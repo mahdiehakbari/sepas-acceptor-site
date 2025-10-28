@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { useToggleLanguage } from './hooks';
-import { Button } from '@/sharedComponent/ui';
 import { getNavItems } from './constants';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
@@ -13,8 +12,9 @@ import { MobileMenu } from './MobileMenu';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 // import ResponsiveModal from '@/sharedComponent/ui/ResponsiveModal/Modal';
-import { DropdownMenu } from '../DropdownMenu/DropdownMenu';
+// import { DropdownMenu } from '../DropdownMenu/DropdownMenu';
 import { useAuthStore } from '@/store/Auth/authStore';
+import { Button } from '@/sharedComponent/ui/Button/Button';
 
 export const Header = () => {
   const { t } = useTranslation();
@@ -86,7 +86,7 @@ export const Header = () => {
                   className='rounded-full'
                 />
               </div>
-              {openPopUp && (
+              {/* {openPopUp && (
                 <DropdownMenu
                   isOpen={openPopUp}
                   onClose={() => setOpenPopUp(false)}
@@ -123,7 +123,7 @@ export const Header = () => {
                     },
                   ]}
                 />
-              )}
+              )} */}
             </div>
           )}
 
