@@ -2,18 +2,18 @@ import i18n from '@/i18n';
 
 export const getSideBarItems = () => [
   {
-    label: i18n.t('profile:user_account'),
-    path: '/panel/userAccount',
+    label: i18n.t('panel:new-receipt'),
+    path: '/panel/newReceipt',
     icon: '/assets/icons/receipt-add.svg',
   },
   {
-    label: i18n.t('profile:requests_list'),
-    path: '/panel/requestList',
+    label: i18n.t('panel:receipts'),
+    path: '/panel/receipts',
     icon: '/assets/icons/receipt.svg',
   },
   {
-    label: i18n.t('profile:transactions_list'),
-    path: '/panel/transactions',
+    label: i18n.t('panel:settlement_status'),
+    path: '/panel/settlementStatus',
     icon: '/assets/icons/card-tick.svg',
     disabled: true,
   },

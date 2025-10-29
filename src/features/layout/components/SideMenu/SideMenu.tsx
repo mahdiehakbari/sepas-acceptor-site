@@ -56,7 +56,7 @@ export const SideMenu = () => {
           {userProfile?.firstName} {userProfile?.lastName}
         </h2>
       </div>
-      <div className='bg-white h-[100vh] flex flex-col justify-between py-6'>
+      <div className='bg-white h-screen flex flex-col justify-between py-6'>
         <ul className='font[400] text-[16px]'>
           {getSideBarItems().map((item) => (
             <li
@@ -93,7 +93,7 @@ export const SideMenu = () => {
               width={20}
               height={20}
             />
-            <p className='text-black font-[400] text-[16px] leading-6 hover:text-primary'>
+            <p className='text-black font-normal text-[16px] leading-6 hover:text-primary'>
               {t('profile:communication_experts')}
             </p>
           </div>
@@ -107,7 +107,7 @@ export const SideMenu = () => {
               width={20}
               height={20}
             />
-            <p className='text-[#FF4B4B] font-[400] text-[16px] leading-6 '>
+            <p className='text-[#FF4B4B] font-normal text-[16px] leading-6 '>
               {t('profile:log_out')}
             </p>
           </div>
