@@ -49,7 +49,6 @@ const Receipts = () => {
       })
       .then((res) => {
         setRequestData(res.data);
-        console.log('Fetched data:', res.data);
       })
       .catch((err) => console.error(err))
       .finally(() => setPageLoading(false));
@@ -97,7 +96,11 @@ const Receipts = () => {
         />
       </div>
       <div className='block md:hidden'>
-        {/* ResponsiveTransactionTable اگر داری */}
+        {/* <ResponsiveTransactionTable
+          requests={items}
+          currentPage={currentPage}
+          pageSize={pageSize}
+        /> */}
       </div>
 
       <Paginate

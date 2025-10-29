@@ -88,6 +88,7 @@ export const NewReceiptOtp = ({
       )
       .then((resp) => {
         setResultData(resp.data);
+        console.log('Fetched data:', resp.data);
         setShowModalResult(true);
         setErrorResult('');
         setButtonLoading(false);
