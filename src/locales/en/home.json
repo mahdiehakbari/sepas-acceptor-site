@@ -13,5 +13,8 @@
   "dental_plan_recipient": "Log in if you are a dental plan recipient.",
   "notice": "Notice",
   "register_patient_payments": "Dear Dentist, to register patient payments and log in, please proceed through this page. By entering the necessary information, you can easily manage medical records and payments. If you need further guidance, please contact us.",
-  "support_contact": "Support contact number: 0217337"
+  "support_contact": "Support contact number: 0217337",
+  "log_out": "Log Out",
+  "record_new_transaction": "Record a new transaction",
+  "transaction": "Transactions"
 }

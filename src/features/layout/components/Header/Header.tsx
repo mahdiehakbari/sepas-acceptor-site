@@ -7,14 +7,14 @@ import { getNavItems } from './constants';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { MobileMenu } from './MobileMenu';
-// import { PhoneNumberModal } from '../Auth/PhoneNumber/PhoneNumberModal';
-// import { OtpModal } from '../Auth/OTPComponent/OtpModal';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
-// import ResponsiveModal from '@/sharedComponent/ui/ResponsiveModal/Modal';
-// import { DropdownMenu } from '../DropdownMenu/DropdownMenu';
 import { useAuthStore } from '@/store/Auth/authStore';
 import { Button } from '@/sharedComponent/ui/Button/Button';
+import ResponsiveModal from '@/sharedComponent/ui/ResponsiveModal/Modal';
+import { PhoneNumberModal } from '../Auth/PhoneNumber/PhoneNumberModal';
+import { OtpModal } from '../Auth/OTPComponent/OtpModal';
+import { DropdownMenu } from '../DropdownMenu/DropdownMenu';
 
 export const Header = () => {
   const { t } = useTranslation();
@@ -86,44 +86,31 @@ export const Header = () => {
                   className='rounded-full'
                 />
               </div>
-              {/* {openPopUp && (
+              {openPopUp && (
                 <DropdownMenu
                   isOpen={openPopUp}
                   onClose={() => setOpenPopUp(false)}
                   items={[
-                    ...(isLoggedIn == 'true'
-                      ? [
-                          {
-                            label: t('profile:user_account'),
-                            href: '/panel/userAccount',
-                            image: '/assets/icons/user-account.svg',
-                          },
-                        ]
-                      : [
-                          {
-                            label: t('profile:complete_profile'),
-                            href: '/profile',
-                            image: '/assets/icons/user-account.svg',
-                          },
-                        ]),
-                    ...(isLoggedIn == 'true'
-                      ? [
-                          {
-                            label: t('profile:requests_list'),
-                            href: '/panel/requestList',
-                            image: '/assets/icons/document.svg',
-                          },
-                        ]
-                      : []),
                     {
-                      label: t('profile:log_out'),
+                      label: t('home:record_new_transaction'),
+                      href: '/panel/userAccount',
+                      image: '/assets/icons/user-account.svg',
+                    },
+                    {
+                      label: t('home:transaction'),
+                      href: '/panel/userAccount',
+                      image: '/assets/icons/user-account.svg',
+                    },
+
+                    {
+                      label: t('home:log_out'),
                       image: '/assets/icons/logout.svg',
                       danger: true,
                       onClick: handleLogout,
                     },
                   ]}
                 />
-              )} */}
+              )}
             </div>
           )}
 
@@ -170,7 +157,7 @@ export const Header = () => {
 
       <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
 
-      {/* <ResponsiveModal
+      <ResponsiveModal
         isOpen={isOpenModal}
         onClose={() => setIsOpenModal(false)}
       >
@@ -189,7 +176,7 @@ export const Header = () => {
             setIsOpenModal={setIsOpenModal}
           />
         )}
-      </ResponsiveModal> */}
+      </ResponsiveModal>
     </header>
   );
 };
