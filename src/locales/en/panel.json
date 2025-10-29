@@ -2,5 +2,11 @@
   "new-receipt": "Record a new transaction",
   "receipts": "Receipts",
   "settlement_status": "Settlement Status",
-  "contact_support": "Contact support"
+  "contact_support": "Contact support",
+  "information_required": "Enter the information required to register a new transaction.",
+  "patient_mobile": "Patient's mobile number",
+  "registration": "registration",
+  "amount": "Amount",
+  "invalid_phone": " The phone number is not valid",
+  "amount_required": "Entering an amount is required."
 }

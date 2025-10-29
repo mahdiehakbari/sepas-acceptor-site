@@ -2,5 +2,11 @@
   "new-receipt": "ثبت تراکنش جدید",
   "receipts": "تراکنش ها",
   "settlement_status": "وضعیت تسویه",
-  "contact_support": "ارتباط با پشتیبانی"
+  "contact_support": "ارتباط با پشتیبانی",
+  "information_required": "اطلاعات لازم برای ثبت تراکنش جدید را وارد کنید.",
+  "patient_mobile": "شماره موبایل بیمار",
+  "registration": "ثبت",
+  "amount": "مبلغ",
+  "invalid_phone": "شماره تلفن معتبر نیست",
+  "amount_required": "وارد کردن مبلغ الزامی است"
 }
