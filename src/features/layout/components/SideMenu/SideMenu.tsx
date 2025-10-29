@@ -94,7 +94,7 @@ export const SideMenu = () => {
               height={20}
             />
             <p className='text-black font-normal text-[16px] leading-6 hover:text-primary'>
-              {t('profile:communication_experts')}
+              {t('panel:contact_support')}
             </p>
           </div>
           <div
@@ -108,7 +108,7 @@ export const SideMenu = () => {
               height={20}
             />
             <p className='text-[#FF4B4B] font-normal text-[16px] leading-6 '>
-              {t('profile:log_out')}
+              {t('home:log_out')}
             </p>
           </div>
         </div>

@@ -92,14 +92,14 @@ export const Header = () => {
                   onClose={() => setOpenPopUp(false)}
                   items={[
                     {
-                      label: t('home:record_new_transaction'),
-                      href: '/panel/userAccount',
-                      image: '/assets/icons/user-account.svg',
+                      label: t('panel:new-receipt'),
+                      href: '/panel/newReceipt',
+                      image: '/assets/icons/receipt.svg',
                     },
                     {
-                      label: t('home:transaction'),
-                      href: '/panel/userAccount',
-                      image: '/assets/icons/user-account.svg',
+                      label: t('panel:receipts'),
+                      href: '/panel/receipts',
+                      image: '/assets/icons/receipt.svg',
                     },
 
                     {

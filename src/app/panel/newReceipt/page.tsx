@@ -1,3 +1,5 @@
-export const NewReceipt = () => {
+const NewReceipt = () => {
   return <>newreceipt</>;
 };
+
+export default NewReceipt;
