@@ -11,7 +11,6 @@ import { useState } from 'react';
 import { SpinnerDiv } from '@/sharedComponent/ui/SpinnerDiv/SpinnerDiv';
 
 export const NewReceiptForm = ({
-  setPurchaseRequestId,
   setShowOtpModal,
   setPhoneNumber,
   setAmountNumber,
@@ -47,7 +46,7 @@ export const NewReceiptForm = ({
       )
       .then((resp) => {
         setButtonLoading(false);
-        setPurchaseRequestId(resp.data.purchaseRequestId);
+        Cookies.set('purchaseRequestId', resp.data.purchaseRequestId);
         setShowOtpModal(true);
         setPhoneNumber(data.customerPhoneNumber);
         setAmountNumber(data.amount);

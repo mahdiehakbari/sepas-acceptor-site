@@ -4,7 +4,6 @@ import {
   API_PURCHASE_REQUESTS_COMMAND,
   API_PURCHASE_REQUESTS_VERIFY,
 } from '@/config/api_address.config';
-import { useSendOtp } from '@/features/layout/components/Auth/PhoneNumber/hooks';
 import { formatTime } from '@/sharedComponent/lib/formatTime';
 import { Button } from '@/sharedComponent/ui/Button/Button';
 import axios from 'axios';
@@ -18,7 +17,6 @@ import { INewReceiptOtpProps } from './types';
 export const NewReceiptOtp = ({
   phoneNumber,
   amountNumber,
-  purchaseRequestId,
   setShowModalResult,
   setErrorResult,
   setResultData,
@@ -32,6 +30,7 @@ export const NewReceiptOtp = ({
   const [canResend, setCanResend] = useState(false);
   const [buttonLoading, setButtonLoading] = useState(false);
   const token = Cookies.get('token');
+  const purchaseRequestId = Cookies.get('purchaseRequestId');
 
   const handleResend = async () => {
     setOtp('');

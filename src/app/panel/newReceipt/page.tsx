@@ -33,7 +33,6 @@ const NewReceipt = () => {
           {t('panel:information_required')}
         </p>
         <NewReceiptForm
-          setPurchaseRequestId={setPurchaseRequestId}
           setShowOtpModal={setShowOtpModal}
           setPhoneNumber={setPhoneNumber}
           setAmountNumber={setAmountNumber}
