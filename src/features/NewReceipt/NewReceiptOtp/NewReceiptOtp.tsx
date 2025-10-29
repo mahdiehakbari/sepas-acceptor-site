@@ -12,17 +12,16 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import OTPInput from 'react-otp-input';
 import Cookies from 'js-cookie';
-
-export interface INewReceiptOtpProps {
-  phoneNumber: string;
-  amountNumber: number;
-  purchaseRequestId: string;
-}
+import { SpinnerDiv } from '@/sharedComponent/ui/SpinnerDiv/SpinnerDiv';
+import { INewReceiptOtpProps } from './types';
 
 export const NewReceiptOtp = ({
   phoneNumber,
   amountNumber,
   purchaseRequestId,
+  setShowModalResult,
+  setErrorResult,
+  setResultData,
 }: INewReceiptOtpProps) => {
   const [otp, setOtp] = useState('');
   const { t } = useTranslation();
@@ -31,6 +30,7 @@ export const NewReceiptOtp = ({
   const [timeLeft, setTimeLeft] = useState(120);
   const [apiError, setApiError] = useState('');
   const [canResend, setCanResend] = useState(false);
+  const [buttonLoading, setButtonLoading] = useState(false);
   const token = Cookies.get('token');
 
   const handleResend = async () => {
@@ -73,6 +73,7 @@ export const NewReceiptOtp = ({
   }, [timeLeft]);
 
   const handleVerify = () => {
+    setButtonLoading(true);
     axios
       .post(
         API_PURCHASE_REQUESTS_VERIFY,
@@ -87,15 +88,26 @@ export const NewReceiptOtp = ({
         },
       )
       .then((resp) => {
-        console.log(resp.data);
+        setResultData(resp.data);
+        setShowModalResult(true);
+        setErrorResult('');
+        setButtonLoading(false);
       })
       .catch((err: unknown) => {
         if (axios.isAxiosError(err)) {
           setError(err.response?.data?.message || 'خطایی رخ داده است.');
+          setShowModalResult(true);
+          setErrorResult(err.response?.data?.message);
+          setButtonLoading(false);
         }
       });
   };
-
+  useEffect(() => {
+    if (otp.length === 6) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      handleVerify();
+    }
+  }, [otp]);
   return (
     <div className='md:w-[600px]'>
       <div className='p-6'>
@@ -165,7 +177,7 @@ export const NewReceiptOtp = ({
 
       <div className='flex justify-end border-t border-[#E6E6E6] px-4 py-2'>
         <Button className='w-[78px]' onClick={handleVerify}>
-          {t('panel:confirmation')}
+          {buttonLoading == true ? <SpinnerDiv /> : t('panel:confirmation')}
         </Button>
       </div>
     </div>

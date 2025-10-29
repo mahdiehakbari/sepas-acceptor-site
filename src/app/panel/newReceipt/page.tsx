@@ -1,6 +1,10 @@
 'use client';
-import { NewReceiptForm } from '@/features/NewReceipt';
-import { NewReceiptOtp } from '@/features/NewReceipt/NewReceiptOtp/NewReceiptOtp';
+import {
+  ModalResult,
+  NewReceiptForm,
+  NewReceiptOtp,
+} from '@/features/NewReceipt';
+import { PurchaseRequestResponse } from '@/features/NewReceipt/NewReceiptOtp/types';
 import ResponsiveModal from '@/sharedComponent/ui/ResponsiveModal/Modal';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,9 +12,19 @@ import { useTranslation } from 'react-i18next';
 const NewReceipt = () => {
   const { t } = useTranslation();
   const [showOtpModal, setShowOtpModal] = useState(false);
+  const [showModalResult, setShowModalResult] = useState(false);
   const [purchaseRequestId, setPurchaseRequestId] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [amountNumber, setAmountNumber] = useState(0);
+  const [errorResult, setErrorResult] = useState('');
+  const [resultData, setResultData] = useState<PurchaseRequestResponse | null>(
+    null,
+  );
+
+  const handleClose = () => {
+    setShowModalResult(false);
+    setShowOtpModal(false);
+  };
 
   return (
     <div className=" h-screen bg-[url('/assets/icons/bg-image.svg')] bg-cover bg-center flex items-center justify-center">
@@ -26,15 +40,26 @@ const NewReceipt = () => {
         />
 
         <ResponsiveModal
-          title={t('panel:otp')}
+          title={showModalResult == false ? t('panel:otp') : undefined}
           isOpen={showOtpModal}
           onClose={() => setShowOtpModal(false)}
         >
-          <NewReceiptOtp
-            phoneNumber={phoneNumber}
-            amountNumber={amountNumber}
-            purchaseRequestId={purchaseRequestId}
-          />
+          {showModalResult == true ? (
+            <ModalResult
+              errorResult={errorResult}
+              handleClose={handleClose}
+              resultData={resultData}
+            />
+          ) : (
+            <NewReceiptOtp
+              phoneNumber={phoneNumber}
+              amountNumber={amountNumber}
+              purchaseRequestId={purchaseRequestId}
+              setErrorResult={setErrorResult}
+              setShowModalResult={setShowModalResult}
+              setResultData={setResultData}
+            />
+          )}
         </ResponsiveModal>
       </div>
     </div>

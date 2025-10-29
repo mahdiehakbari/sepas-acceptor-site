@@ -11,5 +11,12 @@
   "amount_required": "وارد کردن مبلغ الزامی است",
   "otp": "ورود کد یکبار مصرف",
   "customer_otp": "کد یکبار مصرف به شماره موبایل مشتری ارسال شد.کد را وارد کنید.",
-  "confirmation": "تایید"
+  "confirmation": "تایید",
+  "unsuccessful_transaction": "تراکنش ناموفق",
+  "transaction_amount_exceeds": "مبلغ تراکنش از میزان اعتبار مشتری بیشتر است. لطفا مجدد تلاش کنید.",
+  "close": "بستن",
+  "successful_transaction": "تراکنش موفق",
+  "transaction_amount": "مبلغ تراکنش",
+  "transaction_date": "تاریخ تراکنش",
+  "transaction_number": "شماره تراکنش"
 }

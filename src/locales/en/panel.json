@@ -11,5 +11,12 @@
   "amount_required": "Entering an amount is required.",
   "otp": "Enter a one-time code",
   "customer_otp": "A one-time code was sent to the customer's mobile number. Enter the code.",
-  "confirmation": "Confirmation"
+  "confirmation": "Confirmation",
+  "unsuccessful_transaction": "Unsuccessful transaction",
+  "transaction_amount_exceeds": "The transaction amount exceeds the customer's credit limit. Please try again.",
+  "close": "close",
+  "successful_transaction": "Successful transaction",
+  "transaction_number": "Transaction number",
+  "transaction_amount": "Transaction Amount",
+  "transaction_date": "Transaction Date"
 }
