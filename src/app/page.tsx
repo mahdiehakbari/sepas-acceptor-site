@@ -1,3 +1,4 @@
+import { BannerSection, ContentComponent } from '@/features/mainPage';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -6,5 +7,10 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return <></>;
+  return (
+    <>
+      <BannerSection />
+      <ContentComponent />
+    </>
+  );
 }

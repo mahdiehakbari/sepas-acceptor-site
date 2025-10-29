@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import I18nProvider from '@/providers/I18nProvider';
 import { Header } from '@/features/layout';
+import { SiteRights } from '@/features/layout/components/Footer/SiteRights';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://example.com'),
@@ -49,7 +50,7 @@ export default function RootLayout({
           <div className='min-h-screen flex flex-col'>
             <Header />
             <main className='flex-1'>{children}</main>
-            {/* <SiteRights /> */}
+            <SiteRights />
           </div>
           <ToastContainer
             position='top-right'
