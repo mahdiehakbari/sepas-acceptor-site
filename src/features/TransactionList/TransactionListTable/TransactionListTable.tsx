@@ -2,8 +2,9 @@
 
 import { useTranslation } from 'react-i18next';
 import { ITransactionListTableProps } from './types';
-import { useStatusInfo } from './utils/useStatusInfo';
+
 import { getThItems } from './constants';
+import { useStatusInfo } from './utils/useStatusInfo';
 
 export const TransactionListTable = ({
   requests,
