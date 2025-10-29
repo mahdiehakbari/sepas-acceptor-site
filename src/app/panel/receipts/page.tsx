@@ -8,16 +8,21 @@ import { API_AUTHENTICATE_ME, API_MERCHANT } from '@/config/api_address.config';
 import { SpinnerDiv } from '@/sharedComponent/ui/SpinnerDiv/SpinnerDiv';
 import { Paginate } from '@/sharedComponent/ui/Paginate/Paginate';
 import { TransactionListTable } from '@/features/TransactionList';
-import { IUserData } from './types';
+import { ITransactionsData } from './types';
 
 const Receipts = () => {
   const { t } = useTranslation();
   const [pageLoading, setPageLoading] = useState(true);
   const [customerId, setCustomerId] = useState('');
-  const [requestsData, setRequestData] = useState<IUserData | null>(null);
+  const [requestsData, setRequestData] = useState<ITransactionsData | null>(
+    null,
+  );
   const [page, setPage] = useState(1);
   const token = Cookies.get('token');
 
+  const pageSize = 10;
+
+  // گرفتن merchantId
   useEffect(() => {
     if (!token) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -39,16 +44,16 @@ const Receipts = () => {
     if (!customerId) return;
 
     axios
-      .get(`${API_MERCHANT}/${customerId}?page=${page}&pageSize=10`, {
+      .get(`${API_MERCHANT}/${customerId}/paged?page=1&pageSize=1000`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
         setRequestData(res.data);
-        console.log(res.data, 'ggggg');
+        console.log('Fetched data:', res.data);
       })
       .catch((err) => console.error(err))
       .finally(() => setPageLoading(false));
-  }, [customerId, page]);
+  }, [customerId, token]);
 
   if (pageLoading) {
     return (
@@ -59,7 +64,7 @@ const Receipts = () => {
     );
   }
 
-  if (!requestsData || requestsData.purchaseRequests.length === 0) {
+  if (!requestsData || requestsData.items.length === 0) {
     return (
       <div className='text-center mt-10 text-gray-500'>
         هیچ داده‌ای یافت نشد.
@@ -67,13 +72,16 @@ const Receipts = () => {
     );
   }
 
-  const purchaseRequests = requestsData.purchaseRequests;
-  const pageSize = requestsData.pageSize || 10;
-  const totalCount = requestsData.totalCount || 0;
-  const totalPages = Math.ceil(totalCount / pageSize) || 1;
+  const totalCount = requestsData.items.length;
+  const totalPages = Math.ceil(totalCount / pageSize);
   const currentPage = page;
   const hasPreviousPage = currentPage > 1;
   const hasNextPage = currentPage < totalPages;
+
+  const displayItems = requestsData.items.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize,
+  );
 
   return (
     <div className='max-w-6xl mx-auto mt-6'>
@@ -83,18 +91,15 @@ const Receipts = () => {
 
       <div className='hidden md:block'>
         <TransactionListTable
-          requests={purchaseRequests}
+          requests={displayItems}
           currentPage={currentPage}
           pageSize={pageSize}
         />
       </div>
       <div className='block md:hidden'>
-        {/* <ResponsiveTransactionTable
-          requests={items}
-          currentPage={currentPage}
-          pageSize={pageSize}
-        /> */}
+        {/* ResponsiveTransactionTable اگر داری */}
       </div>
+
       <Paginate
         hasPreviousPage={hasPreviousPage}
         setPage={setPage}

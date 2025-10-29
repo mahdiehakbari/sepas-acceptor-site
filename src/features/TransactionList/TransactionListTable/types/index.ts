@@ -1,14 +1,17 @@
-export interface IPurchaseRequest {
+export interface ITransactionItem {
   id: string;
   amount: number;
   description: string;
   status: string;
   createdAt: string;
-  customerPhone: string;
+  customerId: string;
   customerName: string;
+  customerPhone: string;
+  merchantId: string;
 }
+
 export interface ITransactionListTableProps {
-  requests: IPurchaseRequest[];
+  requests: ITransactionItem[];
   currentPage: number;
   pageSize: number;
 }

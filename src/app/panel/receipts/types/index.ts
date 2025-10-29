@@ -1,26 +1,21 @@
-export interface IPurchaseRequest {
+export interface ITransactionItem {
   id: string;
   amount: number;
   description: string;
   status: string;
   createdAt: string;
-  customerPhone: string;
+  customerId: string;
   customerName: string;
+  customerPhone: string;
+  merchantId: string;
 }
 
-export interface IUserData {
-  id: string;
-  phoneNumber: string;
-  nationalId: string;
-  address: string;
-  businessName: string;
-  fullName: string;
-  isVerified: boolean;
-  email: string | null;
-  iban: string | null;
-  createdAt: string;
-  purchaseRequests: IPurchaseRequest[];
+export interface ITransactionsData {
+  items: ITransactionItem[];
   totalCount: number;
   pageNumber: number;
   pageSize: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
 }

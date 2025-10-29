@@ -38,7 +38,7 @@ export const TransactionListTable = ({
               <tr key={req.id}>
                 <td colSpan={5} className='p-0'>
                   <div className='flex items-center justify-between bg-white border border-border-color rounded-lg px-3 py-3'>
-                    <div className='w-[5%] text-center'>
+                    <div className='w-[10%] text-right'>
                       {index + 1 + (currentPage - 1) * pageSize}
                     </div>
                     <div className='w-[20%] text-center'>
@@ -50,9 +50,7 @@ export const TransactionListTable = ({
                     <div className='w-[20%] text-center'>
                       {new Date(req.createdAt).toLocaleDateString('fa-IR')}
                     </div>
-                    <div className='w-[20%] text-center'>
-                      {new Date(req.createdAt).toLocaleDateString('fa-IR')}
-                    </div>
+                    <div className='w-[20%] text-center'>{req.id}</div>
                     <div className='w-[20%] text-center'>
                       <span
                         className={`px-3 py-1 rounded-full text-xs font-semibold ${className}`}

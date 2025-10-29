@@ -5,10 +5,11 @@ export const useStatusInfo = () => {
 
   const getStatusInfo = (status: string) => {
     let className = 'bg-gray-100 text-gray-700';
-    if (status == 'ConfirmedByCustomer')
-      className = 'bg-green-100 text-green-700';
-    // else if (blue.includes(status)) className = 'bg-blue-100 text-blue-700';
-    // else if (red.includes(status)) className = 'bg-red-100 text-red-700';
+    if (status == 'Completed') className = 'bg-green-100 text-green-700';
+    else if (status == 'ConfirmedByCustomer')
+      className = 'bg-blue-100 text-blue-700';
+    else if (status == 'failed' || status == 'canceled')
+      className = 'bg-red-100 text-red-700';
     else if (status == 'Pending' || status == 'OtpSent')
       className = 'bg-yellow-100 text-yellow-700';
 
