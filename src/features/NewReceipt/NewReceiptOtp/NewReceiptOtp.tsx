@@ -1,0 +1,173 @@
+'use client';
+
+import {
+  API_PURCHASE_REQUESTS_COMMAND,
+  API_PURCHASE_REQUESTS_VERIFY,
+} from '@/config/api_address.config';
+import { useSendOtp } from '@/features/layout/components/Auth/PhoneNumber/hooks';
+import { formatTime } from '@/sharedComponent/lib/formatTime';
+import { Button } from '@/sharedComponent/ui/Button/Button';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import OTPInput from 'react-otp-input';
+import Cookies from 'js-cookie';
+
+export interface INewReceiptOtpProps {
+  phoneNumber: string;
+  amountNumber: number;
+  purchaseRequestId: string;
+}
+
+export const NewReceiptOtp = ({
+  phoneNumber,
+  amountNumber,
+  purchaseRequestId,
+}: INewReceiptOtpProps) => {
+  const [otp, setOtp] = useState('');
+  const { t } = useTranslation();
+  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
+  const [error, setError] = useState('');
+  const [timeLeft, setTimeLeft] = useState(120);
+  const [apiError, setApiError] = useState('');
+  const [canResend, setCanResend] = useState(false);
+  const token = Cookies.get('token');
+
+  const handleResend = async () => {
+    setOtp('');
+    setTimeLeft(120);
+    setCanResend(false);
+    setApiError('');
+    try {
+      await axios
+        .post(
+          API_PURCHASE_REQUESTS_COMMAND,
+          {
+            customerPhoneNumber: phoneNumber,
+            amount: amountNumber,
+            description: 'New Receipt ',
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        )
+        .then((resp) => {
+          setOtp('');
+          setError('');
+        })
+        .catch(() => {});
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setApiError(err.response?.data?.message);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (timeLeft <= 0) return;
+
+    const timer = setInterval(() => setTimeLeft((t) => t - 1), 1000);
+    return () => clearInterval(timer);
+  }, [timeLeft]);
+
+  const handleVerify = () => {
+    axios
+      .post(
+        API_PURCHASE_REQUESTS_VERIFY,
+        {
+          purchaseRequestId: purchaseRequestId,
+          otpCode: otp,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
+      .then((resp) => {
+        console.log(resp.data);
+      })
+      .catch((err: unknown) => {
+        if (axios.isAxiosError(err)) {
+          setError(err.response?.data?.message || 'خطایی رخ داده است.');
+        }
+      });
+  };
+
+  return (
+    <div className='md:w-[600px]'>
+      <div className='p-6'>
+        <h2 className='text-[18px] font-bold mb-6'>
+          {t('panel:customer_otp')}
+        </h2>
+        <div dir='ltr' className='flex justify-center'>
+          <OTPInput
+            value={otp}
+            onChange={(val) => setOtp(val.replace(/[^0-9]/g, ''))}
+            numInputs={6}
+            inputType='tel'
+            shouldAutoFocus
+            containerStyle={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '8px',
+            }}
+            renderInput={(props, index) => (
+              <input
+                {...props}
+                onFocus={() => setFocusedIndex(index)}
+                onBlur={() => setFocusedIndex(null)}
+                dir='ltr'
+                inputMode='numeric'
+                className={`text-center text-lg border rounded-lg outline-none transition-all duration-150
+                  ${
+                    error
+                      ? 'border-red-500'
+                      : focusedIndex === index
+                      ? 'border-blue-500 ring-1 ring-blue-400'
+                      : 'border-gray-300'
+                  }
+                `}
+                style={{
+                  width: '44px',
+                  height: '44px',
+                  margin: '0px',
+                }}
+              />
+            )}
+          />
+          {error && <p className='text-red-500 text-sm my-2 mr-4'>{error}</p>}
+          {apiError && (
+            <p className='text-red-500 text-sm my-2 mr-4'>{apiError}</p>
+          )}
+        </div>
+
+        <div className='flex justify-center items-center mt-4 gap-2 text-sm'>
+          <button
+            onClick={handleResend}
+            disabled={!canResend}
+            className={`cursor-pointer font-semibold ${
+              canResend
+                ? 'text-primary hover:underline'
+                : 'text-gray-400 cursor-not-allowed'
+            }`}
+          >
+            {t('login:resend_code')}
+          </button>
+          <span className='text-[#A5A5A5] text-[12px] font-bold'>
+            {formatTime(timeLeft)}
+          </span>
+        </div>
+      </div>
+
+      <div className='flex justify-end border-t border-[#E6E6E6] px-4 py-2'>
+        <Button className='w-[78px]' onClick={handleVerify}>
+          {t('panel:confirmation')}
+        </Button>
+      </div>
+    </div>
+  );
+};

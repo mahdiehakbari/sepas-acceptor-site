@@ -1,23 +1,60 @@
 'use client';
 import { useForm, Controller } from 'react-hook-form';
-import { TFormValues } from './types';
+import { INewReceiptProps, TFormValues } from './types';
 import { NumericFormat } from 'react-number-format';
 import { Button } from '@/sharedComponent/ui/Button/Button';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { API_PURCHASE_REQUESTS_COMMAND } from '@/config/api_address.config';
+import { useState } from 'react';
+import { SpinnerDiv } from '@/sharedComponent/ui/SpinnerDiv/SpinnerDiv';
 
-export const NewReceiptForm = () => {
+export const NewReceiptForm = ({
+  setPurchaseRequestId,
+  setShowOtpModal,
+  setPhoneNumber,
+  setAmountNumber,
+}: INewReceiptProps) => {
   const { t } = useTranslation();
+  const token = Cookies.get('token');
+  const [buttonLoading, setButtonLoading] = useState(false);
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<TFormValues>({
-    defaultValues: { phoneNumber: '', amount: undefined },
+    defaultValues: { customerPhoneNumber: '', amount: undefined },
   });
 
   const onSubmit = (data: TFormValues) => {
-    console.log('Form submitted:', data);
+    setButtonLoading(true);
+    const amountNumber = Number(String(data.amount).replace(/,/g, ''));
+    axios
+      .post(
+        API_PURCHASE_REQUESTS_COMMAND,
+        {
+          customerPhoneNumber: data.customerPhoneNumber,
+          amount: amountNumber,
+          description: 'New Receipt ',
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
+      .then((resp) => {
+        setButtonLoading(false);
+        setPurchaseRequestId(resp.data.purchaseRequestId);
+        setShowOtpModal(true);
+        setPhoneNumber(data.customerPhoneNumber);
+        setAmountNumber(data.amount);
+      })
+      .catch(() => {
+        setButtonLoading(false);
+      });
   };
 
   return (
@@ -27,14 +64,17 @@ export const NewReceiptForm = () => {
           <input
             type='tel'
             placeholder={t('panel:patient_mobile')}
-            {...register('phoneNumber', { required: true, maxLength: 11 })}
+            {...register('customerPhoneNumber', {
+              required: true,
+              maxLength: 11,
+            })}
             className={`bg-white w-full border rounded-lg p-2 mb-2 focus:outline-none focus:ring-2 text-left placeholder:text-right ${
-              errors.phoneNumber
+              errors.customerPhoneNumber
                 ? 'border-red-500 focus:ring-red-400'
                 : 'border-gray-300 focus:ring-blue-500'
             }`}
           />
-          {errors.phoneNumber && (
+          {errors.customerPhoneNumber && (
             <p className='text-red-500 text-sm mb-2'>
               {t('panel:invalid_phone')}
             </p>
@@ -63,13 +103,14 @@ export const NewReceiptForm = () => {
               />
             )}
           />
+
           {errors.amount && (
             <p className='text-red-500 text-sm mt-1'>{errors.amount.message}</p>
           )}
         </div>
 
         <Button type='submit' className='w-full'>
-          ثبت
+          {buttonLoading == true ? <SpinnerDiv /> : t('panel:registration')}
         </Button>
       </form>
     </div>

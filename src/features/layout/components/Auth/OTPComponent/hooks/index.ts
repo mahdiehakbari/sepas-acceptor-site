@@ -7,17 +7,11 @@ import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/Auth/authStore';
 
 export const useOtp = (onClose: () => void) => {
-  const [phone, setPhone] = useState(() => Cookies.get('phoneNumber') || '');
+  const [phone] = useState(() => Cookies.get('phoneNumber') || '');
   const [otp, setOtp] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const { user, setAuth } = useAuthStore();
-  const router = useRouter();
-
-  // useEffect(() => {
-  //   const savedPhone = Cookies.get('phoneNumber');
-  //   if (savedPhone) setPhone(savedPhone);
-  // }, []);
 
   useEffect(() => {
     const token = Cookies.get('token');

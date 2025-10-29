@@ -8,5 +8,8 @@
   "registration": "registration",
   "amount": "Amount",
   "invalid_phone": " The phone number is not valid",
-  "amount_required": "Entering an amount is required."
+  "amount_required": "Entering an amount is required.",
+  "otp": "Enter a one-time code",
+  "customer_otp": "A one-time code was sent to the customer's mobile number. Enter the code.",
+  "confirmation": "Confirmation"
 }
