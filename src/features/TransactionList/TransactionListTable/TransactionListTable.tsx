@@ -33,7 +33,7 @@ export const TransactionListTable = ({
 
         <tbody>
           {requests.map((req, index) => {
-            const { className } = getStatusInfo(req.status);
+            const { label, className } = getStatusInfo(req.status);
 
             return (
               <tr key={req.id}>
@@ -48,15 +48,26 @@ export const TransactionListTable = ({
                     <div className='w-[20%] text-center'>
                       {req.customerPhone}
                     </div>
-                    <div className='w-[20%] text-center'>
-                      {new Date(req.createdAt).toLocaleDateString('fa-IR')}
+                    <div className='w-[20%] text-center flex items-center gap-1.5'>
+                      {new Date(req.createdAt).toLocaleTimeString('fa-IR', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })}
+                      {'   '}
+                      {new Date(req.createdAt).toLocaleDateString('fa-IR', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                      })}
                     </div>
-                    <div className='w-[20%] text-center'>{req.id}</div>
+                    <div className='w-[20%] text-center'>
+                      {req.amount.toLocaleString('fa-IR')}
+                    </div>
                     <div className='w-[20%] text-center'>
                       <span
                         className={`px-3 py-1 rounded-full text-xs font-semibold ${className}`}
                       >
-                        {req.status}
+                        {label}
                       </span>
                     </div>
                   </div>

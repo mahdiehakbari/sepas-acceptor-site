@@ -1,4 +1,10 @@
-export const localesNS = ['login', 'home', 'panel', 'transaction'] as const;
+export const localesNS = [
+  'login',
+  'home',
+  'panel',
+  'transaction',
+  'status',
+] as const;
 export type LocaleNS = (typeof localesNS)[number];
 
 export const languages = ['en', 'fa'] as const;

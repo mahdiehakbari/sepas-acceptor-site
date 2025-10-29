@@ -27,7 +27,7 @@ export const ModalResult = ({
             </div>
 
             <p className='text-[20px] font-bold mb-4 text-(--active-loan-text)'>
-              {t('panel:unsuccessful_transaction')}
+              {t('panel:successful_transaction')}
             </p>
 
             <div className='bg-[#EBFAEB] p-4 md:w-[432px] rounded-2xl'>

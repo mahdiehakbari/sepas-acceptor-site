@@ -14,6 +14,7 @@ export const useStatusInfo = () => {
       className = 'bg-yellow-100 text-yellow-700';
 
     return {
+      label: t(`status:${status}`),
       className,
     };
   };
