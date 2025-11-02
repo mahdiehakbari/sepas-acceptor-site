@@ -1,5 +1,5 @@
 export const API_SEND_OTP = '/api/UnifiedAuth/send-otp';
-export const API_AUTHENTICATE = '/api/UnifiedAuth/authenticate';
+export const API_AUTHENTICATE = '/api/UnifiedAuth/authenticate-merchant';
 export const API_PURCHASE_REQUESTS_COMMAND = '/api/PurchaseRequestsCommand';
 export const API_AUTHENTICATE_ME = '/api/UnifiedAuth/me';
 export const API_MERCHANT = '/api/PurchaseRequestsQuery/merchant/';
