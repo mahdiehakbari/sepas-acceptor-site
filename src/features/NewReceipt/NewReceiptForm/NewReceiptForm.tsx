@@ -9,6 +9,7 @@ import Cookies from 'js-cookie';
 import { API_PURCHASE_REQUESTS_COMMAND } from '@/config/api_address.config';
 import { useState } from 'react';
 import { SpinnerDiv } from '@/sharedComponent/ui/SpinnerDiv/SpinnerDiv';
+import { toast } from 'react-toastify';
 
 export const NewReceiptForm = ({
   setShowOtpModal,
@@ -51,8 +52,10 @@ export const NewReceiptForm = ({
         setPhoneNumber(data.customerPhoneNumber);
         setAmountNumber(data.amount);
       })
-      .catch(() => {
+      .catch((err) => {
         setButtonLoading(false);
+        console.log(err, 'aaaa');
+        toast.error(err?.response?.data?.message);
       });
   };
 

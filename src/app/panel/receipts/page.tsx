@@ -9,6 +9,7 @@ import { SpinnerDiv } from '@/sharedComponent/ui/SpinnerDiv/SpinnerDiv';
 import { Paginate } from '@/sharedComponent/ui/Paginate/Paginate';
 import { TransactionListTable } from '@/features/TransactionList';
 import { ITransactionsData } from './types';
+import { ResponsiveTransactionTable } from '@/features/TransactionList/TransactionListTable/ResponsiveTransactionTable';
 
 const Receipts = () => {
   const { t } = useTranslation();
@@ -56,7 +57,7 @@ const Receipts = () => {
 
   if (pageLoading) {
     return (
-      <div className='flex justify-center items-center h-screen'>
+      <div className='flex justify-center items-center h-[60vh]'>
         <SpinnerDiv size='lg' />
         <p className='px-2'>در حال بارگذاری...</p>
       </div>
@@ -96,11 +97,11 @@ const Receipts = () => {
         />
       </div>
       <div className='block md:hidden'>
-        {/* <ResponsiveTransactionTable
-          requests={items}
+        <ResponsiveTransactionTable
+          requests={displayItems}
           currentPage={currentPage}
           pageSize={pageSize}
-        /> */}
+        />
       </div>
 
       <Paginate

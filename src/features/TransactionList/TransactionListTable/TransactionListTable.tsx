@@ -32,36 +32,42 @@ export const TransactionListTable = ({
         </thead>
 
         <tbody>
-          {requests.map((req, index) => {
-            const { label, className } = getStatusInfo(req.status);
+          {requests.map((transaction, index) => {
+            const { label, className } = getStatusInfo(transaction.status);
 
             return (
-              <tr key={req.id}>
+              <tr key={transaction.id}>
                 <td colSpan={5} className='p-0'>
                   <div className='flex items-center justify-between bg-white border border-border-color rounded-lg px-3 py-3'>
                     <div className='w-[10%] text-right'>
                       {index + 1 + (currentPage - 1) * pageSize}
                     </div>
                     <div className='w-[20%] text-center'>
-                      {req.customerName}
+                      {transaction.customerName}
                     </div>
                     <div className='w-[20%] text-center'>
-                      {req.customerPhone}
+                      {transaction.customerPhone}
                     </div>
                     <div className='w-[20%] text-center flex items-center gap-1.5'>
-                      {new Date(req.createdAt).toLocaleTimeString('fa-IR', {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                      })}
+                      {new Date(transaction.createdAt).toLocaleTimeString(
+                        'fa-IR',
+                        {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        },
+                      )}
                       {'   '}
-                      {new Date(req.createdAt).toLocaleDateString('fa-IR', {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                      })}
+                      {new Date(transaction.createdAt).toLocaleDateString(
+                        'fa-IR',
+                        {
+                          year: 'numeric',
+                          month: '2-digit',
+                          day: '2-digit',
+                        },
+                      )}
                     </div>
                     <div className='w-[20%] text-center'>
-                      {req.amount.toLocaleString('fa-IR')}
+                      {transaction.amount.toLocaleString('fa-IR')}
                     </div>
                     <div className='w-[20%] text-center'>
                       <span
