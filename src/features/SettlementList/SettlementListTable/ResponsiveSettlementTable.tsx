@@ -17,12 +17,12 @@ export const ResponsiveSettlementTable = ({
           <div key={index}>
             <div className='border-2 border-border-color rounded-lg mb-4'>
               <div className=' p-4 '>
-                <div className='flex gap-2 items-center mb-2 '>
+                {/* <div className='flex gap-2 items-center mb-2 '>
                   <h2 className='font-medium text-[#808080] text-[14px]'>
                     {t('settlement_status:transaction_number')}:
                   </h2>
                   <h2 className='font-semibold text-gray-800'></h2>
-                </div>
+                </div> */}
                 <div className='flex justify-between gap-2 items-center mb-4 '>
                   <h2 className='font-medium text-[#808080] text-[14px]'>
                     {t('settlement_status:settlement_date')}
@@ -41,7 +41,7 @@ export const ResponsiveSettlementTable = ({
                     {settlement.amount.toLocaleString('fa-IR')} تومان
                   </span>
                 </div>
-                <div className='flex justify-between gap-2 items-center mb-4 '>
+                {/* <div className='flex justify-between gap-2 items-center mb-4 '>
                   <h2 className='font-medium text-[#808080] text-[14px]'>
                     {t('settlement_status:settlement_status')}
                   </h2>
@@ -51,7 +51,7 @@ export const ResponsiveSettlementTable = ({
                   >
                     {label}
                   </span>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
