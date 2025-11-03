@@ -54,7 +54,6 @@ export const NewReceiptForm = ({
       })
       .catch((err) => {
         setButtonLoading(false);
-        console.log(err, 'aaaa');
         toast.error(err?.response?.data?.message);
       });
   };

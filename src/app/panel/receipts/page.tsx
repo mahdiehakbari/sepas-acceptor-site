@@ -37,6 +37,7 @@ const Receipts = () => {
       })
       .then((res) => {
         setCustomerId(res.data.merchantId);
+        console.log(res.data);
       })
       .catch((err) => console.error(err));
   }, [token]);
@@ -50,6 +51,7 @@ const Receipts = () => {
       })
       .then((res) => {
         setRequestData(res.data);
+        console.log(res.data);
       })
       .catch((err) => console.error(err))
       .finally(() => setPageLoading(false));
