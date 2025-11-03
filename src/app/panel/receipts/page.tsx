@@ -10,6 +10,7 @@ import { Paginate } from '@/sharedComponent/ui/Paginate/Paginate';
 import { TransactionListTable } from '@/features/TransactionList';
 import { ITransactionsData } from './types';
 import { ResponsiveTransactionTable } from '@/features/TransactionList/TransactionListTable/ResponsiveTransactionTable';
+import { paginate } from '../utils/Paginate';
 
 const Receipts = () => {
   const { t } = useTranslation();
@@ -23,7 +24,6 @@ const Receipts = () => {
 
   const pageSize = 10;
 
-  // گرفتن merchantId
   useEffect(() => {
     if (!token) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -72,16 +72,13 @@ const Receipts = () => {
     );
   }
 
-  const totalCount = requestsData.items.length;
-  const totalPages = Math.ceil(totalCount / pageSize);
-  const currentPage = page;
-  const hasPreviousPage = currentPage > 1;
-  const hasNextPage = currentPage < totalPages;
-
-  const displayItems = requestsData.items.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize,
-  );
+  const {
+    displayItems,
+    totalPages,
+    currentPage,
+    hasPreviousPage,
+    hasNextPage,
+  } = paginate(requestsData.items, page, pageSize);
 
   return (
     <div className='max-w-6xl mx-auto mt-6'>
