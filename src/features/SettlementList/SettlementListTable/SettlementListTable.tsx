@@ -1,16 +1,15 @@
 'use client';
 
 import { useTranslation } from 'react-i18next';
-import { ITransactionListTableProps } from './types';
-
 import { getThItems } from './constants';
 import { useStatusInfo } from './utils/useStatusInfo';
+import { ISettlementListTableProps } from './types';
 
-export const TransactionListTable = ({
+export const SettlementListTable = ({
   requests,
   currentPage,
   pageSize,
-}: ITransactionListTableProps) => {
+}: ISettlementListTableProps) => {
   const { t } = useTranslation();
   const { getStatusInfo } = useStatusInfo();
 
@@ -22,7 +21,7 @@ export const TransactionListTable = ({
             <th colSpan={5} className='p-0'>
               <div className='flex bg-(--block-color) border border-(--block-color) rounded-lg px-3 py-3 font-semibold text-gray-700 text-sm'>
                 {getThItems().map((item) => (
-                  <div key={item.id} className='w-1/5 text-right'>
+                  <div key={item.id} className='w-1/1 text-right'>
                     {item.label}
                   </div>
                 ))}
@@ -32,50 +31,35 @@ export const TransactionListTable = ({
         </thead>
 
         <tbody>
-          {requests.map((transaction, index) => {
-            const { label, className } = getStatusInfo(transaction.status);
+          {requests.map((Settlement, index) => {
+            const { label, className } = getStatusInfo(Settlement.status);
 
             return (
-              <tr key={transaction.id}>
+              <tr key={Settlement.uuid}>
                 <td colSpan={5} className='p-0'>
                   <div className='flex items-center justify-between bg-white border border-border-color rounded-lg px-3 py-3'>
-                    <div className='w-[10%] text-right'>
+                    <div className='w-[60%] text-right'>
                       {index + 1 + (currentPage - 1) * pageSize}
                     </div>
-                    <div className='w-[20%] text-center'>
-                      {transaction.customerName}
-                    </div>
-                    <div className='w-[20%] text-center'>
-                      {transaction.customerPhone}
-                    </div>
+                    {/* <div className='w-[27%] text-center'></div> */}
                     <div className='w-[20%] text-center flex items-center gap-1.5'>
-                      {new Date(transaction.createdAt).toLocaleTimeString(
-                        'fa-IR',
-                        {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        },
-                      )}
-                      {'   '}
-                      {new Date(transaction.createdAt).toLocaleDateString(
-                        'fa-IR',
-                        {
-                          year: 'numeric',
-                          month: '2-digit',
-                          day: '2-digit',
-                        },
-                      )}
+                      {Settlement.payment_date}
                     </div>
-                    <div className='w-[20%] text-center'>
-                      {transaction.amount.toLocaleString('fa-IR')}
+                    <div className='w-[100%] text-center'>
+                      {Settlement.amount.toLocaleString('fa-IR')}
                     </div>
-                    <div className='w-[20%] text-center'>
+                    {/* <div className='w-[20%] text-center'>
                       <span
                         className={`px-3 py-1 rounded-full text-xs font-semibold ${className}`}
                       >
                         {label}
                       </span>
-                    </div>
+                    </div> */}
+                    {/* <div className='w-[25%] text-center'>
+                      <p className='text-primary text-[12px] font-medium'>
+                        {t('settlement_status:more')}
+                      </p>
+                    </div> */}
                   </div>
                 </td>
               </tr>

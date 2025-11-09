@@ -9,6 +9,8 @@ import { SpinnerDiv } from '@/sharedComponent/ui/SpinnerDiv/SpinnerDiv';
 import { Paginate } from '@/sharedComponent/ui/Paginate/Paginate';
 import { TransactionListTable } from '@/features/TransactionList';
 import { ITransactionsData } from './types';
+import { ResponsiveTransactionTable } from '@/features/TransactionList/TransactionListTable/ResponsiveTransactionTable';
+import { paginate } from '../utils/Paginate';
 
 const Receipts = () => {
   const { t } = useTranslation();
@@ -22,7 +24,6 @@ const Receipts = () => {
 
   const pageSize = 10;
 
-  // گرفتن merchantId
   useEffect(() => {
     if (!token) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -36,6 +37,7 @@ const Receipts = () => {
       })
       .then((res) => {
         setCustomerId(res.data.merchantId);
+        console.log(res.data);
       })
       .catch((err) => console.error(err));
   }, [token]);
@@ -49,6 +51,7 @@ const Receipts = () => {
       })
       .then((res) => {
         setRequestData(res.data);
+        console.log(res.data);
       })
       .catch((err) => console.error(err))
       .finally(() => setPageLoading(false));
@@ -56,7 +59,7 @@ const Receipts = () => {
 
   if (pageLoading) {
     return (
-      <div className='flex justify-center items-center h-screen'>
+      <div className='flex justify-center items-center h-[60vh]'>
         <SpinnerDiv size='lg' />
         <p className='px-2'>در حال بارگذاری...</p>
       </div>
@@ -71,16 +74,13 @@ const Receipts = () => {
     );
   }
 
-  const totalCount = requestsData.items.length;
-  const totalPages = Math.ceil(totalCount / pageSize);
-  const currentPage = page;
-  const hasPreviousPage = currentPage > 1;
-  const hasNextPage = currentPage < totalPages;
-
-  const displayItems = requestsData.items.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize,
-  );
+  const {
+    displayItems,
+    totalPages,
+    currentPage,
+    hasPreviousPage,
+    hasNextPage,
+  } = paginate(requestsData.items, page, pageSize);
 
   return (
     <div className='max-w-6xl mx-auto mt-6'>
@@ -96,11 +96,11 @@ const Receipts = () => {
         />
       </div>
       <div className='block md:hidden'>
-        {/* <ResponsiveTransactionTable
-          requests={items}
+        <ResponsiveTransactionTable
+          requests={displayItems}
           currentPage={currentPage}
           pageSize={pageSize}
-        /> */}
+        />
       </div>
 
       <Paginate

@@ -1,0 +1,10 @@
+{
+  "row": "ردیف",
+  "transaction_number": "شماره تراکنش",
+  "settlement_date": "تاریخ تسویه",
+  "settlement_amount": "مبلغ تسویه",
+  "settlement_status": "وضعیت تسویه",
+  "action": "عملیات",
+  "more": "جز‌ییات بیشتر",
+  "settlement_list": "لیست تسویه ها"
+}

@@ -1,10 +1,11 @@
 export const API_SEND_OTP = '/api/UnifiedAuth/send-otp';
-export const API_AUTHENTICATE = '/api/UnifiedAuth/authenticate';
+export const API_AUTHENTICATE = '/api/UnifiedAuth/authenticate-merchant';
 export const API_PURCHASE_REQUESTS_COMMAND = '/api/PurchaseRequestsCommand';
 export const API_AUTHENTICATE_ME = '/api/UnifiedAuth/me';
 export const API_MERCHANT = '/api/PurchaseRequestsQuery/merchant/';
 export const API_PURCHASE_REQUESTS_VERIFY =
   '/api/PurchaseRequestsCommand/verify';
+export const API_ENIAC_QUERY = '/api/EniacQuery/merchant-documents/me';
 
 // export const API_PROVINCES_QUERY = '/api/ProvincesQuery';
 // export const API_CITIES_QUERY = '/api/CitiesQuery/by-province/';

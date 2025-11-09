@@ -27,7 +27,7 @@ const NewReceipt = () => {
   };
 
   return (
-    <div className=" h-screen bg-[url('/assets/icons/bg-image.svg')] bg-cover bg-center flex items-center justify-center">
+    <div className="h-[-webkit-fill-available] bg-[url('/assets/icons/bg-image.svg')] bg-cover bg-center flex items-center justify-center">
       <div className='bg-(--second-light-primary) p-6 rounded-2xl md:w-[438px]'>
         <p className='text-black text-[16px] font-medium mb-5'>
           {t('panel:information_required')}

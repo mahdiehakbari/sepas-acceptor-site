@@ -15,6 +15,5 @@ export const getSideBarItems = () => [
     label: i18n.t('panel:settlement_status'),
     path: '/panel/settlementStatus',
     icon: '/assets/icons/card-tick.svg',
-    disabled: true,
   },
 ];

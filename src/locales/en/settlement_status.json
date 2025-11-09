@@ -1,0 +1,10 @@
+{
+  "row": "Row",
+  "transaction_number": "Transaction numbers",
+  "settlement_date": "settlement date",
+  "settlement_amount": "Settlement amount",
+  "settlement_status": "settlement status",
+  "action": "action",
+  "more": "More details",
+  "settlement_list": "settlement list"
+}
