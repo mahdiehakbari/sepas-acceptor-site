@@ -9,8 +9,8 @@ import { SiteRights } from '@/features/layout/components/Footer/SiteRights';
 export const metadata: Metadata = {
   metadataBase: new URL('https://example.com'),
   title: {
-    default: 'دنتالیت',
-    template: '%s | دنتالیت',
+    default: 'پنل پزشکان دنتالیت',
+    template: '%s | پنل پزشکان دنتالیت',
   },
   description: 'Admin panel with modular structure and global sidebar.',
   applicationName: 'دنتالیت',
@@ -20,13 +20,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: '/',
-    title: 'دنتالیت',
+    title: 'پنل پزشکان دنتالیت',
     description: 'Admin panel with modular structure and global sidebar.',
-    siteName: 'دنتالیت',
+    siteName: 'پنل پزشکان دنتالیت',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'دنتالیت',
+    title: 'پنل پزشکان دنتالیت',
     description: 'Admin panel with modular structure and global sidebar.',
   },
   alternates: {
