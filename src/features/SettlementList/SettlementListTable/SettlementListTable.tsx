@@ -4,6 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { getThItems } from './constants';
 import { useStatusInfo } from './utils/useStatusInfo';
 import { ISettlementListTableProps } from './types';
+import { toPersianNumber } from './utils/toPersianNumber';
+import dayjs from 'dayjs';
+import 'dayjs/locale/fa';
 
 export const SettlementListTable = ({
   requests,
@@ -43,15 +46,18 @@ export const SettlementListTable = ({
                     </div>
                     <div className='w-[20%] text-center'>
                       {settlement.create_date
-                        ? `${new Date(
-                            settlement.create_date,
-                          ).toLocaleTimeString('fa-IR')} - ${new Date(
-                            settlement.create_date,
-                          ).toLocaleDateString('fa-IR')}`
+                        ? toPersianNumber(
+                            `${dayjs(settlement.create_date).format(
+                              'HH:mm:ss',
+                            )} - ${dayjs(settlement.create_date).format(
+                              'YYYY/MM/DD',
+                            )}`,
+                          )
                         : '-'}
                     </div>
                     <div className='w-[10%] text-center flex items-center gap-1.5'>
-                      {settlement.payment_date}
+                      {settlement.payment_date &&
+                        toPersianNumber(settlement.payment_date)}
                     </div>
 
                     <div className='w-[20%] text-center'>

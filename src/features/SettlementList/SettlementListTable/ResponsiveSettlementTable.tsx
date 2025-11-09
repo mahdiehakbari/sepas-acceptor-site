@@ -1,6 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { useStatusInfo } from './utils/useStatusInfo';
 import { ISettlementListTableProps } from './types';
+import dayjs from 'dayjs';
+import 'dayjs/locale/fa';
+import { toPersianNumber } from './utils/toPersianNumber';
 
 export const ResponsiveSettlementTable = ({
   requests,
@@ -9,6 +12,7 @@ export const ResponsiveSettlementTable = ({
 }: ISettlementListTableProps) => {
   const { t } = useTranslation();
   const { getStatusInfo } = useStatusInfo();
+
   return (
     <div className='max-w-md mx-auto mt-10'>
       {requests.map((settlement, index) => {
@@ -28,10 +32,28 @@ export const ResponsiveSettlementTable = ({
                     {t('settlement_status:settlement_date')}
                   </h2>
                   <p className='font-medium text-black text-[14px]'>
-                    {settlement.payment_date}
+                    {settlement.payment_date &&
+                      toPersianNumber(settlement.payment_date)}
                   </p>
                 </div>
 
+                <div className='flex justify-between gap-2 items-center mb-4 '>
+                  <h2 className='font-medium text-[#808080] text-[14px]'>
+                    {t('settlement_status:settlement_date')}
+                  </h2>
+
+                  <span className='font-medium text-black text-[14px]'>
+                    {settlement.create_date
+                      ? toPersianNumber(
+                          `${dayjs(settlement.create_date).format(
+                            'HH:mm:ss',
+                          )} - ${dayjs(settlement.create_date).format(
+                            'YYYY/MM/DD',
+                          )}`,
+                        )
+                      : '-'}
+                  </span>
+                </div>
                 <div className='flex justify-between gap-2 items-center mb-4 '>
                   <h2 className='font-medium text-[#808080] text-[14px]'>
                     {t('settlement_status:settlement_amount')}
@@ -41,17 +63,35 @@ export const ResponsiveSettlementTable = ({
                     {settlement.amount.toLocaleString('fa-IR')} تومان
                   </span>
                 </div>
-                {/* <div className='flex justify-between gap-2 items-center mb-4 '>
+                <div className='flex justify-between gap-2 items-center mb-4 '>
                   <h2 className='font-medium text-[#808080] text-[14px]'>
                     {t('settlement_status:settlement_status')}
                   </h2>
 
                   <span
-                    className={`px-3 py-1 rounded-full text-xs font-semibold ${className}`}
+                    className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                      //@ts-expect-error
+                      settlement.status === 29
+                        ? 'bg-red-100 text-red-700'
+                        : settlement.status === null
+                        ? 'bg-blue-100 text-blue-700'
+                        : // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        //@ts-expect-error
+                        settlement.status === 12
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-gray-200 text-gray-800'
+                    }`}
                   >
-                    {label}
+                    {settlement.status === null
+                      ? 'اقدام نشده'
+                      : // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                      //@ts-expect-error
+                      settlement.status == 12
+                      ? 'تسویه شده'
+                      : 'لغو شده '}
                   </span>
-                </div> */}
+                </div>
               </div>
             </div>
           </div>
