@@ -18,5 +18,6 @@
   "successful_transaction": "Successful transaction",
   "transaction_number": "Transaction number",
   "transaction_amount": "Transaction Amount",
-  "transaction_date": "Transaction Date"
+  "transaction_date": "Transaction Date",
+  "customer_phone": "Customer Phone"
 }

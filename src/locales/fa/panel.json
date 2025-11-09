@@ -2,6 +2,7 @@
   "new-receipt": "ثبت تراکنش جدید",
   "receipts": "تراکنش ها",
   "settlement_status": "وضعیت تسویه",
+  "contract_status": "وضعیت قرارداد",
   "contact_support": "ارتباط با پشتیبانی",
   "information_required": "اطلاعات لازم برای ثبت تراکنش جدید را وارد کنید.",
   "patient_mobile": "شماره موبایل بیمار",
@@ -10,13 +11,14 @@
   "invalid_phone": "شماره تلفن معتبر نیست",
   "amount_required": "وارد کردن مبلغ الزامی است",
   "otp": "ورود کد یکبار مصرف",
-  "customer_otp": "کد یکبار مصرف به شماره موبایل مشتری ارسال شد.کد را وارد کنید.",
+  "customer_otp": "کد یکبار مصرف به شماره موبایل بیمار ارسال شد، کد را وارد کنید.",
   "confirmation": "تایید",
   "unsuccessful_transaction": "تراکنش ناموفق",
-  "transaction_amount_exceeds": "مبلغ تراکنش از میزان اعتبار مشتری بیشتر است. لطفا مجدد تلاش کنید.",
+  "transaction_amount_exceeds": "مبلغ تراکنش از میزان اعتبار بیمار بیشتر است. لطفا مجدد تلاش کنید.",
   "close": "بستن",
   "successful_transaction": "تراکنش موفق",
   "transaction_amount": "مبلغ تراکنش",
   "transaction_date": "تاریخ تراکنش",
-  "transaction_number": "شماره تراکنش"
+  "transaction_number": "شماره تراکنش",
+  "customer_phone": "شماره همراه بیمار"
 }

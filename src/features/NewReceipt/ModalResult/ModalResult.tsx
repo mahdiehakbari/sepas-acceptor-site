@@ -39,7 +39,7 @@ export const ModalResult = ({
                   {resultData?.amount.toLocaleString('fa-IR')}
                 </p>
               </div>
-
+{/* 
               <div className='flex items-center justify-between'>
                 <p className='text-[16px] font-normal mb-4 text-(--active-loan-text)'>
                   {t('panel:transaction_date')}
@@ -47,11 +47,11 @@ export const ModalResult = ({
                 <p className='text-[16px] font-medium mb-4 text-(--active-loan-text)'>
                   -
                 </p>
-              </div>
+              </div> */}
 
               <div className='flex items-center justify-between'>
                 <p className='text-[16px] font-normal mb-4 text-(--active-loan-text)'>
-                  {t('panel:transaction_number')}
+                  {t('panel:customer_phone')}
                 </p>
                 <p className='text-[16px] font-medium mb-4 text-(--active-loan-text)'>
                   {resultData?.customerPhone}

@@ -1,6 +1,6 @@
 {
   "row": "ردیف",
-  "customer_name": "نام مشتری",
+  "customer_name": "نام بیمار",
   "phone_number": "شماره موبایل",
   "transaction_date": "تاریخ تراکنش",
   "transaction_amount": "مبلغ تراکنش",
