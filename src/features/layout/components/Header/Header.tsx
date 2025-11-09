@@ -102,6 +102,11 @@ export const Header = () => {
                       href: '/panel/receipts',
                       image: '/assets/icons/receipt.svg',
                     },
+                    {
+                      label: t('panel:settlement_status'),
+                      href: '/panel/settlementStatus',
+                      image: '/assets/icons/receipt.svg',
+                    },
 
                     {
                       label: t('home:log_out'),

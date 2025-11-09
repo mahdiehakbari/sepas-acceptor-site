@@ -8,7 +8,7 @@ export interface ISettlementItem {
   acceptor_tag?: number;
   city?: string;
   province?: string;
-  create_date?: string;
+  create_date?: string | undefined;
   payment_date?: string;
   iban?: string;
   person_address?: number;

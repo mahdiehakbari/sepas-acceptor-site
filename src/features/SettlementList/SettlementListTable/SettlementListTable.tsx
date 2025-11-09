@@ -22,7 +22,7 @@ export const SettlementListTable = ({
               <div className='flex bg-(--block-color) border border-(--block-color) rounded-lg px-3 py-3 font-semibold text-gray-700 text-sm'>
                 {getThItems().map((item) => (
                   <div key={item.id} className='w-1/1 text-right'>
-                    {item.label}
+                    {item.label} {item.id == 4 && '(ریال)'}
                   </div>
                 ))}
               </div>
@@ -31,30 +31,57 @@ export const SettlementListTable = ({
         </thead>
 
         <tbody>
-          {requests.map((Settlement, index) => {
-            const { label, className } = getStatusInfo(Settlement.status);
+          {requests.map((settlement, index) => {
+            const { label, className } = getStatusInfo(settlement.status);
 
             return (
-              <tr key={Settlement.uuid}>
+              <tr key={settlement.uuid}>
                 <td colSpan={5} className='p-0'>
                   <div className='flex items-center justify-between bg-white border border-border-color rounded-lg px-3 py-3'>
-                    <div className='w-[60%] text-right'>
+                    <div className='w-[10%] text-right'>
                       {index + 1 + (currentPage - 1) * pageSize}
                     </div>
-                    {/* <div className='w-[27%] text-center'></div> */}
-                    <div className='w-[20%] text-center flex items-center gap-1.5'>
-                      {Settlement.payment_date}
+                    <div className='w-[20%] text-center'>
+                      {settlement.create_date
+                        ? `${new Date(
+                            settlement.create_date,
+                          ).toLocaleTimeString('fa-IR')} - ${new Date(
+                            settlement.create_date,
+                          ).toLocaleDateString('fa-IR')}`
+                        : '-'}
                     </div>
-                    <div className='w-[100%] text-center'>
-                      {Settlement.amount.toLocaleString('fa-IR')}
+                    <div className='w-[10%] text-center flex items-center gap-1.5'>
+                      {settlement.payment_date}
                     </div>
-                    {/* <div className='w-[20%] text-center'>
+
+                    <div className='w-[20%] text-center'>
+                      {settlement.amount.toLocaleString('fa-IR')}
+                    </div>
+                    <div className='w-[20%] text-center'>
                       <span
-                        className={`px-3 py-1 rounded-full text-xs font-semibold ${className}`}
+                        className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                          //@ts-expect-error
+                          settlement.status === 29
+                            ? 'bg-red-100 text-red-700'
+                            : settlement.status === null
+                            ? 'bg-blue-100 text-blue-700'
+                            : // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                            //@ts-expect-error
+                            settlement.status === 12
+                            ? 'bg-green-100 text-green-700'
+                            : 'bg-gray-200 text-gray-800'
+                        }`}
                       >
-                        {label}
+                        {settlement.status === null
+                          ? 'اقدام نشده'
+                          : // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                          //@ts-expect-error
+                          settlement.status == 12
+                          ? 'تسویه شده'
+                          : 'لغو شده '}
                       </span>
-                    </div> */}
+                    </div>
                     {/* <div className='w-[25%] text-center'>
                       <p className='text-primary text-[12px] font-medium'>
                         {t('settlement_status:more')}
