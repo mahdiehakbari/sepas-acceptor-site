@@ -45,12 +45,12 @@ export const ResponsiveSettlementTable = ({
                   <span className='font-medium text-black text-[14px]'>
                     {settlement.create_date
                       ? toPersianNumber(
-                          `${dayjs(settlement.create_date).format(
-                            'HH:mm:ss',
-                          )} - ${dayjs(settlement.create_date).format(
-                            'YYYY/MM/DD',
-                          )}`,
-                        )
+                        `${dayjs(settlement.create_date).format(
+                          'HH:mm:ss',
+                        )} - ${dayjs(settlement.create_date).format(
+                          'YYYY/MM/DD',
+                        )}`,
+                      )
                       : '-'}
                   </span>
                 </div>
@@ -71,25 +71,28 @@ export const ResponsiveSettlementTable = ({
                   <span
                     className={`px-3 py-1 rounded-full text-xs font-semibold ${
                       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                      //@ts-expect-error
-                      settlement.status === 29
-                        ? 'bg-red-100 text-red-700'
-                        : settlement.status === null
+                      settlement.status === null
                         ? 'bg-blue-100 text-blue-700'
-                        : // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                        //@ts-expect-error
-                        settlement.status === 12
-                        ? 'bg-green-100 text-green-700'
-                        : 'bg-gray-200 text-gray-800'
-                    }`}
+                        : //@ts-expect-error
+                        settlement.status === 29
+                          ? 'bg-red-100 text-red-700'
+                          : // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                          //@ts-expect-error
+                          settlement.status === 12
+                            ? 'bg-green-100 text-green-700'
+                            : 'bg-gray-200 text-gray-800'
+                      }`}
                   >
                     {settlement.status === null
                       ? 'اقدام نشده'
                       : // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                       //@ts-expect-error
                       settlement.status == 12
-                      ? 'تسویه شده'
-                      : 'لغو شده '}
+                        ? 'تسویه شده' : // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        //@ts-expect-error
+                        settlement.status == 29
+                          ? 'لغو شده'
+                          : 'ناشناخته'}
                   </span>
                 </div>
               </div>

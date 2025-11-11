@@ -2,7 +2,7 @@ import { BannerSection, ContentComponent } from '@/features/mainPage';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'main page',
+  title: 'پنل پزشکان دنتالیت',
   description: 'loan site',
 };
 
