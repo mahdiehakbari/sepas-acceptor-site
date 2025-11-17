@@ -15,6 +15,9 @@ import {
 import { SpinnerDiv } from '@/sharedComponent/ui/SpinnerDiv/SpinnerDiv';
 import Cookies from 'js-cookie';
 import { ISettlementsData } from './types';
+import { Filteredtabel } from '@/features/Filteredtabel';
+import { DateObject } from 'react-multi-date-picker';
+import { filterTable } from '../utils/filterTable';
 
 const SettlementStatus = () => {
   const { t } = useTranslation();
@@ -23,6 +26,10 @@ const SettlementStatus = () => {
     null,
   );
   const [page, setPage] = useState(1);
+  const [planName, setPlanName] = useState('');
+  const [filterData, setFilterData] = useState(null);
+  const [fromDate, setFromDate] = useState<DateObject | null>(null);
+  const [toDate, setToDate] = useState<DateObject | null>(null);
   const token = Cookies.get('token');
 
   useEffect(() => {
@@ -46,7 +53,20 @@ const SettlementStatus = () => {
       .finally(() => setPageLoading(false));
   }, [page]);
 
-  console.log(requestsData, 'aaa', page);
+  const handleFilter = () => {
+    if (!requestsData) return;
+    const result = filterTable({
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-expect-error
+      data: requestsData?.data?.document_lis,
+      planName,
+      fromDate,
+      toDate,
+    });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-expect-error
+    setFilterData(result);
+  };
 
   if (pageLoading) {
     return (
@@ -72,6 +92,8 @@ const SettlementStatus = () => {
   const currentPage = page;
   const hasPreviousPage = currentPage > 1;
   const hasNextPage = currentPage < totalPages;
+
+  const isFilterButtonDisabled = !planName && !fromDate && !toDate;
 
   return (
     <div className='max-w-6xl mx-auto mt-6'>

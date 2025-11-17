@@ -16,5 +16,6 @@
   "support_contact": "Support contact number: 0217337",
   "log_out": "Log Out",
   "record_new_transaction": "Record a new transaction",
-  "transaction": "Transactions"
+  "transaction": "Transactions",
+  "search_plane": "Search by project name..."
 }

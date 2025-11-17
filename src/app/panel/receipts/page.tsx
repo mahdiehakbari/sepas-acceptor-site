@@ -11,6 +11,9 @@ import { TransactionListTable } from '@/features/TransactionList';
 import { ITransactionsData } from './types';
 import { ResponsiveTransactionTable } from '@/features/TransactionList/TransactionListTable/ResponsiveTransactionTable';
 import { paginate } from '../utils/Paginate';
+import { Filteredtabel } from '@/features/Filteredtabel';
+import { DateObject } from 'react-multi-date-picker';
+import { filterTable } from '../utils/filterTable';
 
 const Receipts = () => {
   const { t } = useTranslation();
@@ -20,6 +23,10 @@ const Receipts = () => {
     null,
   );
   const [page, setPage] = useState(1);
+  const [planName, setPlanName] = useState('');
+  const [filterData, setFilterData] = useState(null);
+  const [fromDate, setFromDate] = useState<DateObject | null>(null);
+  const [toDate, setToDate] = useState<DateObject | null>(null);
   const token = Cookies.get('token');
 
   const pageSize = 10;
@@ -57,6 +64,19 @@ const Receipts = () => {
       .finally(() => setPageLoading(false));
   }, [customerId, token]);
 
+  const handleFilter = () => {
+    if (!requestsData) return;
+    const result = filterTable({
+      data: requestsData.items,
+      planName,
+      fromDate,
+      toDate,
+    });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-expect-error
+    setFilterData(result);
+  };
+
   if (pageLoading) {
     return (
       <div className='flex justify-center items-center h-[60vh]'>
@@ -80,14 +100,25 @@ const Receipts = () => {
     currentPage,
     hasPreviousPage,
     hasNextPage,
-  } = paginate(requestsData.items, page, pageSize);
+  } = paginate(filterData ?? requestsData.items ?? [], page, pageSize);
+  const isFilterButtonDisabled = !planName && !fromDate && !toDate;
 
   return (
     <div className='max-w-6xl mx-auto mt-6'>
       <h1 className='text-black font-bold text-lg mb-4'>
         {t('transaction:transaction_list')}
       </h1>
-
+      <Filteredtabel
+        planName={planName}
+        setPlanName={setPlanName}
+        fromDate={fromDate}
+        setFromDate={setFromDate}
+        toDate={toDate}
+        setToDate={setToDate}
+        handleFilter={handleFilter}
+        isFilterButtonDisabled={isFilterButtonDisabled}
+        placeholderText={t('home:search_plane')}
+      />
       <div className='hidden md:block'>
         <TransactionListTable
           requests={displayItems}
