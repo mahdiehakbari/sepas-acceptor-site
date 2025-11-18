@@ -1,167 +1,105 @@
 'use client';
 
-import {
-  API_PURCHASE_REQUESTS_COMMAND,
-  API_PURCHASE_REQUESTS_VERIFY,
-} from '@/config/api_address.config';
-import { formatTime } from '@/sharedComponent/lib/formatTime';
-import { Button } from '@/sharedComponent/ui/Button/Button';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import OTPInput from 'react-otp-input';
 import Cookies from 'js-cookie';
+import { useState, useEffect } from 'react';
+import { Button } from '@/sharedComponent/ui/Button/Button';
 import { SpinnerDiv } from '@/sharedComponent/ui/SpinnerDiv/SpinnerDiv';
+import { formatTime } from '@/sharedComponent/lib/formatTime';
 import { INewReceiptOtpProps } from './types';
+import { useCountdown } from './hooks/useCountdown';
+import { resendOtpAPI, verifyOtpAPI } from './api/resendOtpAPI';
+import { AxiosError } from 'axios';
+import { OtpField } from './OtpField/OtpField';
 
-export const NewReceiptOtp = ({
+export const NewReceiptOtp: React.FC<INewReceiptOtpProps> = ({
   phoneNumber,
   amountNumber,
   setShowModalResult,
   setErrorResult,
   setResultData,
-}: INewReceiptOtpProps) => {
-  const [otp, setOtp] = useState('');
+}) => {
   const { t } = useTranslation();
+
+  const [otp, setOtp] = useState<string>('');
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
-  const [error, setError] = useState('');
-  const [timeLeft, setTimeLeft] = useState(120);
-  const [apiError, setApiError] = useState('');
-  const [canResend, setCanResend] = useState(false);
-  const [buttonLoading, setButtonLoading] = useState(false);
+  const [error, setError] = useState<string>('');
+  const [apiError, setApiError] = useState<string>('');
+  const [canResend, setCanResend] = useState<boolean>(false);
+  const [buttonLoading, setButtonLoading] = useState<boolean>(false);
+
   const token = Cookies.get('token');
-  const purchaseRequestId = Cookies.get('purchaseRequestId');
+  const purchaseRequestId = Cookies.get('purchaseRequestId') ?? '';
 
-  const handleResend = async () => {
-    setOtp('');
-    setTimeLeft(120);
-    setCanResend(false);
-    setApiError('');
+  const handleExpire = () => setCanResend(true);
+
+  const { timeLeft, reset } = useCountdown(120, handleExpire);
+
+  const handleResend = async (): Promise<void> => {
+    if (!canResend) return;
+
     try {
-      await axios
-        .post(
-          API_PURCHASE_REQUESTS_COMMAND,
-          {
-            customerPhoneNumber: phoneNumber,
-            amount: amountNumber,
-            description: 'New Receipt ',
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        )
-        .then((resp) => {
-          setOtp('');
-          setError('');
-        })
-        .catch(() => {});
-    } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-        setApiError(err.response?.data?.message);
-      }
+      await resendOtpAPI(phoneNumber, amountNumber, token);
+      setOtp('');
+      reset();
+      setCanResend(false);
+      setError('');
+    } catch (err) {
+      const axiosErr = err as AxiosError<{ message?: string }>;
+      setApiError(axiosErr.response?.data?.message ?? 'خطا در ارسال مجدد کد');
     }
   };
 
-  useEffect(() => {
-    if (timeLeft <= 0) return;
+  const handleVerify = async (): Promise<void> => {
+    if (otp.length < 6) return;
 
-    const timer = setInterval(() => setTimeLeft((t) => t - 1), 1000);
-    return () => clearInterval(timer);
-  }, [timeLeft]);
-
-  const handleVerify = () => {
     setButtonLoading(true);
-    axios
-      .post(
-        API_PURCHASE_REQUESTS_VERIFY,
-        {
-          purchaseRequestId: purchaseRequestId,
-          otpCode: otp,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      )
-      .then((resp) => {
-        setResultData(resp.data);
-        console.log('Fetched data:', resp.data);
-        setShowModalResult(true);
-        setErrorResult('');
-        setButtonLoading(false);
-      })
-      .catch((err: unknown) => {
-        if (axios.isAxiosError(err)) {
-          setError(err.response?.data?.message || 'خطایی رخ داده است.');
-          setShowModalResult(true);
-          setErrorResult(err.response?.data?.message);
-          setButtonLoading(false);
-        }
-      });
-  };
-  useEffect(() => {
-    if (otp.length === 6) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      handleVerify();
+
+    try {
+      const resp = await verifyOtpAPI(purchaseRequestId, otp, token);
+      setResultData(resp.data);
+      setShowModalResult(true);
+      setErrorResult('');
+    } catch (err) {
+      const axiosErr = err as AxiosError<{ message?: string }>;
+      const msg = axiosErr.response?.data?.message ?? 'خطایی رخ داده است.';
+      setError(msg);
+      setErrorResult(msg);
+      setShowModalResult(true);
     }
+
+    setButtonLoading(false);
+  };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (otp.length === 6) handleVerify();
   }, [otp]);
+
   return (
     <div className='md:w-[600px]'>
       <div className='p-6'>
         <h2 className='text-[18px] font-bold mb-6'>
           {t('panel:customer_otp')}
         </h2>
-        <div dir='ltr' className='flex justify-center'>
-          <OTPInput
-            value={otp}
-            onChange={(val) => setOtp(val.replace(/[^0-9]/g, ''))}
-            numInputs={6}
-            inputType='tel'
-            shouldAutoFocus
-            containerStyle={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: '8px',
-            }}
-            renderInput={(props, index) => (
-              <input
-                {...props}
-                onFocus={() => setFocusedIndex(index)}
-                onBlur={() => setFocusedIndex(null)}
-                dir='ltr'
-                inputMode='numeric'
-                className={`text-center text-lg border rounded-lg outline-none transition-all duration-150
-                  ${
-                    error
-                      ? 'border-red-500'
-                      : focusedIndex === index
-                      ? 'border-blue-500 ring-1 ring-blue-400'
-                      : 'border-gray-300'
-                  }
-                `}
-                style={{
-                  width: '44px',
-                  height: '44px',
-                  margin: '0px',
-                }}
-              />
-            )}
-          />
-          {error && <p className='text-red-500 text-sm my-2 mr-4'>{error}</p>}
-          {apiError && (
-            <p className='text-red-500 text-sm my-2 mr-4'>{apiError}</p>
-          )}
-        </div>
+
+        <OtpField
+          otp={otp}
+          setOtp={setOtp}
+          error={error}
+          focusedIndex={focusedIndex}
+          setFocusedIndex={setFocusedIndex}
+        />
+
+        {apiError && (
+          <p className='text-red-500 text-sm text-center'>{apiError}</p>
+        )}
 
         <div className='flex justify-center items-center mt-4 gap-2 text-sm'>
           <button
             onClick={handleResend}
             disabled={!canResend}
-            className={`cursor-pointer font-semibold ${
+            className={`font-semibold ${
               canResend
                 ? 'text-primary hover:underline'
                 : 'text-gray-400 cursor-not-allowed'
@@ -169,6 +107,7 @@ export const NewReceiptOtp = ({
           >
             {t('login:resend_code')}
           </button>
+
           <span className='text-[#A5A5A5] text-[12px] font-bold'>
             {formatTime(timeLeft)}
           </span>
@@ -177,7 +116,7 @@ export const NewReceiptOtp = ({
 
       <div className='flex justify-end border-t border-[#E6E6E6] px-4 py-2'>
         <Button className='w-[78px]' onClick={handleVerify}>
-          {buttonLoading == true ? <SpinnerDiv /> : t('panel:confirmation')}
+          {buttonLoading ? <SpinnerDiv /> : t('panel:confirmation')}
         </Button>
       </div>
     </div>
