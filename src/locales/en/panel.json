@@ -19,5 +19,7 @@
   "transaction_number": "Transaction number",
   "transaction_amount": "Transaction Amount",
   "transaction_date": "Transaction Date",
-  "customer_phone": "Customer Phone"
+  "customer_phone": "Customer Phone",
+  "page_loading": "page Loading ......",
+  "empty": "No data found."
 }

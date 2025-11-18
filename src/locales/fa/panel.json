@@ -20,5 +20,7 @@
   "transaction_amount": "مبلغ تراکنش",
   "transaction_date": "تاریخ تراکنش",
   "transaction_number": "شماره تراکنش",
-  "customer_phone": "شماره همراه بیمار"
+  "customer_phone": "شماره همراه بیمار",
+  "page_loading": "در حال بارگذاری...",
+  "empty": " هیچ داده‌ای یافت نشد."
 }

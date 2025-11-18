@@ -14,6 +14,7 @@ import { paginate } from '../utils/Paginate';
 import { Filteredtabel } from '@/features/Filteredtabel';
 import { DateObject } from 'react-multi-date-picker';
 import { filterTable } from '../utils/filterTable';
+import { ContentStateWrapper } from '@/features/layout';
 
 const Receipts = () => {
   const { t } = useTranslation();
@@ -77,71 +78,61 @@ const Receipts = () => {
     setFilterData(result);
   };
 
-  if (pageLoading) {
-    return (
-      <div className='flex justify-center items-center h-[60vh]'>
-        <SpinnerDiv size='lg' />
-        <p className='px-2'>در حال بارگذاری...</p>
-      </div>
-    );
-  }
-
-  if (!requestsData || requestsData.items.length === 0) {
-    return (
-      <div className='text-center mt-10 text-gray-500'>
-        هیچ داده‌ای یافت نشد.
-      </div>
-    );
-  }
-
   const {
     displayItems,
     totalPages,
     currentPage,
     hasPreviousPage,
     hasNextPage,
-  } = paginate(filterData ?? requestsData.items ?? [], page, pageSize);
+  } = paginate(filterData ?? requestsData?.items ?? [], page, pageSize);
   const isFilterButtonDisabled = !planName && !fromDate && !toDate;
 
   return (
-    <div className='max-w-6xl mx-auto mt-6'>
-      <h1 className='text-black font-bold text-lg mb-4'>
-        {t('transaction:transaction_list')}
-      </h1>
-      <Filteredtabel
-        planName={planName}
-        setPlanName={setPlanName}
-        fromDate={fromDate}
-        setFromDate={setFromDate}
-        toDate={toDate}
-        setToDate={setToDate}
-        handleFilter={handleFilter}
-        isFilterButtonDisabled={isFilterButtonDisabled}
-        placeholderText={t('home:search_plane')}
-      />
-      <div className='hidden md:block'>
-        <TransactionListTable
-          requests={displayItems}
-          currentPage={currentPage}
-          pageSize={pageSize}
+    <ContentStateWrapper
+      loading={pageLoading}
+      isEmpty={!requestsData || requestsData.items.length === 0}
+      loadingText={t('panel:page_loading')}
+      emptyText={t('panel:empty')}
+    >
+      <div className='max-w-6xl mx-auto mt-6'>
+        <h1 className='text-black font-bold text-lg mb-4'>
+          {t('transaction:transaction_list')}
+        </h1>
+        <Filteredtabel
+          planName={planName}
+          setPlanName={setPlanName}
+          fromDate={fromDate}
+          setFromDate={setFromDate}
+          toDate={toDate}
+          setToDate={setToDate}
+          handleFilter={handleFilter}
+          isFilterButtonDisabled={isFilterButtonDisabled}
+          placeholderText={t('home:search_plane')}
         />
-      </div>
-      <div className='block md:hidden'>
-        <ResponsiveTransactionTable
-          requests={displayItems}
-          currentPage={currentPage}
-          pageSize={pageSize}
-        />
-      </div>
+        <div className='hidden md:block'>
+          <TransactionListTable
+            requests={displayItems}
+            currentPage={currentPage}
+            pageSize={pageSize}
+          />
+        </div>
+        <div className='block md:hidden'>
+          <ResponsiveTransactionTable
+            requests={displayItems}
+            currentPage={currentPage}
+            pageSize={pageSize}
+          />
+        </div>
 
-      <Paginate
-        hasPreviousPage={hasPreviousPage}
-        setPage={setPage}
-        currentPage={currentPage}
-        totalPages={totalPages}
-        hasNextPage={hasNextPage}
-      />
-    </div>
+        <Paginate
+          hasPreviousPage={hasPreviousPage}
+          setPage={setPage}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          hasNextPage={hasNextPage}
+        />
+      </div>
+    </ContentStateWrapper>
   );
 };
 

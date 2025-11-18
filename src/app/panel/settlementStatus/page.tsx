@@ -18,6 +18,7 @@ import { ISettlementsData } from './types';
 import { Filteredtabel } from '@/features/Filteredtabel';
 import { DateObject } from 'react-multi-date-picker';
 import { filterTable } from '../utils/filterTable';
+import { ContentStateWrapper } from '@/features/layout';
 
 const SettlementStatus = () => {
   const { t } = useTranslation();
@@ -68,26 +69,9 @@ const SettlementStatus = () => {
     setFilterData(result);
   };
 
-  if (pageLoading) {
-    return (
-      <div className='flex justify-center items-center h-screen'>
-        <SpinnerDiv size='lg' />
-        <p className='px-2'>در حال بارگذاری...</p>
-      </div>
-    );
-  }
-
-  if (!requestsData || requestsData?.data?.document_list.length === 0) {
-    return (
-      <div className='text-center mt-10 text-gray-500'>
-        هیچ داده‌ای یافت نشد.
-      </div>
-    );
-  }
-
   const items = requestsData?.data?.document_list;
-  const pageSize = requestsData.pageSize || 10;
-  const totalCount = requestsData.totalCount || 0;
+  const pageSize = requestsData?.pageSize || 10;
+  const totalCount = requestsData?.totalCount || 0;
   const totalPages = Math.ceil(totalCount / pageSize) || 1;
   const currentPage = page;
   const hasPreviousPage = currentPage > 1;
@@ -96,35 +80,42 @@ const SettlementStatus = () => {
   const isFilterButtonDisabled = !planName && !fromDate && !toDate;
 
   return (
-    <div className='max-w-6xl mx-auto mt-6'>
-      <h1 className='text-black font-bold text-lg mb-4'>
-        {t('settlement_status:settlement_list')}
-      </h1>
+    <ContentStateWrapper
+      loading={pageLoading}
+      isEmpty={!requestsData || requestsData?.data?.document_list.length === 0}
+      loadingText={t('panel:page_loading')}
+      emptyText={t('panel:empty')}
+    >
+      <div className='max-w-6xl mx-auto mt-6'>
+        <h1 className='text-black font-bold text-lg mb-4'>
+          {t('settlement_status:settlement_list')}
+        </h1>
 
-      <div className='hidden md:block'>
-        <SettlementListTable
-          requests={items}
+        <div className='hidden md:block'>
+          <SettlementListTable
+            requests={items ?? []}
+            currentPage={page}
+            pageSize={pageSize}
+          />
+        </div>
+
+        <div className='block md:hidden'>
+          <ResponsiveSettlementTable
+            requests={items ?? []}
+            currentPage={page}
+            pageSize={pageSize}
+          />
+        </div>
+
+        <Paginate
+          hasPreviousPage={hasPreviousPage}
+          setPage={setPage}
           currentPage={page}
-          pageSize={pageSize}
+          totalPages={totalPages}
+          hasNextPage={hasNextPage}
         />
       </div>
-
-      <div className='block md:hidden'>
-        <ResponsiveSettlementTable
-          requests={items}
-          currentPage={page}
-          pageSize={pageSize}
-        />
-      </div>
-
-      <Paginate
-        hasPreviousPage={hasPreviousPage}
-        setPage={setPage}
-        currentPage={page}
-        totalPages={totalPages}
-        hasNextPage={hasNextPage}
-      />
-    </div>
+    </ContentStateWrapper>
   );
 };
 
