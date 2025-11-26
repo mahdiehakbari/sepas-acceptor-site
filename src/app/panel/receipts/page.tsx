@@ -5,87 +5,78 @@ import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { API_AUTHENTICATE_ME, API_MERCHANT } from '@/config/api_address.config';
-import { SpinnerDiv } from '@/sharedComponent/ui/SpinnerDiv/SpinnerDiv';
 import { Paginate } from '@/sharedComponent/ui/Paginate/Paginate';
 import { TransactionListTable } from '@/features/TransactionList';
 import { ITransactionsData } from './types';
 import { ResponsiveTransactionTable } from '@/features/TransactionList/TransactionListTable/ResponsiveTransactionTable';
-import { paginate } from '../utils/Paginate';
-import { Filteredtabel } from '@/features/Filteredtabel';
-import { DateObject } from 'react-multi-date-picker';
-import { filterTable } from '../utils/filterTable';
 import { ContentStateWrapper } from '@/features/layout';
+import { PageHeader } from '@/features/PageHeader';
+import ResponsiveModal from '@/sharedComponent/ui/ResponsiveModal/Modal';
+import { ReceiptsFilter } from '@/features/NewReceipt';
+import {
+  IAcceptorData,
+  ISelectOption,
+} from '@/features/NewReceipt/ReceiptsFilter/types';
+import { useFetchAcceptor } from '@/features/hooks';
+import { DateObject } from 'react-multi-date-picker';
+import { useFilter } from '@/features/hooks/useFetchMerchantRequests/useFetchFilter';
 
 const Receipts = () => {
   const { t } = useTranslation();
+  const [page, setPage] = useState(1);
   const [pageLoading, setPageLoading] = useState(true);
-  const [customerId, setCustomerId] = useState('');
   const [requestsData, setRequestData] = useState<ITransactionsData | null>(
     null,
   );
-  const [page, setPage] = useState(1);
-  const [planName, setPlanName] = useState('');
-  const [filterData, setFilterData] = useState(null);
+  const [acceptorName, setAcceptorName] = useState<ISelectOption[]>([]);
+  const [acceptorData, setAcceptorData] = useState<IAcceptorData[]>([]);
   const [fromDate, setFromDate] = useState<DateObject | null>(null);
   const [toDate, setToDate] = useState<DateObject | null>(null);
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const token = Cookies.get('token');
-
   const pageSize = 10;
+  useFetchAcceptor(setAcceptorData);
+  const { filterData } = useFilter<ITransactionsData>(token, setRequestData);
 
-  useEffect(() => {
-    if (!token) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setPageLoading(false);
-      return;
-    }
+  const fetchData = async (pageNumber = 1) => {
+    const customerIds = acceptorName.map((c) => c.value);
+    setPageLoading(true);
 
-    axios
-      .get(API_AUTHENTICATE_ME, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        setCustomerId(res.data.merchantId);
-        console.log(res.data);
-      })
-      .catch((err) => console.error(err));
-  }, [token]);
+    await filterData(fromDate, toDate, customerIds, pageNumber, pageSize);
 
-  useEffect(() => {
-    if (!customerId) return;
-
-    axios
-      .get(`${API_MERCHANT}/${customerId}/paged?page=1&pageSize=1000`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        setRequestData(res.data);
-        console.log(res.data);
-      })
-      .catch((err) => console.error(err))
-      .finally(() => setPageLoading(false));
-  }, [customerId, token]);
-
-  const handleFilter = () => {
-    if (!requestsData) return;
-    const result = filterTable({
-      data: requestsData.items,
-      planName,
-      fromDate,
-      toDate,
-    });
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-expect-error
-    setFilterData(result);
+    setPageLoading(false);
   };
 
-  const {
-    displayItems,
-    totalPages,
-    currentPage,
-    hasPreviousPage,
-    hasNextPage,
-  } = paginate(filterData ?? requestsData?.items ?? [], page, pageSize);
-  const isFilterButtonDisabled = !planName && !fromDate && !toDate;
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchData(page);
+  }, [page]);
+  const handleFilter = () => {
+    setPage(1);
+    fetchData(1);
+    setIsOpenModal(false);
+  };
+
+  const handleClose = () => {
+    setPage(1);
+    fetchData(1);
+    setAcceptorName([]);
+    setIsOpenModal(false);
+    setFromDate(null);
+    setToDate(null);
+  };
+
+  const handleRemoveFilter = () => {
+    setPage(1);
+    fetchData(1);
+    setAcceptorName([]);
+    setFromDate(null);
+    setToDate(null);
+  };
+
+  const handleOpenModal = () => {
+    setIsOpenModal(true);
+  };
 
   return (
     <ContentStateWrapper
@@ -95,43 +86,53 @@ const Receipts = () => {
       emptyText={t('panel:empty')}
     >
       <div className='max-w-6xl mx-auto mt-6'>
-        <h1 className='text-black font-bold text-lg mb-4'>
-          {t('transaction:transaction_list')}
-        </h1>
-        <Filteredtabel
-          planName={planName}
-          setPlanName={setPlanName}
+        <PageHeader
+          titleKey='transaction:transaction_list'
+          onFilterClick={handleOpenModal}
+        />
+
+        <div className='hidden md:block'>
+          <TransactionListTable
+            requests={requestsData?.items ?? []}
+            currentPage={requestsData?.pageNumber ?? 1}
+            pageSize={requestsData?.pageSize ?? pageSize}
+          />
+        </div>
+        <div className='block md:hidden'>
+          <ResponsiveTransactionTable
+            requests={requestsData?.items ?? []}
+            currentPage={requestsData?.pageNumber ?? 1}
+            pageSize={requestsData?.pageSize ?? pageSize}
+          />
+        </div>
+
+        <Paginate
+          hasPreviousPage={requestsData?.hasPreviousPage ?? false}
+          hasNextPage={requestsData?.hasNextPage ?? false}
+          currentPage={requestsData?.pageNumber ?? 1}
+          totalPages={requestsData?.totalPages ?? 1}
+          setPage={setPage}
+        />
+      </div>
+
+      <ResponsiveModal
+        title={t('panel:filter')}
+        isOpen={isOpenModal}
+        onClose={handleClose}
+      >
+        <ReceiptsFilter
+          acceptorName={acceptorName}
+          setAcceptorName={setAcceptorName}
           fromDate={fromDate}
           setFromDate={setFromDate}
           toDate={toDate}
           setToDate={setToDate}
           handleFilter={handleFilter}
-          isFilterButtonDisabled={isFilterButtonDisabled}
-          placeholderText={t('home:search_plane')}
+          placeholderText={t('panel:search_customer')}
+          acceptorData={acceptorData || []}
+          handleRemoveFilter={handleRemoveFilter}
         />
-        <div className='hidden md:block'>
-          <TransactionListTable
-            requests={displayItems}
-            currentPage={currentPage}
-            pageSize={pageSize}
-          />
-        </div>
-        <div className='block md:hidden'>
-          <ResponsiveTransactionTable
-            requests={displayItems}
-            currentPage={currentPage}
-            pageSize={pageSize}
-          />
-        </div>
-
-        <Paginate
-          hasPreviousPage={hasPreviousPage}
-          setPage={setPage}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          hasNextPage={hasNextPage}
-        />
-      </div>
+      </ResponsiveModal>
     </ContentStateWrapper>
   );
 };

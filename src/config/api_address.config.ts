@@ -6,6 +6,10 @@ export const API_MERCHANT = '/api/PurchaseRequestsQuery/merchant/';
 export const API_PURCHASE_REQUESTS_VERIFY =
   '/api/PurchaseRequestsCommand/verify';
 export const API_ENIAC_QUERY = '/api/EniacQuery/merchant-documents/me';
+export const API_CUSTOMER_QUERY_SIMPLE = '/api/CustomersQuery/simple';
+export const API_MERCHANT_QUERY_SIMPLE = '/api/MerchantsQuery/simple';
+export const API_MERCHANT_PURCHASE_REQUEST =
+  '/api/PurchaseRequestsQuery/my-merchant-purchase-requests';
 
 // export const API_PROVINCES_QUERY = '/api/ProvincesQuery';
 // export const API_CITIES_QUERY = '/api/CitiesQuery/by-province/';

@@ -21,5 +21,11 @@
   "transaction_date": "Transaction Date",
   "customer_phone": "Customer Phone",
   "page_loading": "page Loading ......",
-  "empty": "No data found."
+  "empty": "No data found.",
+  "filter": "Filter",
+  "from_date": "From Date",
+  "to_date": "To Date",
+  "remove_filter": "Remove the filter",
+  "get_report": "Get the report",
+  "customer_name": "Customer Name"
 }

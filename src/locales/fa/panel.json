@@ -22,5 +22,12 @@
   "transaction_number": "شماره تراکنش",
   "customer_phone": "شماره همراه بیمار",
   "page_loading": "در حال بارگذاری...",
-  "empty": " هیچ داده‌ای یافت نشد."
+  "empty": " هیچ داده‌ای یافت نشد.",
+  "filter": "فیلتر",
+  "merchant_name": "نام پذیرنده",
+  "from_date": "از تاریخ",
+  "to_date": "تا تاریخ",
+  "remove_filter": "حذف فیلتر",
+  "get_report": "دریافت گزارش",
+  "customer_name": "نام مشتری"
 }
