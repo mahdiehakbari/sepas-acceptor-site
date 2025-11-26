@@ -8,16 +8,10 @@ import { useTranslation } from 'react-i18next';
 import { paginate } from '../utils/Paginate';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import {
-  API_AUTHENTICATE_ME,
-  API_ENIAC_QUERY,
-} from '@/config/api_address.config';
-import { SpinnerDiv } from '@/sharedComponent/ui/SpinnerDiv/SpinnerDiv';
+import { API_ENIAC_QUERY } from '@/config/api_address.config';
 import Cookies from 'js-cookie';
 import { ISettlementsData } from './types';
-import { Filteredtabel } from '@/features/Filteredtabel';
 import { DateObject } from 'react-multi-date-picker';
-import { filterTable } from '../utils/filterTable';
 import { ContentStateWrapper } from '@/features/layout';
 
 const SettlementStatus = () => {

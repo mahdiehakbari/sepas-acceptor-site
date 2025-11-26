@@ -10,12 +10,4 @@ export const API_CUSTOMER_QUERY_SIMPLE = '/api/CustomersQuery/simple';
 export const API_MERCHANT_QUERY_SIMPLE = '/api/MerchantsQuery/simple';
 export const API_MERCHANT_PURCHASE_REQUEST =
   '/api/PurchaseRequestsQuery/my-merchant-purchase-requests';
-
-// export const API_PROVINCES_QUERY = '/api/ProvincesQuery';
-// export const API_CITIES_QUERY = '/api/CitiesQuery/by-province/';
-// export const API_UPDATE_PROFILE = '/api/CustomersCommand/profile';
-// export const API_BUDGET_QUERY = '/api/BajetQuery/balance';
-// export const API_BUDGET_CALC =
-//   '/api/CustomerCreditFeeConfigurationQuery/active';
-// export const API_CUSTOMER_CREDIT_COMMAND = '/api/CustomerCreditCommand';
-// export const API_CUSTOMER_CREDIT_QUERY = '/api/CustomerCreditQuery/customer';
+export const API_MERCHANT_CONTRACTS_ME = '/api/MerchantContractsQuery/me';

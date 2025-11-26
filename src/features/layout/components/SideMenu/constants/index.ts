@@ -18,7 +18,7 @@ export const getSideBarItems = () => [
   },
   {
     label: i18n.t('panel:contract_status'),
-    path: '',
+    path: '/panel/contractStatus',
     icon: '/assets/icons/receipt.svg',
   },
 ];
