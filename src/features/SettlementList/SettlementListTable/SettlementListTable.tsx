@@ -2,7 +2,6 @@
 
 import { useTranslation } from 'react-i18next';
 import { getThItems } from './constants';
-import { useStatusInfo } from './utils/useStatusInfo';
 import { ISettlementListTableProps } from './types';
 import { toPersianNumber } from './utils/toPersianNumber';
 import dayjs from 'dayjs';
@@ -14,7 +13,6 @@ export const SettlementListTable = ({
   pageSize,
 }: ISettlementListTableProps) => {
   const { t } = useTranslation();
-  const { getStatusInfo } = useStatusInfo();
 
   return (
     <div className='overflow-x-auto'>
@@ -35,8 +33,6 @@ export const SettlementListTable = ({
 
         <tbody>
           {requests.map((settlement, index) => {
-            const { label, className } = getStatusInfo(settlement.status);
-
             return (
               <tr key={settlement.uuid}>
                 <td colSpan={5} className='p-0'>
@@ -63,27 +59,21 @@ export const SettlementListTable = ({
                     <div className='w-[20%] text-center'>
                       {settlement.amount.toLocaleString('fa-IR')}
                     </div>
-                    <div className='w-[20%] text-center'>
+                    <div className='w-[20%] text-center flex'>
                       <span
                         className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                          //@ts-expect-error
                           settlement.status === 29
                             ? 'bg-red-100 text-red-700'
                             : settlement.status === null
                             ? 'bg-blue-100 text-blue-700'
-                            : // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                            //@ts-expect-error
-                            settlement.status === 12
+                            : settlement.status === 12
                             ? 'bg-green-100 text-green-700'
                             : 'bg-gray-200 text-gray-800'
                         }`}
                       >
                         {settlement.status === null
                           ? 'اقدام نشده'
-                          : // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                          //@ts-expect-error
-                          settlement.status == 12
+                          : settlement.status == 12
                           ? 'تسویه شده'
                           : 'لغو شده '}
                       </span>

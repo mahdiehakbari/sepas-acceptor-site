@@ -54,21 +54,6 @@ const SettlementStatus = () => {
       .finally(() => setPageLoading(false));
   }, [page]);
 
-  // const handleFilter = () => {
-  //   if (!requestsData) return;
-  //   const result = filterTable({
-  //     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //     //@ts-expect-error
-  //     data: requestsData?.data?.document_lis,
-  //     planName,
-  //     fromDate,
-  //     toDate,
-  //   });
-  //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //   //@ts-expect-error
-  //   setFilterData(result);
-  // };
-
   const items = requestsData?.data?.document_list;
   const pageSize = requestsData?.pageSize || 10;
   const totalCount = requestsData?.totalCount || 0;

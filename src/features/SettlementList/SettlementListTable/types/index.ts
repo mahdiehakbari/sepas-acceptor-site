@@ -3,7 +3,7 @@ export interface ISettlementItem {
   amount: number;
   cash_out_method: number;
   account_no: number;
-  status: string | null;
+  status: string | number;
   acceptor?: string;
   acceptor_tag?: number;
   city?: string;
