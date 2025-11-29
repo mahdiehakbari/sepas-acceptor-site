@@ -61,38 +61,44 @@ const SettlementStatus = () => {
   return (
     <ContentStateWrapper
       loading={pageLoading}
-      isEmpty={!requestsData || requestsData?.data?.document_list.length === 0}
       loadingText={t('panel:page_loading')}
-      emptyText={t('panel:empty')}
     >
       <div className='max-w-6xl mx-auto mt-6'>
         <h1 className='text-black font-bold text-lg mb-4'>
           {t('settlement_status:settlement_list')}
         </h1>
 
-        <div className='hidden md:block'>
-          <SettlementListTable
-            requests={items ?? []}
-            currentPage={page}
-            pageSize={pageSize}
-          />
-        </div>
+        {!requestsData || requestsData?.data?.document_list.length === 0 ? (
+          <div className='text-center mt-10 text-gray-500'>
+            {t('panel:empty')}
+          </div>
+        ) : (
+          <>
+            <div className='hidden md:block'>
+              <SettlementListTable
+                requests={items ?? []}
+                currentPage={page}
+                pageSize={pageSize}
+              />
+            </div>
 
-        <div className='block md:hidden'>
-          <ResponsiveSettlementTable
-            requests={items ?? []}
-            currentPage={page}
-            pageSize={pageSize}
-          />
-        </div>
+            <div className='block md:hidden'>
+              <ResponsiveSettlementTable
+                requests={items ?? []}
+                currentPage={page}
+                pageSize={pageSize}
+              />
+            </div>
 
-        <Paginate
-          hasPreviousPage={hasPreviousPage}
-          setPage={setPage}
-          currentPage={page}
-          totalPages={totalPages}
-          hasNextPage={hasNextPage}
-        />
+            <Paginate
+              hasPreviousPage={hasPreviousPage}
+              setPage={setPage}
+              currentPage={page}
+              totalPages={totalPages}
+              hasNextPage={hasNextPage}
+            />
+          </>
+        )}
       </div>
     </ContentStateWrapper>
   );

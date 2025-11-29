@@ -81,38 +81,42 @@ const Receipts = () => {
   return (
     <ContentStateWrapper
       loading={pageLoading}
-      isEmpty={!requestsData || requestsData.items.length === 0}
       loadingText={t('panel:page_loading')}
-      emptyText={t('panel:empty')}
     >
       <div className='max-w-6xl mx-auto mt-6'>
         <PageHeader
           titleKey='transaction:transaction_list'
           onFilterClick={handleOpenModal}
         />
-
-        <div className='hidden md:block'>
-          <TransactionListTable
-            requests={requestsData?.items ?? []}
-            currentPage={requestsData?.pageNumber ?? 1}
-            pageSize={requestsData?.pageSize ?? pageSize}
-          />
-        </div>
-        <div className='block md:hidden'>
-          <ResponsiveTransactionTable
-            requests={requestsData?.items ?? []}
-            currentPage={requestsData?.pageNumber ?? 1}
-            pageSize={requestsData?.pageSize ?? pageSize}
-          />
-        </div>
-
-        <Paginate
-          hasPreviousPage={requestsData?.hasPreviousPage ?? false}
-          hasNextPage={requestsData?.hasNextPage ?? false}
-          currentPage={requestsData?.pageNumber ?? 1}
-          totalPages={requestsData?.totalPages ?? 1}
-          setPage={setPage}
-        />
+        {!requestsData || requestsData.items.length === 0 ? (
+          <div className='text-center mt-10 text-gray-500'>
+            {t('panel:empty')}
+          </div>
+        ) : (
+          <>
+            <div className='hidden md:block'>
+              <TransactionListTable
+                requests={requestsData?.items ?? []}
+                currentPage={requestsData?.pageNumber ?? 1}
+                pageSize={requestsData?.pageSize ?? pageSize}
+              />
+            </div>
+            <div className='block md:hidden'>
+              <ResponsiveTransactionTable
+                requests={requestsData?.items ?? []}
+                currentPage={requestsData?.pageNumber ?? 1}
+                pageSize={requestsData?.pageSize ?? pageSize}
+              />
+            </div>
+            <Paginate
+              hasPreviousPage={requestsData?.hasPreviousPage ?? false}
+              hasNextPage={requestsData?.hasNextPage ?? false}
+              currentPage={requestsData?.pageNumber ?? 1}
+              totalPages={requestsData?.totalPages ?? 1}
+              setPage={setPage}
+            />
+          </>
+        )}
       </div>
 
       <ResponsiveModal
