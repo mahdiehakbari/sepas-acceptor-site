@@ -27,13 +27,5 @@ export interface IFilteredProps {
   setToDate: (value: DateObject | null) => void;
   handleFilter: () => void;
   placeholderText: string;
-  acceptorData: IAcceptorData[];
   handleRemoveFilter: () => void;
-}
-
-export interface IFilterParams {
-  pageNumber: number;
-  pageSize: number;
-  createdFrom?: string;
-  createdTo?: string;
 }

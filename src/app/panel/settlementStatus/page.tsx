@@ -9,10 +9,11 @@ import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import { ISettlementsData } from './types';
 import { ContentStateWrapper } from '@/features/layout';
-import { useFilter } from '@/features/SettlementList/hooks/FilterData';
 import ResponsiveModal from '@/sharedComponent/ui/ResponsiveModal/Modal';
-import { SettlementFilter } from '@/features/SettlementList/SettlementFilter';
 import { DateObject } from 'react-multi-date-picker';
+import { SettlementFilter } from '@/features/SettlementList/SttlementFilter/SttlementFilter';
+import { useFilter } from '@/features/hooks/useFetchSettlementRequest/useFetchFilter';
+import { PageHeader } from '@/features/PageHeader';
 
 const SettlementStatus = () => {
   const { t } = useTranslation();
@@ -42,6 +43,12 @@ const SettlementStatus = () => {
     fetchData(page);
   }, [page]);
 
+  const handleFilter = () => {
+    setPage(1);
+    fetchData(1);
+    setIsOpenModal(false);
+  };
+
   const handleClose = () => {
     setPage(1);
     fetchData(1);
@@ -50,15 +57,27 @@ const SettlementStatus = () => {
     setToDate(null);
   };
 
+  const handleRemoveFilter = () => {
+    setPage(1);
+    fetchData(1);
+    setFromDate(null);
+    setToDate(null);
+  };
+
+  const handleOpenModal = () => {
+    setIsOpenModal(true);
+  };
+
   return (
     <ContentStateWrapper
       loading={pageLoading}
       loadingText={t('panel:page_loading')}
     >
       <div className='max-w-6xl mx-auto mt-6'>
-        <h1 className='text-black font-bold text-lg mb-4'>
-          {t('settlement_status:settlement_list')}
-        </h1>
+        <PageHeader
+          titleKey='settlement_status:settlement_list'
+          onFilterClick={handleOpenModal}
+        />
 
         {!pageLoading && !requestsData?.data?.document_list ? (
           <div className='text-center mt-10 text-gray-500'>
