@@ -25,7 +25,7 @@ const SettlementStatus = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [fromDate, setFromDate] = useState<DateObject | null>(null);
   const [toDate, setToDate] = useState<DateObject | null>(null);
-  const pageSize = 10;
+  const PAGE_SIZE = 10;
   const token = Cookies.get('token');
 
   const { filterData } = useFilter<ISettlementsData>(token, setRequestData);
@@ -33,7 +33,7 @@ const SettlementStatus = () => {
   const fetchData = async (pageNumber = 1) => {
     setPageLoading(true);
 
-    await filterData(fromDate, toDate, pageNumber, pageSize);
+    await filterData(fromDate, toDate, page, PAGE_SIZE);
 
     setPageLoading(false);
   };
@@ -89,7 +89,7 @@ const SettlementStatus = () => {
               <SettlementListTable
                 requests={requestsData?.data?.document_list ?? []}
                 currentPage={requestsData?.pageNumber ?? 1}
-                pageSize={requestsData?.pageSize ?? pageSize}
+                pageSize={requestsData?.pageSize ?? PAGE_SIZE}
               />
             </div>
 
@@ -98,14 +98,14 @@ const SettlementStatus = () => {
               <ResponsiveSettlementTable
                 requests={requestsData?.data.document_list ?? []}
                 currentPage={requestsData?.pageNumber ?? 1}
-                pageSize={requestsData?.pageSize ?? pageSize}
+                pageSize={requestsData?.pageSize ?? PAGE_SIZE}
               />
             </div>
 
             <Paginate
-              hasPreviousPage={requestsData?.hasPreviousPage ?? false}
-              hasNextPage={requestsData?.hasNextPage ?? false}
-              currentPage={requestsData?.pageNumber ?? 1}
+              hasPreviousPage={page > 1}
+              hasNextPage={page < (requestsData?.totalPages ?? 1)}
+              currentPage={page}
               totalPages={requestsData?.totalPages ?? 1}
               setPage={setPage}
             />

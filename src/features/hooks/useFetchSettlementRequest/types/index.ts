@@ -1,6 +1,7 @@
 export interface IFilterParams {
-  pageNumber: number;
+  pageNo: number;
   pageSize: number;
+  count: number;
   fromPaymentDate?: string;
   toPaymentDate?: string;
   customerIds?: string[];
