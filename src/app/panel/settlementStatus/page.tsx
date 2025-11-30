@@ -5,14 +5,14 @@ import {
 } from '@/features/SettlementList';
 import { Paginate } from '@/sharedComponent/ui/Paginate/Paginate';
 import { useTranslation } from 'react-i18next';
-import { paginate } from '../utils/Paginate';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { API_ENIAC_QUERY } from '@/config/api_address.config';
 import Cookies from 'js-cookie';
 import { ISettlementsData } from './types';
-import { DateObject } from 'react-multi-date-picker';
 import { ContentStateWrapper } from '@/features/layout';
+import { useFilter } from '@/features/SettlementList/hooks/FilterData';
+import ResponsiveModal from '@/sharedComponent/ui/ResponsiveModal/Modal';
+import { SettlementFilter } from '@/features/SettlementList/SettlementFilter';
+import { DateObject } from 'react-multi-date-picker';
 
 const SettlementStatus = () => {
   const { t } = useTranslation();
@@ -21,42 +21,34 @@ const SettlementStatus = () => {
     null,
   );
   const [page, setPage] = useState(1);
-  const [planName, setPlanName] = useState('');
-  const [filterData, setFilterData] = useState(null);
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const [fromDate, setFromDate] = useState<DateObject | null>(null);
   const [toDate, setToDate] = useState<DateObject | null>(null);
+  const pageSize = 10;
   const token = Cookies.get('token');
 
-  useEffect(() => {
-    if (!token) {
-      const disableLoading = async () => {
-        setPageLoading(false);
-      };
-      disableLoading();
-    }
-  }, [token]);
+  const { filterData } = useFilter<ISettlementsData>(token, setRequestData);
+
+  const fetchData = async (pageNumber = 1) => {
+    setPageLoading(true);
+
+    await filterData(fromDate, toDate, pageNumber, pageSize);
+
+    setPageLoading(false);
+  };
 
   useEffect(() => {
-    axios
-      .get(`${API_ENIAC_QUERY}?pageNo=${page}&count=10`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        setRequestData(res.data);
-      })
-      .catch((err) => console.error(err))
-      .finally(() => setPageLoading(false));
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchData(page);
   }, [page]);
 
-  const items = requestsData?.data?.document_list;
-  const pageSize = requestsData?.pageSize || 10;
-  const totalCount = requestsData?.totalCount || 0;
-  const totalPages = Math.ceil(totalCount / pageSize) || 1;
-  const currentPage = page;
-  const hasPreviousPage = currentPage > 1;
-  const hasNextPage = currentPage < totalPages;
-
-  const isFilterButtonDisabled = !planName && !fromDate && !toDate;
+  const handleClose = () => {
+    setPage(1);
+    fetchData(1);
+    setIsOpenModal(false);
+    setFromDate(null);
+    setToDate(null);
+  };
 
   return (
     <ContentStateWrapper
@@ -68,7 +60,7 @@ const SettlementStatus = () => {
           {t('settlement_status:settlement_list')}
         </h1>
 
-        {!requestsData || requestsData?.data?.document_list.length === 0 ? (
+        {!pageLoading && !requestsData?.data?.document_list ? (
           <div className='text-center mt-10 text-gray-500'>
             {t('panel:empty')}
           </div>
@@ -76,29 +68,45 @@ const SettlementStatus = () => {
           <>
             <div className='hidden md:block'>
               <SettlementListTable
-                requests={items ?? []}
-                currentPage={page}
-                pageSize={pageSize}
+                requests={requestsData?.data?.document_list ?? []}
+                currentPage={requestsData?.pageNumber ?? 1}
+                pageSize={requestsData?.pageSize ?? pageSize}
               />
             </div>
 
+            {/* Mobile Table */}
             <div className='block md:hidden'>
               <ResponsiveSettlementTable
-                requests={items ?? []}
-                currentPage={page}
-                pageSize={pageSize}
+                requests={requestsData?.data.document_list ?? []}
+                currentPage={requestsData?.pageNumber ?? 1}
+                pageSize={requestsData?.pageSize ?? pageSize}
               />
             </div>
 
             <Paginate
-              hasPreviousPage={hasPreviousPage}
+              hasPreviousPage={requestsData?.hasPreviousPage ?? false}
+              hasNextPage={requestsData?.hasNextPage ?? false}
+              currentPage={requestsData?.pageNumber ?? 1}
+              totalPages={requestsData?.totalPages ?? 1}
               setPage={setPage}
-              currentPage={page}
-              totalPages={totalPages}
-              hasNextPage={hasNextPage}
             />
           </>
         )}
+        <ResponsiveModal
+          title={t('panel:filter')}
+          isOpen={isOpenModal}
+          onClose={handleClose}
+        >
+          <SettlementFilter
+            fromDate={fromDate}
+            setFromDate={setFromDate}
+            toDate={toDate}
+            setToDate={setToDate}
+            handleFilter={handleFilter}
+            placeholderText={t('panel:search_customer')}
+            handleRemoveFilter={handleRemoveFilter}
+          />
+        </ResponsiveModal>
       </div>
     </ContentStateWrapper>
   );

@@ -8,6 +8,7 @@ export interface ITransactionItem {
   customerName: string;
   customerPhone: string;
   merchantId: string;
+  referenceNumber: number;
 }
 
 export interface ITransactionListTableProps {

@@ -17,7 +17,7 @@
   "transaction_amount_exceeds": "مبلغ تراکنش از میزان اعتبار بیمار بیشتر است. لطفا مجدد تلاش کنید.",
   "close": "بستن",
   "successful_transaction": "تراکنش موفق",
-  "transaction_amount": "مبلغ تراکنش",
+  "transaction_amount": "مبلغ تراکنش (ریال)",
   "transaction_date": "تاریخ تراکنش",
   "transaction_number": "شماره تراکنش",
   "customer_phone": "شماره همراه بیمار",
@@ -32,5 +32,6 @@
   "customer_name": "نام مشتری",
   "select_image": "انتخاب تصویر",
   "cancel": "انصراف",
-  "confirm": "تایید"
+  "confirm": "تایید",
+  "tracking_number": "شماره پیگیری"
 }

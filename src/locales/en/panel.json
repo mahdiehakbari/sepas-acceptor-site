@@ -30,5 +30,6 @@
   "customer_name": "Customer Name",
   "select_image": "Select image",
   "cancel": "Cancel",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+  "tracking_number": "Tracking Number"
 }
