@@ -11,3 +11,5 @@ export const API_MERCHANT_QUERY_SIMPLE = '/api/MerchantsQuery/simple';
 export const API_MERCHANT_PURCHASE_REQUEST =
   '/api/PurchaseRequestsQuery/my-merchant-purchase-requests';
 export const API_MERCHANT_CONTRACTS_ME = '/api/MerchantContractsQuery/me';
+export const API_MERCHANT_CONTRACTS_ME_POST =
+  '/api/MerchantContractsCommand/me';

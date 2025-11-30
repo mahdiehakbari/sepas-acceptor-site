@@ -1,1 +1,9 @@
-{}
+{
+  "settlement_status": "Select your settlement status.",
+  "register": "Register",
+  "settlement_type": "Settlement type",
+  "cash_settlement": "Cash settlement",
+  "bi_monthly": "Bi-monthly settlement",
+  "four_monthly": "Four-monthly settlement",
+  "six_monthly": "Six-monthly settlement"
+}

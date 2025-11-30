@@ -1,1 +1,9 @@
-{}
+{
+  "settlement_status": "وضعیت تسویه خود را انتخاب کنید.",
+  "register": "ثبت",
+  "settlement_type": "نوع تسویه",
+  "cash_settlement": "تسویه نقدی",
+  "bi_monthly": "تسویه دو ماهه",
+  "four_monthly": "تسویه چهار ماهه",
+  "six_monthly": "تسویه شش ماهه"
+}

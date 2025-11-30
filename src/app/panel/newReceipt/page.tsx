@@ -24,6 +24,10 @@ const NewReceipt = () => {
   const handleClose = () => {
     setShowModalResult(false);
     setShowOtpModal(false);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-expect-error
+    setAmountNumber('');
+    setAmountNumber(0);
   };
 
   return (
