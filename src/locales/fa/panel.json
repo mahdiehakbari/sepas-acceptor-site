@@ -29,5 +29,8 @@
   "to_date": "تا تاریخ",
   "remove_filter": "حذف فیلتر",
   "get_report": "دریافت گزارش",
-  "customer_name": "نام مشتری"
+  "customer_name": "نام مشتری",
+  "select_image": "انتخاب تصویر",
+  "cancel": "انصراف",
+  "confirm": "تایید"
 }

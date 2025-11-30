@@ -27,5 +27,8 @@
   "to_date": "To Date",
   "remove_filter": "Remove the filter",
   "get_report": "Get the report",
-  "customer_name": "Customer Name"
+  "customer_name": "Customer Name",
+  "select_image": "Select image",
+  "cancel": "Cancel",
+  "confirm": "Confirm"
 }

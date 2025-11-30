@@ -1,114 +1,159 @@
 'use client';
 import Image from 'next/image';
-import Cookies from 'js-cookie';
-import { useEffect, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { getSideBarItems } from './constants';
 import { useAuthStore } from '@/store/Auth/authStore';
 import { IProfileFormValues } from './types';
+import { ProfileHeader } from '@/features/ProfileHeader';
+import ResponsiveModal from '@/sharedComponent/ui/ResponsiveModal/Modal';
+import { Button } from '@/sharedComponent/ui/Button/Button';
 
 export const SideMenu = () => {
   const { t } = useTranslation();
-  const [userProfile, setUserProfile] = useState<IProfileFormValues | null>(
-    null,
-  );
   const pathname = usePathname();
   const router = useRouter();
   const { logout } = useAuthStore();
 
-  const handleLogout = () => {
-    logout();
-    Cookies.remove('userProfile');
-    Cookies.remove('isLoggedIn');
-    router.push('/');
-  };
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const [userProfile, setUserProfile] = useState<IProfileFormValues | null>(
+    null,
+  );
+  const [profileImage, setProfileImage] = useState<string>(
+    '/assets/icons/user-profile-icon.jpg',
+  );
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    const userInfo = Cookies.get('userProfile');
+    const userInfo = localStorage.getItem('userProfile');
     if (userInfo) {
       Promise.resolve().then(() => setUserProfile(JSON.parse(userInfo)));
     }
   }, []);
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const blobUrl = URL.createObjectURL(file);
+    setPreviewImage(blobUrl);
+    setIsModalOpen(true);
+    e.target.value = '';
+  };
+
+  const handleConfirmImage = () => {
+    if (previewImage) {
+      setProfileImage(previewImage);
+    }
+    setPreviewImage(null);
+    setIsModalOpen(false);
+  };
+
+  const handleCancelImage = () => {
+    setPreviewImage(null);
+    setIsModalOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    router.push('/');
+  };
+
   const isActive = (path: string) => pathname === path;
 
   return (
-    <aside className='w-64 bg-[#F8F9FA] shadow-md p-6'>
-      <div className='flex items-center space-x-3 mb-8'>
-        <div className='relative'>
-          <Image
-            src='/assets/icons/user-profile-icon.jpg'
-            alt='user'
-            width={56}
-            height={56}
-            className='rounded-full text-white'
-          />
-          <Image
-            src='/assets/icons/profile-edit-button.svg'
-            alt='edit'
-            width={28}
-            height={28}
-            className='cursor-pointer absolute top-8 left-8'
-          />
-        </div>
-        <h2 className='font-medium text-[#515151] text-[12px] font[700]'>
-          {userProfile?.firstName} {userProfile?.lastName}
-        </h2>
-      </div>
-      <div className='bg-white h-[60vh] flex flex-col justify-between py-6'>
-        <ul className='font[400] text-[16px]'>
-          {getSideBarItems().map((item) => (
-            <li
-              key={item.path}
-              onClick={() => router.push(item.path)}
-              className={`px-4 py-2 cursor-pointer flex items-center mb-2 mx-2
-        ${
-          isActive(item.path)
-            ? 'text-white bg-primary font-semibold rounded-2xl'
-            : ''
-        }
-        ${'hover:text-primary'}
-      `}
-            >
-              <Image src={item.icon} alt={item.label} width={20} height={20} />
-              <span
-                className={`pr-1 ${isActive(item.path) ? 'text-white' : ''}`}
-              >
-                {item.label}
-              </span>
-            </li>
-          ))}
-        </ul>
+    <>
+      <aside className='w-64 bg-[#F8F9FA] shadow-md p-6'>
+        <ProfileHeader
+          fileInputRef={fileInputRef}
+          profileImage={profileImage}
+          userProfile={userProfile}
+          handleFileChange={handleFileChange}
+        />
 
-        <div className='px-6'>
-          <div className='flex items-center gap-2 pb-4  cursor-pointer '>
-            <Image
-              src='/assets/icons/headphone.svg'
-              alt=''
-              width={20}
-              height={20}
-            />
-            <p className='text-black font-normal text-[16px] leading-6 hover:text-primary'>
-              {t('panel:contact_support')}
-            </p>
-          </div>
-          <div
-            className='flex items-center gap-1 pb-1 cursor-pointer '
-            onClick={handleLogout}
-          >
-            <Image
-              src='/assets/icons/logout.svg'
-              alt=''
-              width={20}
-              height={20}
-            />
-            <p className='text-[#FF4B4B] font-normal text-[16px] leading-6 '>
-              {t('home:log_out')}
-            </p>
+        <div className='bg-white h-[60vh] flex flex-col justify-between py-6'>
+          <ul className='text-[16px]'>
+            {getSideBarItems().map((item) => (
+              <li
+                key={item.path}
+                onClick={() => router.push(item.path)}
+                className={`
+                  px-4 py-2 cursor-pointer flex items-center mb-2 mx-2
+                  ${
+                    isActive(item.path)
+                      ? 'text-white bg-primary font-semibold rounded-2xl'
+                      : ''
+                  }
+                  hover:text-primary
+                `}
+              >
+                <Image
+                  src={item.icon}
+                  alt={item.label}
+                  width={20}
+                  height={20}
+                />
+                <span
+                  className={`pr-1 ${isActive(item.path) ? 'text-white' : ''}`}
+                >
+                  {item.label}
+                </span>
+              </li>
+            ))}
+          </ul>
+
+          <div className='px-6'>
+            <div className='flex items-center gap-2 pb-4 cursor-pointer'>
+              <Image
+                src='/assets/icons/headphone.svg'
+                alt=''
+                width={20}
+                height={20}
+              />
+              <p className='text-black text-[16px] hover:text-primary'>
+                {t('panel:contact_support')}
+              </p>
+            </div>
+
+            <div
+              className='flex items-center gap-1 pb-1 cursor-pointer'
+              onClick={handleLogout}
+            >
+              <Image
+                src='/assets/icons/logout.svg'
+                alt=''
+                width={20}
+                height={20}
+              />
+              <p className='text-[#FF4B4B] text-[16px]'>{t('home:log_out')}</p>
+            </div>
           </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+
+      <ResponsiveModal
+        title={t('panel:select_image')}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      >
+        <div className='md:w-[600px]'>
+          <img
+            src={previewImage!}
+            alt='preview'
+            className='w-40 h-40 object-cover rounded-full mx-auto my-6'
+          />
+
+          <div className='flex justify-between p-4 border-t border-border-color '>
+            <Button variant='outline' onClick={handleCancelImage}>
+              {t('panel:cancel')}
+            </Button>
+            <Button onClick={handleConfirmImage}>{t('panel:confirm')}</Button>
+          </div>
+        </div>
+      </ResponsiveModal>
+    </>
   );
 };
