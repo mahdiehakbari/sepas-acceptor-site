@@ -23,6 +23,10 @@ const SettlementStatus = () => {
   );
   const [page, setPage] = useState(1);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [fromPaymentDate, setFromPaymentDate] = useState<DateObject | null>(
+    null,
+  );
+  const [toPaymentDate, setToPaymentDate] = useState<DateObject | null>(null);
   const [fromDate, setFromDate] = useState<DateObject | null>(null);
   const [toDate, setToDate] = useState<DateObject | null>(null);
   const PAGE_SIZE = 10;
@@ -33,8 +37,14 @@ const SettlementStatus = () => {
   const fetchData = async (pageNumber = 1) => {
     setPageLoading(true);
 
-    await filterData(fromDate, toDate, pageNumber, PAGE_SIZE);
-
+    await filterData(
+      fromPaymentDate,
+      toPaymentDate,
+      fromDate,
+      toDate,
+      pageNumber,
+      PAGE_SIZE,
+    );
     setPageLoading(false);
   };
 
@@ -55,6 +65,8 @@ const SettlementStatus = () => {
     setIsOpenModal(false);
     setFromDate(null);
     setToDate(null);
+    setFromPaymentDate(null);
+    setToPaymentDate(null);
   };
 
   const handleRemoveFilter = () => {
@@ -62,6 +74,8 @@ const SettlementStatus = () => {
     fetchData(1);
     setFromDate(null);
     setToDate(null);
+    setFromPaymentDate(null);
+    setToPaymentDate(null);
   };
 
   const handleOpenModal = () => {
@@ -120,6 +134,10 @@ const SettlementStatus = () => {
             setFromDate={setFromDate}
             toDate={toDate}
             setToDate={setToDate}
+            fromPaymentDate={fromPaymentDate}
+            setFromPaymentDate={setFromPaymentDate}
+            toPaymentDate={toPaymentDate}
+            setToPaymentDate={setToPaymentDate}
             handleFilter={handleFilter}
             placeholderText={t('panel:search_customer')}
             handleRemoveFilter={handleRemoveFilter}
