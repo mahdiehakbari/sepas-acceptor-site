@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { API_PURCHASE_REQUESTS_COMMAND } from '@/config/api_address.config';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SpinnerDiv } from '@/sharedComponent/ui/SpinnerDiv/SpinnerDiv';
 import { toast } from 'react-toastify';
 
@@ -15,6 +15,7 @@ export const NewReceiptForm = ({
   setShowOtpModal,
   setPhoneNumber,
   setAmountNumber,
+  registerReset,
 }: INewReceiptProps) => {
   const { t } = useTranslation();
   const token = Cookies.get('token');
@@ -23,10 +24,15 @@ export const NewReceiptForm = ({
     register,
     handleSubmit,
     control,
+    watch,
+    reset,
     formState: { errors },
   } = useForm<TFormValues>({
     defaultValues: { customerPhoneNumber: '', amount: undefined },
   });
+  useEffect(() => {
+    if (registerReset) registerReset(reset);
+  }, [registerReset, reset]);
 
   const onSubmit = (data: TFormValues) => {
     setButtonLoading(true);
@@ -58,6 +64,11 @@ export const NewReceiptForm = ({
       });
   };
 
+  const phoneValue = watch('customerPhoneNumber');
+
+  const toPersianDigits = (num: string | number) =>
+    num.toString().replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className='w-full'>
@@ -68,7 +79,11 @@ export const NewReceiptForm = ({
             {...register('customerPhoneNumber', {
               required: true,
               maxLength: 11,
+              onChange: (e) => {
+                e.target.value = e.target.value.replace(/[^0-9]/g, '');
+              },
             })}
+            value={toPersianDigits(phoneValue || '')}
             className={`bg-white w-full border rounded-lg p-2 mb-2 focus:outline-none focus:ring-2 text-left placeholder:text-right ${
               errors.customerPhoneNumber
                 ? 'border-red-500 focus:ring-red-400'
@@ -86,23 +101,52 @@ export const NewReceiptForm = ({
             name='amount'
             control={control}
             rules={{ required: t('panel:amount_required') }}
-            render={({ field }) => (
-              <NumericFormat
-                {...field}
-                value={field.value ?? ''}
-                placeholder={t('panel:amount')}
-                className={`bg-white w-full border rounded-lg p-2 focus:outline-none focus:ring-2 ${
-                  errors.amount
-                    ? 'border-red-500 focus:ring-red-400'
-                    : 'border-gray-300 focus:ring-blue-500'
-                }${field.value ? ' text-left' : ' text-right'}`}
-                thousandSeparator=','
-                allowNegative={false}
-                onValueChange={(values) => {
-                  field.onChange(values.floatValue ?? undefined);
-                }}
-              />
-            )}
+            render={({ field }) => {
+              const toPersianDigits = (num: string | number) =>
+                num.toString().replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
+
+              const formatValue = (val: number | undefined) => {
+                if (val === undefined || val === null) return '';
+                const withCommas = val.toLocaleString('en-US');
+                return toPersianDigits(withCommas);
+              };
+
+              return (
+                <input
+                  type='text'
+                  value={formatValue(field.value)}
+                  placeholder={t('panel:amount')}
+                  className={`bg-white w-full border rounded-lg p-2 focus:outline-none focus:ring-2
+          ${
+            errors.amount
+              ? 'border-red-500 focus:ring-red-400'
+              : 'border-gray-300 focus:ring-blue-500'
+          }
+          text-left
+          placeholder:text-right
+        `}
+                  style={{ direction: 'ltr' }}
+                  onChange={(e) => {
+                    const rawValue = e.target.value.trim();
+                    if (rawValue === '') {
+                      field.onChange(undefined);
+                      return;
+                    }
+
+                    const numericValue = Number(
+                      rawValue
+                        .replace(/[۰-۹]/g, (d) =>
+                          String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d)),
+                        )
+                        .replace(/,/g, ''),
+                    );
+                    field.onChange(
+                      isNaN(numericValue) ? undefined : numericValue,
+                    );
+                  }}
+                />
+              );
+            }}
           />
 
           {errors.amount && (

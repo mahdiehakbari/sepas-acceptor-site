@@ -6,7 +6,7 @@ import {
 } from '@/features/NewReceipt';
 import { PurchaseRequestResponse } from '@/features/NewReceipt/NewReceiptOtp/types';
 import ResponsiveModal from '@/sharedComponent/ui/ResponsiveModal/Modal';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const NewReceipt = () => {
@@ -21,6 +21,8 @@ const NewReceipt = () => {
     null,
   );
 
+  const resetFormRef = useRef<(() => void) | null>(null);
+
   const handleClose = () => {
     setShowModalResult(false);
     setShowOtpModal(false);
@@ -28,6 +30,7 @@ const NewReceipt = () => {
     //@ts-expect-error
     setAmountNumber('');
     setAmountNumber(0);
+    resetFormRef.current?.();
   };
 
   return (
@@ -40,6 +43,7 @@ const NewReceipt = () => {
           setShowOtpModal={setShowOtpModal}
           setPhoneNumber={setPhoneNumber}
           setAmountNumber={setAmountNumber}
+          registerReset={(resetFn) => (resetFormRef.current = resetFn)}
         />
 
         <ResponsiveModal

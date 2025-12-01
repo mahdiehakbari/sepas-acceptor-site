@@ -7,4 +7,5 @@ export interface INewReceiptProps {
   setShowOtpModal: (value: boolean) => void;
   setPhoneNumber: (value: string) => void;
   setAmountNumber: (value: number) => void;
+  registerReset?: (resetFn: () => void) => void;
 }
