@@ -28,13 +28,13 @@ export const SettlementFilter = ({
           className='w-full'
           containerClassName='w-full'
           inputClass='border border-gray-300 rounded-md w-full px-3 py-2 focus:outline-none focus:ring focus:border-blue-400'
-          placeholder={t('panel:from_date')}
+          placeholder='از تاریخ تسویه'
           render={(value, openCalendar) => (
             <div
               className='border border-gray-300 rounded-md w-full px-3 py-2 flex items-center justify-between cursor-pointer'
               onClick={openCalendar}
             >
-              <span>{value || t('panel:from_date')}</span>
+              <span>{value || 'از تاریخ تسویه'}</span>
 
               <Image
                 src='/assets/icons/calendar.svg'
@@ -57,13 +57,13 @@ export const SettlementFilter = ({
           className='w-full'
           containerClassName='w-full'
           inputClass='border border-gray-300 rounded-md w-full px-3 py-2 focus:outline-none focus:ring focus:border-blue-400'
-          placeholder={t('panel:to_date')}
+          placeholder='تا تاریخ تسویه'
           render={(value, openCalendar) => (
             <div
               className='border border-gray-300 rounded-md w-full px-3 py-2 flex items-center justify-between cursor-pointer'
               onClick={openCalendar}
             >
-              <span>{value || t('panel:to_date')}</span>
+              <span>{value || 'تا تاریخ تسویه'}</span>
 
               <Image
                 src='/assets/icons/calendar.svg'
