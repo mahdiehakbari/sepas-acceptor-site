@@ -15,6 +15,7 @@ import ResponsiveModal from '@/sharedComponent/ui/ResponsiveModal/Modal';
 import { PhoneNumberModal } from '../Auth/PhoneNumber/PhoneNumberModal';
 import { OtpModal } from '../Auth/OTPComponent/OtpModal';
 import { DropdownMenu } from '../DropdownMenu/DropdownMenu';
+import { IUser } from './types';
 
 export const Header = () => {
   const { t } = useTranslation();
@@ -27,6 +28,19 @@ export const Header = () => {
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const { logout } = useAuthStore();
+  const [user, setUser] = useState<IUser | null>(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setUser(JSON.parse(storedUser));
+      } catch (e) {
+        console.error('Invalid user JSON:', e);
+      }
+    }
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -79,13 +93,31 @@ export const Header = () => {
           ) : (
             <div className='relative' ref={menuRef}>
               <div onClick={handleClick} className='cursor-pointer'>
-                <Image
-                  src='/assets/icons/user-profile-icon.jpg'
-                  alt='user-profile-icon'
-                  width={56}
-                  height={56}
-                  className='rounded-full'
-                />
+                {user?.gender == 'Female' ? (
+                  <Image
+                    src='/assets/icons/avatar-f.jpg'
+                    alt='user-profile-icon'
+                    width={56}
+                    height={56}
+                    className='rounded-full'
+                  />
+                ) : user?.gender == 'Male' ? (
+                  <Image
+                    src='/assets/icons/avatar-m.jpg'
+                    alt='user-profile-icon'
+                    width={56}
+                    height={56}
+                    className='rounded-full'
+                  />
+                ) : (
+                  <Image
+                    src='/assets/icons/guest.jpg'
+                    alt='user-profile-icon'
+                    width={56}
+                    height={56}
+                    className='rounded-full'
+                  />
+                )}
               </div>
               {openPopUp && (
                 <DropdownMenu
@@ -107,6 +139,11 @@ export const Header = () => {
                       href: '/panel/settlementStatus',
                       image: '/assets/icons/receipt.svg',
                     },
+                    {
+                      label: t('panel:contract_status'),
+                      href: '/panel/contractStatus',
+                      image: '/assets/icons/receipt.svg',
+                    },
 
                     {
                       label: t('home:log_out'),
@@ -120,7 +157,7 @@ export const Header = () => {
             </div>
           )}
 
-          <button
+          {/* <button
             className='cursor-pointer bg-secondary h-[42px] px-3 py-1 rounded-[8px] flex items-center gap-2'
             onClick={toggleLanguage}
           >
@@ -137,7 +174,7 @@ export const Header = () => {
             <span className='text-sm font-medium'>
               {currentLanguage === 'fa' ? 'فا' : 'EN'}
             </span>
-          </button>
+          </button> */}
           <button
             className='md:hidden flex flex-col justify-center items-center w-8 h-8 relative'
             onClick={() => setIsOpen(!isOpen)}
