@@ -44,6 +44,9 @@ export const TransactionListTable = ({
                       {index + 1 + (currentPage - 1) * pageSize}
                     </div>
                     <div className='w-[20%] text-center'>
+                      {toPersianNumber(String(transaction.referenceNumber))}
+                    </div>
+                    <div className='w-[20%] text-center'>
                       {transaction.customerName}
                     </div>
                     <div className='w-[20%] text-center'>
@@ -66,9 +69,6 @@ export const TransactionListTable = ({
                           day: '2-digit',
                         },
                       )}
-                    </div>
-                    <div className='w-[20%] text-center'>
-                      {toPersianNumber(String(transaction.referenceNumber))}
                     </div>
                     <div className='w-[20%] text-center'>
                       {transaction.amount.toLocaleString('fa-IR')}
