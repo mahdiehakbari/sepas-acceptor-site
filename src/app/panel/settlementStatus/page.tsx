@@ -33,7 +33,7 @@ const SettlementStatus = () => {
   const fetchData = async (pageNumber = 1) => {
     setPageLoading(true);
 
-    await filterData(fromDate, toDate, page, PAGE_SIZE);
+    await filterData(fromDate, toDate, pageNumber, PAGE_SIZE);
 
     setPageLoading(false);
   };
@@ -93,19 +93,18 @@ const SettlementStatus = () => {
               />
             </div>
 
-            {/* Mobile Table */}
             <div className='block md:hidden'>
               <ResponsiveSettlementTable
-                requests={requestsData?.data.document_list ?? []}
+                requests={requestsData?.data?.document_list ?? []}
                 currentPage={requestsData?.pageNumber ?? 1}
                 pageSize={requestsData?.pageSize ?? PAGE_SIZE}
               />
             </div>
 
             <Paginate
-              hasPreviousPage={page > 1}
-              hasNextPage={page < (requestsData?.totalPages ?? 1)}
-              currentPage={page}
+              hasPreviousPage={requestsData?.hasPreviousPage ?? false}
+              hasNextPage={requestsData?.hasNextPage ?? false}
+              currentPage={requestsData?.pageNumber ?? 1}
               totalPages={requestsData?.totalPages ?? 1}
               setPage={setPage}
             />

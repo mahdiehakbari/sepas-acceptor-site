@@ -33,6 +33,7 @@ const Receipts = () => {
   const [fromDate, setFromDate] = useState<DateObject | null>(null);
   const [toDate, setToDate] = useState<DateObject | null>(null);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [referenceNumber, setReferenceNumber] = useState<string | null>(null);
   const token = Cookies.get('token');
   const pageSize = 10;
   useFetchAcceptor(setAcceptorData);
@@ -42,7 +43,14 @@ const Receipts = () => {
     const customerIds = acceptorName.map((c) => c.value);
     setPageLoading(true);
 
-    await filterData(fromDate, toDate, customerIds, pageNumber, pageSize);
+    await filterData(
+      fromDate,
+      toDate,
+      customerIds,
+      pageNumber,
+      pageSize,
+      referenceNumber ? Number(referenceNumber) : undefined,
+    );
 
     setPageLoading(false);
   };
@@ -55,6 +63,7 @@ const Receipts = () => {
     setPage(1);
     fetchData(1);
     setIsOpenModal(false);
+    setReferenceNumber(null);
   };
 
   const handleClose = () => {
@@ -64,14 +73,17 @@ const Receipts = () => {
     setIsOpenModal(false);
     setFromDate(null);
     setToDate(null);
+    setReferenceNumber(null);
   };
 
   const handleRemoveFilter = () => {
     setPage(1);
     fetchData(1);
     setAcceptorName([]);
+    setIsOpenModal(false);
     setFromDate(null);
     setToDate(null);
+    setReferenceNumber(null);
   };
 
   const handleOpenModal = () => {
@@ -135,6 +147,8 @@ const Receipts = () => {
           placeholderText={t('panel:search_customer')}
           acceptorData={acceptorData || []}
           handleRemoveFilter={handleRemoveFilter}
+          referenceNumber={referenceNumber}
+          setReferenceNumber={setReferenceNumber}
         />
       </ResponsiveModal>
     </ContentStateWrapper>

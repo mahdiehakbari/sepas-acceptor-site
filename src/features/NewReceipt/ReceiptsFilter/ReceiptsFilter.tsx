@@ -22,6 +22,8 @@ export const ReceiptsFilter = ({
   handleFilter,
   acceptorData,
   handleRemoveFilter,
+  referenceNumber,
+  setReferenceNumber,
 }: IFilteredProps) => {
   const { t } = useTranslation();
   const uniqueCustomers: ISelectOption[] = acceptorData.map((item) => ({
@@ -29,8 +31,32 @@ export const ReceiptsFilter = ({
     value: item.id,
   }));
 
+  const persianToEnglish = (str: string) => {
+    return str.replace(/[۰-۹]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d).toString());
+  };
+
+  const englishToPersian = (str: string) => {
+    return str.replace(/[0-9]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
+  };
+
   return (
     <div className='p-6 md:w-[465px]'>
+      <div className='w-full mb-5'>
+        <input
+          type='text'
+          value={englishToPersian(referenceNumber ?? '')}
+          onChange={(e) => {
+            const val = e.target.value;
+            const english = persianToEnglish(val);
+            setReferenceNumber(english);
+          }}
+          placeholder={t('panel:tracking_number')}
+          className='border border-border-color w-full h-[38px] px-3 rounded-sm outline-0 placeholder:text-right'
+          dir='ltr'
+          inputMode='numeric'
+        />
+      </div>
+
       <div className='w-full mb-5'>
         <Select
           options={uniqueCustomers}

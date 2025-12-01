@@ -34,14 +34,20 @@ export const NewReceiptForm = ({
     if (registerReset) registerReset(reset);
   }, [registerReset, reset]);
 
+  const toEnglishDigits = (str: string) =>
+    str.replace(/[۰-۹]/g, (d) => String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d)));
+
   const onSubmit = (data: TFormValues) => {
     setButtonLoading(true);
+
+    const englishPhone = toEnglishDigits(data.customerPhoneNumber);
+
     const amountNumber = Number(String(data.amount).replace(/,/g, ''));
     axios
       .post(
         API_PURCHASE_REQUESTS_COMMAND,
         {
-          customerPhoneNumber: data.customerPhoneNumber,
+          customerPhoneNumber: englishPhone,
           amount: amountNumber,
           description: 'New Receipt ',
         },
@@ -96,58 +102,66 @@ export const NewReceiptForm = ({
             </p>
           )}
         </div>
+
         <div className='mb-4'>
-          <Controller
-            name='amount'
-            control={control}
-            rules={{ required: t('panel:amount_required') }}
-            render={({ field }) => {
-              const toPersianDigits = (num: string | number) =>
-                num.toString().replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
+          <div className='relative'>
+            <span className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-600'>
+              ریال
+            </span>
 
-              const formatValue = (val: number | undefined) => {
-                if (val === undefined || val === null) return '';
-                const withCommas = val.toLocaleString('en-US');
-                return toPersianDigits(withCommas);
-              };
+            <Controller
+              name='amount'
+              control={control}
+              rules={{ required: t('panel:amount_required') }}
+              render={({ field }) => {
+                const toPersianDigits = (num: string | number) =>
+                  num.toString().replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
 
-              return (
-                <input
-                  type='text'
-                  value={formatValue(field.value)}
-                  placeholder={t('panel:amount')}
-                  className={`bg-white w-full border rounded-lg p-2 focus:outline-none focus:ring-2
-          ${
-            errors.amount
-              ? 'border-red-500 focus:ring-red-400'
-              : 'border-gray-300 focus:ring-blue-500'
-          }
-          text-left
-          placeholder:text-right
-        `}
-                  style={{ direction: 'ltr' }}
-                  onChange={(e) => {
-                    const rawValue = e.target.value.trim();
-                    if (rawValue === '') {
-                      field.onChange(undefined);
-                      return;
-                    }
+                const formatValue = (val: number | undefined) => {
+                  if (val === undefined || val === null) return '';
+                  const withCommas = val.toLocaleString('en-US');
+                  return toPersianDigits(withCommas);
+                };
 
-                    const numericValue = Number(
-                      rawValue
-                        .replace(/[۰-۹]/g, (d) =>
-                          String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d)),
-                        )
-                        .replace(/,/g, ''),
-                    );
-                    field.onChange(
-                      isNaN(numericValue) ? undefined : numericValue,
-                    );
-                  }}
-                />
-              );
-            }}
-          />
+                return (
+                  <input
+                    type='text'
+                    value={formatValue(field.value)}
+                    placeholder={t('panel:amount')}
+                    className={`
+              bg-white w-full border rounded-lg p-2 pl-12 text-left
+              focus:outline-none focus:ring-2
+              ${
+                errors.amount
+                  ? 'border-red-500 focus:ring-red-400'
+                  : 'border-gray-300 focus:ring-blue-500'
+              }
+              placeholder:text-right
+            `}
+                    style={{ direction: 'ltr' }}
+                    onChange={(e) => {
+                      const rawValue = e.target.value.trim();
+                      if (rawValue === '') {
+                        field.onChange(undefined);
+                        return;
+                      }
+
+                      const numericValue = Number(
+                        rawValue
+                          .replace(/[۰-۹]/g, (d) =>
+                            String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d)),
+                          )
+                          .replace(/,/g, ''),
+                      );
+                      field.onChange(
+                        isNaN(numericValue) ? undefined : numericValue,
+                      );
+                    }}
+                  />
+                );
+              }}
+            />
+          </div>
 
           {errors.amount && (
             <p className='text-red-500 text-sm mt-1'>{errors.amount.message}</p>

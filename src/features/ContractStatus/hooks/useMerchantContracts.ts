@@ -32,7 +32,6 @@ export const useMerchantContracts = ({
         `${API_MERCHANT_CONTRACTS_ME}`,
         config,
       );
-      console.log(res.data, 'aaaa');
       setRequestData(res.data);
     } catch (err) {
       console.error(err);
