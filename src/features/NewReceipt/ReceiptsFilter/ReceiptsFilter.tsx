@@ -91,6 +91,7 @@ export const ReceiptsFilter = ({
           onChange={setFromDate}
           calendar={persian}
           locale={persian_fa}
+          maxDate={new Date()}
           portal
           className='w-full'
           containerClassName='w-full'
@@ -120,6 +121,7 @@ export const ReceiptsFilter = ({
           onChange={setToDate}
           calendar={persian}
           locale={persian_fa}
+          maxDate={new Date()}
           portal
           className='w-full'
           containerClassName='w-full'

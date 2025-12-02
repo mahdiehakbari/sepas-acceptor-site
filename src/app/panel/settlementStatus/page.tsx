@@ -34,17 +34,24 @@ const SettlementStatus = () => {
 
   const { filterData } = useFilter<ISettlementsData>(token, setRequestData);
 
-  const fetchData = async (pageNumber = 1) => {
+  const fetchData = async (
+    pageNumber = 1,
+    filterFromPaymentDate = fromPaymentDate,
+    filterToPaymentDate = toPaymentDate,
+    filterFromDate = fromDate,
+    filterToDate = toDate,
+  ) => {
     setPageLoading(true);
 
     await filterData(
-      fromPaymentDate,
-      toPaymentDate,
-      fromDate,
-      toDate,
+      filterFromPaymentDate,
+      filterToPaymentDate,
+      filterFromDate,
+      filterToDate,
       pageNumber,
       PAGE_SIZE,
     );
+
     setPageLoading(false);
   };
 
@@ -55,13 +62,12 @@ const SettlementStatus = () => {
 
   const handleFilter = () => {
     setPage(1);
-    fetchData(1);
+
+    fetchData(1, fromPaymentDate, toPaymentDate, fromDate, toDate);
     setIsOpenModal(false);
   };
 
   const handleClose = () => {
-    setPage(1);
-    fetchData(1);
     setIsOpenModal(false);
     setFromDate(null);
     setToDate(null);
@@ -71,7 +77,7 @@ const SettlementStatus = () => {
 
   const handleRemoveFilter = () => {
     setPage(1);
-    fetchData(1);
+    fetchData(1, null, null, null, null);
     setFromDate(null);
     setToDate(null);
     setFromPaymentDate(null);
@@ -91,6 +97,7 @@ const SettlementStatus = () => {
         <PageHeader
           titleKey='settlement_status:settlement_list'
           onFilterClick={handleOpenModal}
+          handleRemoveFilter={handleRemoveFilter}
         />
 
         {!pageLoading && !requestsData?.data?.document_list ? (

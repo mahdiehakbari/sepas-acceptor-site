@@ -59,16 +59,14 @@ const Receipts = () => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchData(page);
   }, [page]);
+
   const handleFilter = () => {
     setPage(1);
     fetchData(1);
     setIsOpenModal(false);
-    setReferenceNumber(null);
   };
 
   const handleClose = () => {
-    setPage(1);
-    fetchData(1);
     setAcceptorName([]);
     setIsOpenModal(false);
     setFromDate(null);
@@ -99,6 +97,7 @@ const Receipts = () => {
         <PageHeader
           titleKey='transaction:transaction_list'
           onFilterClick={handleOpenModal}
+          handleRemoveFilter={handleRemoveFilter}
         />
         {!requestsData || requestsData.items.length === 0 ? (
           <div className='text-center mt-10 text-gray-500'>

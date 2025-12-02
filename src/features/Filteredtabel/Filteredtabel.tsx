@@ -45,6 +45,7 @@ export const Filteredtabel = ({
           onChange={setFromDate}
           calendar={persian}
           locale={persian_fa}
+          maxDate={new Date()}
           inputClass='border border-gray-300 rounded-md w-full px-3 py-2 focus:outline-none focus:ring focus:border-blue-400'
           placeholder='انتخاب تاریخ'
         />
@@ -56,6 +57,7 @@ export const Filteredtabel = ({
           onChange={setToDate}
           calendar={persian}
           locale={persian_fa}
+          maxDate={new Date()}
           inputClass='border border-gray-300 rounded-md w-full px-3 py-2 focus:outline-none focus:ring focus:border-blue-400'
           placeholder='انتخاب تاریخ'
         />

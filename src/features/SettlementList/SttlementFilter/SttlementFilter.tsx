@@ -1,159 +1,4 @@
-// import DatePicker from 'react-multi-date-picker';
-// import persian from 'react-date-object/calendars/persian';
-// import persian_fa from 'react-date-object/locales/persian_fa';
-// import { Button } from '@/sharedComponent/ui/Button/Button';
-// import { useTranslation } from 'react-i18next';
-// import Image from 'next/image';
-// import { IFilteredProps, ISelectOption } from './types';
-
-// export const SettlementFilter = ({
-//   fromDate,
-//   setFromDate,
-//   toDate,
-//   fromPaymentDate,
-//   setFromPaymentDate,
-//   toPaymentDate,
-//   setToPaymentDate,
-//   setToDate,
-//   handleFilter,
-//   handleRemoveFilter,
-// }: IFilteredProps) => {
-//   const { t } = useTranslation();
-
-//   return (
-//     <div className='p-6 md:w-[465px]'>
-//       <div className='w-full  mb-5'>
-//         <DatePicker
-//           value={fromDate}
-//           onChange={setFromDate}
-//           calendar={persian}
-//           locale={persian_fa}
-//           portal
-//           className='w-full'
-//           containerClassName='w-full'
-//           inputClass='border border-gray-300 rounded-md w-full px-3 py-2 focus:outline-none focus:ring focus:border-blue-400'
-//           placeholder='از تاریخ تراکنش'
-//           render={(value, openCalendar) => (
-//             <div
-//               className='border border-gray-300 rounded-md w-full px-3 py-2 flex items-center justify-between cursor-pointer'
-//               onClick={openCalendar}
-//             >
-//               <span>{value || 'از تاریخ تراکنش'}</span>
-
-//               <Image
-//                 src='/assets/icons/calendar.svg'
-//                 alt='calender'
-//                 width={20}
-//                 height={20}
-//               />
-//             </div>
-//           )}
-//         />
-//       </div>
-
-//       <div className='w-full  mb-5'>
-//         <DatePicker
-//           value={toDate}
-//           onChange={setToDate}
-//           calendar={persian}
-//           locale={persian_fa}
-//           portal
-//           className='w-full'
-//           containerClassName='w-full'
-//           inputClass='border border-gray-300 rounded-md w-full px-3 py-2 focus:outline-none focus:ring focus:border-blue-400'
-//           placeholder='تا تاریخ تراکنش'
-//           render={(value, openCalendar) => (
-//             <div
-//               className='border border-gray-300 rounded-md w-full px-3 py-2 flex items-center justify-between cursor-pointer'
-//               onClick={openCalendar}
-//             >
-//               <span>{value || 'تا تاریخ تراکنش'}</span>
-
-//               <Image
-//                 src='/assets/icons/calendar.svg'
-//                 alt='calender'
-//                 width={20}
-//                 height={20}
-//               />
-//             </div>
-//           )}
-//         />
-//       </div>
-//       <div className='w-full  mb-5'>
-//         <DatePicker
-//           value={fromPaymentDate}
-//           onChange={setFromPaymentDate}
-//           calendar={persian}
-//           locale={persian_fa}
-//           portal
-//           className='w-full'
-//           containerClassName='w-full'
-//           inputClass='border border-gray-300 rounded-md w-full px-3 py-2 focus:outline-none focus:ring focus:border-blue-400'
-//           placeholder='از تاریخ تسویه'
-//           render={(value, openCalendar) => (
-//             <div
-//               className='border border-gray-300 rounded-md w-full px-3 py-2 flex items-center justify-between cursor-pointer'
-//               onClick={openCalendar}
-//             >
-//               <span>{value || 'از تاریخ تسویه'}</span>
-
-//               <Image
-//                 src='/assets/icons/calendar.svg'
-//                 alt='calender'
-//                 width={20}
-//                 height={20}
-//               />
-//             </div>
-//           )}
-//         />
-//       </div>
-
-//       <div className='w-full  mb-5'>
-//         <DatePicker
-//           value={toPaymentDate}
-//           onChange={setToPaymentDate}
-//           calendar={persian}
-//           locale={persian_fa}
-//           portal
-//           className='w-full'
-//           containerClassName='w-full'
-//           inputClass='border border-gray-300 rounded-md w-full px-3 py-2 focus:outline-none focus:ring focus:border-blue-400'
-//           placeholder='تا تاریخ تسویه'
-//           render={(value, openCalendar) => (
-//             <div
-//               className='border border-gray-300 rounded-md w-full px-3 py-2 flex items-center justify-between cursor-pointer'
-//               onClick={openCalendar}
-//             >
-//               <span>{value || 'تا تاریخ تسویه'}</span>
-
-//               <Image
-//                 src='/assets/icons/calendar.svg'
-//                 alt='calender'
-//                 width={20}
-//                 height={20}
-//               />
-//             </div>
-//           )}
-//         />
-//       </div>
-
-//       <div className='flex justify-between gap-4'>
-//         <Button
-//           variant='outline'
-//           onClick={handleRemoveFilter}
-//           className='w-[199px]'
-//         >
-//           {t('panel:remove_filter')}
-//         </Button>
-//         <Button onClick={handleFilter} className='w-[199px]'>
-//           {t('panel:get_report')}
-//         </Button>
-//       </div>
-//     </div>
-//   );
-// };
-
-import DatePicker from 'react-multi-date-picker';
+import DatePicker, { DateObject } from 'react-multi-date-picker';
 import persian from 'react-date-object/calendars/persian';
 import persian_fa from 'react-date-object/locales/persian_fa';
 import { Button } from '@/sharedComponent/ui/Button/Button';
@@ -176,8 +21,8 @@ export const SettlementFilter = ({
   const { t } = useTranslation();
 
   const renderDatePicker = (
-    value: any,
-    onChange: (date: any) => void,
+    value: DateObject | null,
+    onChange: (date: DateObject | null) => void,
     placeholder: string,
   ) => (
     <DatePicker
@@ -185,6 +30,7 @@ export const SettlementFilter = ({
       onChange={onChange}
       calendar={persian}
       locale={persian_fa}
+      maxDate={new Date()}
       portal
       className='w-full'
       containerClassName='w-full'
@@ -219,9 +65,9 @@ export const SettlementFilter = ({
       {renderDatePicker(toPaymentDate, setToPaymentDate, 'تا تاریخ تسویه')}
 
       <div className='mb-4'>
-        {renderDatePicker(fromDate, setFromDate, 'از تاریخ')}
+        {renderDatePicker(fromDate, setFromDate, 'از تاریخ تراکنش')}
       </div>
-      {renderDatePicker(toDate, setToDate, 'تا تاریخ')}
+      {renderDatePicker(toDate, setToDate, 'تا تاریخ تراکنش')}
 
       <div className='flex justify-between gap-4 mt-4'>
         <Button

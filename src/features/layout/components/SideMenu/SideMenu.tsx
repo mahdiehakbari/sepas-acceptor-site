@@ -9,6 +9,7 @@ import { IProfileFormValues } from './types';
 import { ProfileHeader } from '@/features/ProfileHeader';
 import ResponsiveModal from '@/sharedComponent/ui/ResponsiveModal/Modal';
 import { Button } from '@/sharedComponent/ui/Button/Button';
+import { IUser } from '../Header/types';
 
 export const SideMenu = () => {
   const { t } = useTranslation();
@@ -21,9 +22,8 @@ export const SideMenu = () => {
   const [userProfile, setUserProfile] = useState<IProfileFormValues | null>(
     null,
   );
-  const [profileImage, setProfileImage] = useState<string>(
-    '/assets/icons/guest.jpg',
-  );
+  const [profileImage, setProfileImage] = useState<string>('');
+  const [userData, setUserData] = useState<IUser | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -61,6 +61,29 @@ export const SideMenu = () => {
     logout();
     router.push('/');
   };
+
+  useEffect(() => {
+    const userDataStr = localStorage.getItem('user');
+    if (userDataStr) {
+      const userData = JSON.parse(userDataStr);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setUserData(userData);
+    }
+  }, []);
+
+  useEffect(() => {
+    switch (userData?.gender) {
+      case 'Male':
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setProfileImage('/assets/icons/avatar-m.jpg');
+        break;
+      case 'Female':
+        setProfileImage('/assets/icons/avatar-f.jpg');
+      default:
+        setProfileImage('/assets/icons/guest.jpg');
+        break;
+    }
+  }, [userData]);
 
   const isActive = (path: string) => pathname === path;
 

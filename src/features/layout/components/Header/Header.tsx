@@ -25,6 +25,7 @@ export const Header = () => {
   const [isOpenLoginModal, setIsOpenLoginModal] = useState(false);
   const [isOpenOtpModal, setIsOpenOtpModal] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
+  const [userData, setUserData] = useState<IUser | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const { logout } = useAuthStore();
@@ -60,6 +61,15 @@ export const Header = () => {
     setOpenPopUp(true);
   };
 
+  useEffect(() => {
+    const userDataStr = localStorage.getItem('user');
+    if (userDataStr) {
+      const userData = JSON.parse(userDataStr);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setUserData(userData);
+    }
+  }, []);
+
   return (
     <header className='w-full sticky top-0 z-50 shadow-[0px_-3px_10px_-4px_#32323214,0px_4px_6px_-2px_#32323208] bg-white mb-14'>
       <div className='mx-auto max-w-7xl px-4 py-2.5 flex items-center justify-between'>
@@ -93,7 +103,7 @@ export const Header = () => {
           ) : (
             <div className='relative' ref={menuRef}>
               <div onClick={handleClick} className='cursor-pointer'>
-                {user?.gender == 'Female' ? (
+                {userData?.gender === 'Female' ? (
                   <Image
                     src='/assets/icons/avatar-f.jpg'
                     alt='user-profile-icon'
@@ -101,7 +111,7 @@ export const Header = () => {
                     height={56}
                     className='rounded-full'
                   />
-                ) : user?.gender == 'Male' ? (
+                ) : userData?.gender === 'Male' ? (
                   <Image
                     src='/assets/icons/avatar-m.jpg'
                     alt='user-profile-icon'
