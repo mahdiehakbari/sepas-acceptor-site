@@ -10,6 +10,7 @@ import { ProfileHeader } from '@/features/ProfileHeader';
 import ResponsiveModal from '@/sharedComponent/ui/ResponsiveModal/Modal';
 import { Button } from '@/sharedComponent/ui/Button/Button';
 import { IUser } from '../Header/types';
+import Cookies from 'js-cookie';
 
 export const SideMenu = () => {
   const { t } = useTranslation();
@@ -62,14 +63,17 @@ export const SideMenu = () => {
     router.push('/');
   };
 
+  const isLoggedIn = Cookies.get('isLoggedIn');
+
   useEffect(() => {
     const userDataStr = localStorage.getItem('user');
     if (userDataStr) {
-      const userData = JSON.parse(userDataStr);
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setUserData(userData);
+      setUserData(JSON.parse(userDataStr));
+    } else {
+      setUserData(null);
     }
-  }, []);
+  }, [isLoggedIn]);
 
   useEffect(() => {
     switch (userData?.gender) {
@@ -84,7 +88,6 @@ export const SideMenu = () => {
         break;
     }
   }, [userData]);
-
   const isActive = (path: string) => pathname === path;
 
   return (

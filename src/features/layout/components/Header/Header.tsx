@@ -64,11 +64,12 @@ export const Header = () => {
   useEffect(() => {
     const userDataStr = localStorage.getItem('user');
     if (userDataStr) {
-      const userData = JSON.parse(userDataStr);
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setUserData(userData);
+      setUserData(JSON.parse(userDataStr));
+    } else {
+      setUserData(null);
     }
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <header className='w-full sticky top-0 z-50 shadow-[0px_-3px_10px_-4px_#32323214,0px_4px_6px_-2px_#32323208] bg-white mb-14'>
