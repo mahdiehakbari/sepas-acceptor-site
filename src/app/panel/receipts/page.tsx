@@ -34,22 +34,29 @@ const Receipts = () => {
   const [toDate, setToDate] = useState<DateObject | null>(null);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [referenceNumber, setReferenceNumber] = useState<string | null>(null);
+  const [remove, setRemove] = useState(false);
   const token = Cookies.get('token');
   const pageSize = 10;
   useFetchAcceptor(setAcceptorData);
   const { filterData } = useFilter<ITransactionsData>(token, setRequestData);
 
-  const fetchData = async (pageNumber = 1) => {
-    const customerIds = acceptorName.map((c) => c.value);
+  const fetchData = async (
+    pageNumber = 1,
+    filterFromDate = fromDate,
+    filterToDate = toDate,
+    filterAcceptorName = acceptorName,
+    filterReferenceNumber = referenceNumber,
+  ) => {
     setPageLoading(true);
+    const customerIds = acceptorName.map((c) => c.value);
 
     await filterData(
-      fromDate,
-      toDate,
+      filterFromDate,
+      filterToDate,
       customerIds,
       pageNumber,
       pageSize,
-      referenceNumber ? Number(referenceNumber) : undefined,
+      filterAcceptorName ? Number(filterReferenceNumber) : undefined,
     );
 
     setPageLoading(false);
@@ -76,17 +83,29 @@ const Receipts = () => {
 
   const handleRemoveFilter = () => {
     setPage(1);
-    fetchData(1);
+    fetchData(1, null, null, [], null);
     setAcceptorName([]);
     setIsOpenModal(false);
     setFromDate(null);
     setToDate(null);
     setReferenceNumber(null);
+    setRemove(false);
   };
 
   const handleOpenModal = () => {
     setIsOpenModal(true);
   };
+
+  useEffect(() => {
+    const hasFilter =
+      (referenceNumber && referenceNumber.trim() !== '') ||
+      fromDate !== null ||
+      toDate !== null ||
+      acceptorName.length > 0;
+
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setRemove(hasFilter);
+  }, [fromDate, toDate, referenceNumber, acceptorName]);
 
   return (
     <ContentStateWrapper
@@ -98,6 +117,7 @@ const Receipts = () => {
           titleKey='transaction:transaction_list'
           onFilterClick={handleOpenModal}
           handleRemoveFilter={handleRemoveFilter}
+          remove={remove}
         />
         {!requestsData || requestsData.items.length === 0 ? (
           <div className='text-center mt-10 text-gray-500'>

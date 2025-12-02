@@ -8,6 +8,7 @@ export const PageHeader: React.FC<IPageHeaderProps> = ({
   onFilterClick,
   filterTextKey = 'panel:filter',
   handleRemoveFilter,
+  remove,
 }) => {
   const { t } = useTranslation();
   return (
@@ -15,13 +16,15 @@ export const PageHeader: React.FC<IPageHeaderProps> = ({
       <div className='flex justify-between items-center'>
         <h1 className='text-black font-bold text-lg mb-4'>{t(titleKey)}</h1>
         <div className='flex items-center gap-4'>
-          <Button
-            variant='outline'
-            onClick={handleRemoveFilter}
-            className='w-[90px]'
-          >
-            {t('panel:remove_filter')}
-          </Button>
+          {remove == true && (
+            <Button
+              variant='outline'
+              onClick={handleRemoveFilter}
+              className='w-[90px]'
+            >
+              {t('panel:remove_filter')}
+            </Button>
+          )}
           <Button onClick={onFilterClick} className='w-[75px]'>
             <Image
               src='/assets/icons/filter.svg'

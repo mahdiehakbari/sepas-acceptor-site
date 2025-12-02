@@ -29,6 +29,7 @@ const SettlementStatus = () => {
   const [toPaymentDate, setToPaymentDate] = useState<DateObject | null>(null);
   const [fromDate, setFromDate] = useState<DateObject | null>(null);
   const [toDate, setToDate] = useState<DateObject | null>(null);
+  const [remove, setRemove] = useState(false);
   const PAGE_SIZE = 10;
   const token = Cookies.get('token');
 
@@ -87,6 +88,16 @@ const SettlementStatus = () => {
   const handleOpenModal = () => {
     setIsOpenModal(true);
   };
+  useEffect(() => {
+    const hasFilter =
+      fromDate !== null ||
+      toDate !== null ||
+      fromPaymentDate !== null ||
+      toPaymentDate !== null;
+
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setRemove(hasFilter);
+  }, [fromDate, toDate, fromPaymentDate, toPaymentDate]);
 
   return (
     <ContentStateWrapper
@@ -98,6 +109,7 @@ const SettlementStatus = () => {
           titleKey='settlement_status:settlement_list'
           onFilterClick={handleOpenModal}
           handleRemoveFilter={handleRemoveFilter}
+          remove={remove}
         />
 
         {!pageLoading && !requestsData?.data?.document_list ? (
