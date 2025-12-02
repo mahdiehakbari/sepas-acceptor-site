@@ -66,12 +66,13 @@ const ContractStatus = () => {
         },
       )
       .then((resp) => {
-        console.log(resp.data, 'aaa');
         toast.success('قرار داد شما با موفقیت ثبت شد.');
         setButtonLoading(false);
       })
       .catch();
   };
+
+  console.log(selectedContract, contractOptions);
 
   return (
     <ContentStateWrapper
@@ -95,7 +96,7 @@ const ContractStatus = () => {
               className='cursor-pointer w-full bg-white border border-gray-300 rounded-lg px-4 py-2 text-right flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-blue-500'
             >
               <span>
-                {selectedContract
+                {selectedContract !== null && selectedContract !== undefined
                   ? contractOptions.find(
                       (opt) => opt.value === selectedContract,
                     )?.label
