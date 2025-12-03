@@ -13,3 +13,5 @@ export const API_MERCHANT_PURCHASE_REQUEST =
 export const API_MERCHANT_CONTRACTS_ME = '/api/MerchantContractsQuery/me';
 export const API_MERCHANT_CONTRACTS_ME_POST =
   '/api/MerchantContractsCommand/me';
+export const API_UPLOAD_PROFILE_IMAGE = '/api/UserProfileImage/upload';
+export const API_GET_PROFILE_IMAGE = '/api/UserProfileImage';

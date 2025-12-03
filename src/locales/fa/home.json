@@ -17,5 +17,8 @@
   "log_out": "خروج",
   "record_new_transaction": "ثبت تراکنش جدید",
   "transaction": "تراکنش ها",
-  "search_plane": "جستجو بر اساس نام طرح..."
+  "search_plane": "جستجو بر اساس نام طرح...",
+  "select_image": "انتخاب تصویر",
+  "confirm": "ثبت",
+  "cancel": "انصراف"
 }

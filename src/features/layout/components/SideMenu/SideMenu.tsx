@@ -11,6 +11,7 @@ import ResponsiveModal from '@/sharedComponent/ui/ResponsiveModal/Modal';
 import { Button } from '@/sharedComponent/ui/Button/Button';
 import { IUser } from '../Header/types';
 import Cookies from 'js-cookie';
+import { useUploadProfileImage } from './hooks/useUploadProfileImage';
 
 export const SideMenu = () => {
   const { t } = useTranslation();
@@ -19,6 +20,7 @@ export const SideMenu = () => {
   const { logout } = useAuthStore();
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const { uploadImage, isLoading } = useUploadProfileImage();
 
   const [userProfile, setUserProfile] = useState<IProfileFormValues | null>(
     null,
@@ -45,12 +47,42 @@ export const SideMenu = () => {
     e.target.value = '';
   };
 
-  const handleConfirmImage = () => {
-    if (previewImage) {
-      setProfileImage(previewImage);
+  const handleConfirmImage = async () => {
+    if (!previewImage) return;
+
+    try {
+      // Convert blob URL to base64
+      const response = await fetch(previewImage);
+      const blob = await response.blob();
+
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64String = reader.result as string;
+        // Remove the data:image/...;base64, prefix
+        const base64Image = base64String.split(',')[1];
+
+        // Upload to backend
+        const success = await uploadImage(base64Image);
+
+        if (success) {
+          // Store the full base64 string (with prefix) in localStorage
+          localStorage.setItem('profileImage', base64String);
+          // Only set the profile image if upload was successful
+          setProfileImage(base64String);
+          
+          // Dispatch custom event to notify other components
+          window.dispatchEvent(new CustomEvent('profileImageUpdated'));
+        }
+
+        setPreviewImage(null);
+        setIsModalOpen(false);
+      };
+      reader.readAsDataURL(blob);
+    } catch (error) {
+      console.error('Error converting image:', error);
+      setPreviewImage(null);
+      setIsModalOpen(false);
     }
-    setPreviewImage(null);
-    setIsModalOpen(false);
   };
 
   const handleCancelImage = () => {

@@ -17,5 +17,8 @@
   "log_out": "Log Out",
   "record_new_transaction": "Record a new transaction",
   "transaction": "Transactions",
-  "search_plane": "Search by project name..."
+  "search_plane": "Search by project name...",
+  "select_image": "Select image",
+  "confirm": "Confirm",
+  "cancel": "Cancel"
 }
