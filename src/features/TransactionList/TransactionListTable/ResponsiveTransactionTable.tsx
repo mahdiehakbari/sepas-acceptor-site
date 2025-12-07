@@ -18,7 +18,7 @@ export const ResponsiveTransactionTable = ({
             <div className='border-2 border-border-color rounded-lg mb-4'>
               <div className=' p-4 '>
                 <div className='flex gap-2 items-center mb-2 '>
-                  <h2 className='font-medium text-[#808080] text-[14px]'>
+                  <h2 className='font-medium text-(--text-gray) text-[14px]'>
                     {t('transaction:customer_name')}
                   </h2>
                   <h2 className='font-semibold text-gray-800'>
@@ -26,7 +26,7 @@ export const ResponsiveTransactionTable = ({
                   </h2>
                 </div>
                 <div className='flex justify-between gap-2 items-center mb-4 '>
-                  <h2 className='font-medium text-[#808080] text-[14px]'>
+                  <h2 className='font-medium text-(--text-gray) text-[14px]'>
                     {t('transaction:phone_number')}
                   </h2>
                   <p className='font-medium text-black text-[14px]'>
@@ -34,7 +34,7 @@ export const ResponsiveTransactionTable = ({
                   </p>
                 </div>
                 <div className='flex justify-between gap-2 items-center mb-4 '>
-                  <h2 className='font-medium text-[#808080] text-[14px]'>
+                  <h2 className='font-medium text-(--text-gray) text-[14px]'>
                     {t('transaction:transaction_date')}
                   </h2>
                   <div className='text-center flex items-center gap-1.5'>
@@ -57,7 +57,7 @@ export const ResponsiveTransactionTable = ({
                   </div>
                 </div>
                 <div className='flex justify-between gap-2 items-center mb-4 '>
-                  <h2 className='font-medium text-[#808080] text-[14px]'>
+                  <h2 className='font-medium text-(--text-gray) text-[14px]'>
                     {t('transaction:transaction_amount')}
                   </h2>
 
@@ -66,7 +66,7 @@ export const ResponsiveTransactionTable = ({
                   </span>
                 </div>
                 <div className='flex justify-between gap-2 items-center mb-4 '>
-                  <h2 className='font-medium text-[#808080] text-[14px]'>
+                  <h2 className='font-medium text-(--text-gray) text-[14px]'>
                     {t('transaction:transaction_status')}
                   </h2>
 

@@ -23,6 +23,9 @@ module.exports = {
         'second-light-primary': 'var(--second-light-primary)',
         'second-green': 'var(--second-green)',
         'bg-gray': 'var(--bg-gray)',
+        'text-gray': 'var(--text-gray)',
+        'second-text-gray': 'var(--second-text-gray)',
+        '-border-blue': 'var(---border-blue)',
 
         'button-primary': 'var(--button-primary)',
         'second-blue': 'var(--second-blue)',
@@ -34,8 +37,8 @@ module.exports = {
         'gray-text-second': 'var(--gray-text-second)',
         'danger-color': 'var(--danger-color)',
         'block-color': 'var(--block-color)',
+        'second-light-blue': 'var(--second-light-blue)',
       },
     },
   },
-  plugins: [],
 };

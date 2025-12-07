@@ -39,6 +39,7 @@ export const SideMenu = () => {
     // Load saved profile image from localStorage
     const savedProfileImage = localStorage.getItem('profileImage');
     if (savedProfileImage) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setProfileImage(savedProfileImage);
     }
   }, []);
@@ -57,26 +58,18 @@ export const SideMenu = () => {
     if (!previewImage) return;
 
     try {
-      // Convert blob URL to base64
       const response = await fetch(previewImage);
       const blob = await response.blob();
 
       const reader = new FileReader();
       reader.onloadend = async () => {
         const base64String = reader.result as string;
-        // Remove the data:image/...;base64, prefix
         const base64Image = base64String.split(',')[1];
-
-        // Upload to backend
         const success = await uploadImage(base64Image);
 
         if (success) {
-          // Store the full base64 string (with prefix) in localStorage
           localStorage.setItem('profileImage', base64String);
-          // Only set the profile image if upload was successful
           setProfileImage(base64String);
-
-          // Dispatch custom event to notify other components
           window.dispatchEvent(new CustomEvent('profileImageUpdated'));
         }
 
@@ -114,7 +107,6 @@ export const SideMenu = () => {
   }, [isLoggedIn]);
 
   useEffect(() => {
-<<<<<<< HEAD
     const savedProfileImage = localStorage.getItem('profileImage');
     if (savedProfileImage) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -131,25 +123,6 @@ export const SideMenu = () => {
           setProfileImage('/assets/icons/guest.jpg');
           break;
       }
-=======
-    // Only set default image if there's no saved profile image
-    const savedProfileImage = localStorage.getItem('profileImage');
-    if (savedProfileImage) {
-      setProfileImage(savedProfileImage);
-      return;
-    }
-
-    switch (userData?.gender) {
-      case 'Male':
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setProfileImage('/assets/icons/avatar-m.jpg');
-        break;
-      case 'Female':
-        setProfileImage('/assets/icons/avatar-f.jpg');
-      default:
-        setProfileImage('/assets/icons/guest.jpg');
-        break;
->>>>>>> 076058a2b8c8f167ba7caeb417176203c0bee209
     }
   }, [userData]);
 
@@ -164,7 +137,10 @@ export const SideMenu = () => {
 
     window.addEventListener('profileImageUpdated', handleProfileImageUpdate);
     return () => {
-      window.removeEventListener('profileImageUpdated', handleProfileImageUpdate);
+      window.removeEventListener(
+        'profileImageUpdated',
+        handleProfileImageUpdate,
+      );
     };
   }, []);
   const isActive = (path: string) => pathname === path;

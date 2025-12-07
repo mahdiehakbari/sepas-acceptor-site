@@ -1,0 +1,12 @@
+{
+  "performance_report": "Total number of patients:",
+  "credit_amount": "Total credit amount so far",
+  "credit_settled": "Total credit settled",
+  "credit_balance": "Total credit remaining",
+  "contract_status": "Contract status:",
+  "transaction_status": "Transaction status by month",
+  "transaction_amount": "Transaction amount",
+  "month": "month",
+  "year": "year",
+  "recorded_month": "No transactions recorded this month."
+}
