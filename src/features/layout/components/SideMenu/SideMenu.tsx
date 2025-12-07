@@ -69,7 +69,7 @@ export const SideMenu = () => {
           localStorage.setItem('profileImage', base64String);
           // Only set the profile image if upload was successful
           setProfileImage(base64String);
-          
+
           // Dispatch custom event to notify other components
           window.dispatchEvent(new CustomEvent('profileImageUpdated'));
         }
@@ -108,16 +108,22 @@ export const SideMenu = () => {
   }, [isLoggedIn]);
 
   useEffect(() => {
-    switch (userData?.gender) {
-      case 'Male':
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setProfileImage('/assets/icons/avatar-m.jpg');
-        break;
-      case 'Female':
-        setProfileImage('/assets/icons/avatar-f.jpg');
-      default:
-        setProfileImage('/assets/icons/guest.jpg');
-        break;
+    const savedProfileImage = localStorage.getItem('profileImage');
+    if (savedProfileImage) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setProfileImage(savedProfileImage);
+    } else {
+      switch (userData?.gender) {
+        case 'Male':
+          setProfileImage('/assets/icons/avatar-m.jpg');
+          break;
+        case 'Female':
+          setProfileImage('/assets/icons/avatar-f.jpg');
+          break;
+        default:
+          setProfileImage('/assets/icons/guest.jpg');
+          break;
+      }
     }
   }, [userData]);
   const isActive = (path: string) => pathname === path;

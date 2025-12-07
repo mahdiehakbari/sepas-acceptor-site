@@ -77,9 +77,9 @@ export const Header = () => {
   useEffect(() => {
     // First, try to load the profile image from localStorage
     const savedProfileImage = localStorage.getItem('profileImage');
-    
+
     if (savedProfileImage) {
-      // If user has uploaded a profile image, use it
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setProfileImage(savedProfileImage);
     } else {
       // Otherwise, set default avatar based on gender
@@ -106,10 +106,16 @@ export const Header = () => {
       }
     };
 
-    window.addEventListener('profileImageUpdated', handleStorageChange as EventListener);
+    window.addEventListener(
+      'profileImageUpdated',
+      handleStorageChange as EventListener,
+    );
 
     return () => {
-      window.removeEventListener('profileImageUpdated', handleStorageChange as EventListener);
+      window.removeEventListener(
+        'profileImageUpdated',
+        handleStorageChange as EventListener,
+      );
     };
   }, []);
 
@@ -146,13 +152,14 @@ export const Header = () => {
           ) : (
             <div className='relative' ref={menuRef}>
               <div onClick={handleClick} className='cursor-pointer'>
-                <Image
-                  src={profileImage || '/assets/icons/guest.jpg'}
-                  alt='user-profile-icon'
-                  width={56}
-                  height={56}
-                  className='rounded-full object-cover'
-                />
+                <div className='w-14 h-14 rounded-full overflow-hidden relative'>
+                  <Image
+                    src={profileImage || '/assets/icons/guest.jpg'}
+                    alt='user'
+                    fill
+                    className='object-cover'
+                  />
+                </div>
               </div>
               {openPopUp && (
                 <DropdownMenu
