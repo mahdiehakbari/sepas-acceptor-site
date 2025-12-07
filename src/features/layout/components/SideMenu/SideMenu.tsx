@@ -35,6 +35,12 @@ export const SideMenu = () => {
     if (userInfo) {
       Promise.resolve().then(() => setUserProfile(JSON.parse(userInfo)));
     }
+
+    // Load saved profile image from localStorage
+    const savedProfileImage = localStorage.getItem('profileImage');
+    if (savedProfileImage) {
+      setProfileImage(savedProfileImage);
+    }
   }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,6 +114,7 @@ export const SideMenu = () => {
   }, [isLoggedIn]);
 
   useEffect(() => {
+<<<<<<< HEAD
     const savedProfileImage = localStorage.getItem('profileImage');
     if (savedProfileImage) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -124,8 +131,42 @@ export const SideMenu = () => {
           setProfileImage('/assets/icons/guest.jpg');
           break;
       }
+=======
+    // Only set default image if there's no saved profile image
+    const savedProfileImage = localStorage.getItem('profileImage');
+    if (savedProfileImage) {
+      setProfileImage(savedProfileImage);
+      return;
+    }
+
+    switch (userData?.gender) {
+      case 'Male':
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setProfileImage('/assets/icons/avatar-m.jpg');
+        break;
+      case 'Female':
+        setProfileImage('/assets/icons/avatar-f.jpg');
+      default:
+        setProfileImage('/assets/icons/guest.jpg');
+        break;
+>>>>>>> 076058a2b8c8f167ba7caeb417176203c0bee209
     }
   }, [userData]);
+
+  // Listen for profile image updates
+  useEffect(() => {
+    const handleProfileImageUpdate = () => {
+      const savedProfileImage = localStorage.getItem('profileImage');
+      if (savedProfileImage) {
+        setProfileImage(savedProfileImage);
+      }
+    };
+
+    window.addEventListener('profileImageUpdated', handleProfileImageUpdate);
+    return () => {
+      window.removeEventListener('profileImageUpdated', handleProfileImageUpdate);
+    };
+  }, []);
   const isActive = (path: string) => pathname === path;
 
   return (
