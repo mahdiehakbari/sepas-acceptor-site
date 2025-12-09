@@ -7,36 +7,38 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
+  TooltipProps,
 } from 'recharts';
-import type { TooltipProps } from 'recharts';
-import type { Payload } from 'recharts/types/component/DefaultTooltipContent';
+import {
+  ValueType,
+  NameType,
+} from 'recharts/types/component/DefaultTooltipContent';
 
-interface ChartItem {
+export interface ChartItem {
   day: number;
   value: number;
 }
 
-const data: ChartItem[] = Array.from({ length: 31 }, (_, i) => ({
-  day: i + 1,
-  value: Math.floor(Math.random() * 900) + 100,
-}));
+const CustomTooltip = ({
+  active,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-expect-error
+  payload,
+}: TooltipProps<ValueType, NameType>) => {
+  if (!active || !payload || payload.length === 0) return null;
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-expect-error
-const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
-  if (!active || !payload || !payload.length) return null;
-
-  const firstPayload = payload[0] as Payload<number, string>;
-  if (firstPayload.value === undefined) return null;
+  const firstPayload = payload[0];
+  if (firstPayload.value === undefined || firstPayload.value === null)
+    return null;
 
   return (
     <div className='bg-gray-700 text-white text-sm px-3 py-1 rounded-lg shadow'>
-      {firstPayload.value.toLocaleString('fa-IR')}ریال
+      {Number(firstPayload.value).toLocaleString('fa-IR')} ریال
     </div>
   );
 };
 
-export default function BarExample() {
+export const BarExample = ({ data }: { data: ChartItem[] }) => {
   return (
     <div className='w-full h-72 bg-white rounded-xl pr-6'>
       <ResponsiveContainer width='100%' height='100%'>
@@ -54,4 +56,4 @@ export default function BarExample() {
       </ResponsiveContainer>
     </div>
   );
-}
+};

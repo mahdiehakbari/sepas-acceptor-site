@@ -6,3 +6,4 @@ export { PageSpinner } from './SpinnerDiv/PageSpinner';
 export { DateInput } from './DateInput/DateInput';
 export { FormTitle } from './FormTitle/FormTitle';
 export { Paginate } from './Paginate/Paginate';
+export { SimpleSelect } from './SimpleSelectInput/index';

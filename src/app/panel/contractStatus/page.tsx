@@ -72,8 +72,6 @@ const ContractStatus = () => {
       .catch();
   };
 
-  console.log(selectedContract, contractOptions);
-
   return (
     <ContentStateWrapper
       loading={pageLoading}

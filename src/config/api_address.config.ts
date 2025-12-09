@@ -20,3 +20,5 @@ export const API_CITIES_QUERY = '/api/CitiesQuery/by-province/';
 export const API_CONTRACT_GET = '/api/MerchantContractsQuery/me';
 export const API_CONTRACT_POST = '/api/MerchantContractsCommand/me';
 export const API_UPDATE_PROFILE = ' /api/MerchantsCommand/profile';
+export const API_MERCHANT_MONTH = '/api/MerchantFinancialQuery/Monthly';
+export const API_MERCHANT_OVERALL = '/api/MerchantFinancialQuery/Overall';

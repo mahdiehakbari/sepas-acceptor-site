@@ -1,1 +1,1 @@
-export { default as BarExample } from './Barchart';
+export { BarExample } from './Barchart';
