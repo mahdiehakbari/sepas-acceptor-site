@@ -9,7 +9,7 @@ export const ProfileHeader = ({
   handleFileChange,
 }: IProfileHeaderProps) => {
   return (
-     <div
+    <div
       className='flex items-center space-x-3 mb-8 cursor-pointer'
       onClick={() => fileInputRef.current?.click()}
     >
