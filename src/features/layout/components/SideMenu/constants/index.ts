@@ -7,9 +7,14 @@ export const getSideBarItems = () => [
     icon: '/assets/icons/user-account.svg',
   },
   {
+    label: i18n.t('panel:performance_report'),
+    path: '/panel/performanceReport',
+    icon: '/assets/icons/receipt.svg',
+  },
+  {
     label: i18n.t('panel:new-receipt'),
     path: '/panel/newReceipt',
-    icon: '/assets/icons/receipt-add.svg',
+    icon: '/assets/icons/receipt.svg',
   },
 
   {

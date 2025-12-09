@@ -172,10 +172,16 @@ export const Header = () => {
                       image: '/assets/icons/user-account.svg',
                     },
                     {
+                      label: t('panel:performance_report'),
+                      href: '/panel/performanceReport',
+                      image: '/assets/icons/receipt.svg',
+                    },
+                    {
                       label: t('panel:new-receipt'),
                       href: '/panel/newReceipt',
                       image: '/assets/icons/receipt.svg',
                     },
+
                     {
                       label: t('panel:receipts'),
                       href: '/panel/receipts',
