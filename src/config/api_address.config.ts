@@ -15,3 +15,8 @@ export const API_MERCHANT_CONTRACTS_ME_POST =
   '/api/MerchantContractsCommand/me';
 export const API_UPLOAD_PROFILE_IMAGE = '/api/UserProfileImage/upload';
 export const API_GET_PROFILE_IMAGE = '/api/UserProfileImage';
+export const API_PROVINCES_QUERY = '/api/ProvincesQuery';
+export const API_CITIES_QUERY = '/api/CitiesQuery/by-province/';
+export const API_CONTRACT_GET = '/api/MerchantContractsQuery/me';
+export const API_CONTRACT_POST = '/api/MerchantContractsCommand/me';
+export const API_UPDATE_PROFILE = ' /api/MerchantsCommand/profile';

@@ -12,7 +12,7 @@ export const useUploadProfileImage = () => {
   const uploadImage = async (base64Image: string, description?: string) => {
     const token = Cookies.get('token');
     if (!token) {
-      toast.error(t('profile:token_missing'));
+      toast.error(t('dental-society:token_missing'));
       return false;
     }
 
@@ -23,12 +23,12 @@ export const useUploadProfileImage = () => {
         base64Image,
         description: description || 'User profile picture',
       });
-      toast.success(t('profile:success_toast'));
+      toast.success(t('dental-society:success_toast'));
       return true;
     } catch (error) {
       const axiosError = error as AxiosError<{ message?: string }>;
       toast.error(
-        axiosError.response?.data?.message || t('profile:update_error'),
+        axiosError.response?.data?.message || t('dental-society:update_error'),
       );
       return false;
     } finally {

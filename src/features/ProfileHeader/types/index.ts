@@ -3,7 +3,7 @@ import { RefObject } from 'react';
 export interface IProfileHeaderProps {
   fileInputRef: RefObject<HTMLInputElement | null>;
   profileImage: string;
-  userProfile: {
+  userdental-society: {
     firstName?: string;
     lastName?: string;
   } | null;
