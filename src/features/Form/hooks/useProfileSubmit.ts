@@ -21,8 +21,7 @@ export const useProfileSubmit = ({
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
   const router = useRouter();
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //@ts-expect-error
+
   const { setProfile } = useProfileStore();
 
   const onSubmit = async (data: IProfileFormValues) => {

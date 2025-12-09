@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { IProfileStore } from './types';
+import { IProfile, IProfileStore } from './types';
 
 export const useProfileStore = create<IProfileStore>((set) => ({
   profile: {
@@ -16,5 +16,5 @@ export const useProfileStore = create<IProfileStore>((set) => ({
     postalCode: '',
     addressDetails: '',
   },
-  setProfile: (data: unknown) => set({ profile: data }),
+  setProfile: (data: IProfile | undefined) => set({ profile: data }),
 }));

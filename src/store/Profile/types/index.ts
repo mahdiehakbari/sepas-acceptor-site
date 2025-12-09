@@ -14,6 +14,6 @@ export interface IProfile {
 }
 
 export interface IProfileStore {
-  dental-society: IProfile;
-  setdental-society: (data: IProfile) => void;
+  profile: IProfile;
+  setProfile: (data: IProfile) => void;
 }
