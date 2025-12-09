@@ -5,9 +5,9 @@ interface IAddress {
   cityName: string;
   provinceId: string;
   provinceName: string;
-  details: string;
+  // details: string;
   postalCode: string;
-  certificateNumber: string;
+
   workPlacePhoneNumber: string;
   merchantAddress: string;
 }

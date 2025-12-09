@@ -167,6 +167,11 @@ export const Header = () => {
                   onClose={() => setOpenPopUp(false)}
                   items={[
                     {
+                      label: t('login:user_account'),
+                      href: '/panel/profile',
+                      image: '/assets/icons/user-account.svg',
+                    },
+                    {
                       label: t('panel:new-receipt'),
                       href: '/panel/newReceipt',
                       image: '/assets/icons/receipt.svg',

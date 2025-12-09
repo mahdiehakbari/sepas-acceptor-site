@@ -12,10 +12,10 @@
   "phone_number": "شماره موبایل",
   "national_id": "کدملی",
   "birth_date": "تاریخ تولد",
-  "gender": "جنسیت *",
+  "gender": "جنسیت ",
   "medical_system_number": "شماره نظام پزشکی",
-  "educational": "آخرین مدرک تحصیلی*",
-  "contract_type": "نوع قرارداد *",
+  "educational": "آخرین مدرک تحصیلی",
+  "contract_type": "نوع قرارداد ",
   "email": "ایمیل ",
   "bank_info": "اطلاعات بانکی",
   "iban_number": "شماره شبا",
@@ -44,5 +44,6 @@
   "bank_information": "اطلاعات بانکی",
   "only_numbers_allowed": "فقط شماره مجاز است",
   "mobile_must_be_11_digits": "شماره وارد شده باید 11 رقم باشد ",
-  "national_code_invalid": "شماره ملی اشتباه است "
+  "national_code_invalid": "شماره ملی اشتباه است ",
+  "edit": "ویرایش اطلاعات"
 }

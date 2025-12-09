@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { IProfileStore } from './types';
 
 export const useProfileStore = create<IProfileStore>((set) => ({
-  dental-society: {
+  profile: {
     firstName: '',
     lastName: '',
     mobile: '',
@@ -16,5 +16,5 @@ export const useProfileStore = create<IProfileStore>((set) => ({
     postalCode: '',
     addressDetails: '',
   },
-  setdental-society: (data) => set({ dental-society: data }),
+  setProfile: (data: unknown) => set({ profile: data }),
 }));

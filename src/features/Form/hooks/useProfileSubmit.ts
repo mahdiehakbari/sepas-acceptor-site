@@ -21,6 +21,8 @@ export const useProfileSubmit = ({
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
   const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-expect-error
   const { setProfile } = useProfileStore();
 
   const onSubmit = async (data: IProfileFormValues) => {
@@ -30,16 +32,13 @@ export const useProfileSubmit = ({
     setIsLoading(true);
 
     const formattedData: Partial<IProfileFormValues> = {
-      ...data,
-      gender: data.gender !== '' ? Number(data.gender) : 0,
-      educationLevel:
-        data.educationLevel !== '' ? Number(data.educationLevel) : 0,
-      birthDate: formatBirthDate(data.birthDate),
+      email: data.email,
+      iban: data.iban,
+      merchantAddress: data.merchantAddress || '',
+      workPlacePhoneNumber: data.workPlacePhoneNumber,
+      cityId: data.cityId,
+      postalCode: data.postalCode,
     };
-
-    if (!formattedData.email) {
-      delete formattedData.email;
-    }
 
     try {
       const res = await updateProfile(token, formattedData);
@@ -57,7 +56,7 @@ export const useProfileSubmit = ({
       }
 
       Cookies.set('isLoggedIn', 'true');
-      toast.success('قرار داد شما با موفقیت ثبت شد.');
+      toast.success('اطلاعات شما با موفقیت ثبت شد.');
 
       if (name === 'profile') router.push('/panel/dentalSociety');
 

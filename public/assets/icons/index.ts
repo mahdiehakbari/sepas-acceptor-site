@@ -5,7 +5,7 @@ interface IAddress {
   cityName: string;
   provinceId: string;
   provinceName: string;
-  details: string;
+  // details: string;
   postalCode: string;
   medicalCertificateNumber: string;
   workPlacePhoneNumber: string;
@@ -35,6 +35,7 @@ export interface IProfileFormValues {
   medicalCertificateNumber: string;
   workPlacePhoneNumber: string;
   merchantAddress: string;
+  certificateNumber: string;
 }
 
 export interface InputProps {

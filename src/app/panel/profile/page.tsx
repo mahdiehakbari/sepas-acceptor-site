@@ -1,14 +1,17 @@
 'use client';
 import { API_AUTHENTICATE_ME } from '@/config/api_address.config';
 import { ProfileForm } from '@/features/Form/ProfileForm';
-import { SpinnerDiv } from '@/sharedComponent/ui';
+import { ShowUserData } from '@/features/ShowUserData';
+import { Button, SpinnerDiv } from '@/sharedComponent/ui';
 import { IProfileFormValues } from '@/sharedComponent/ui/Input/types';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Profile = () => {
-  const [isEditing, setIsEditing] = useState(true);
+  const { t } = useTranslation();
+  const [isEditing, setIsEditing] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const [user, setUser] = useState<IProfileFormValues>({
     fullName: '',
@@ -25,19 +28,17 @@ const Profile = () => {
     cityId: '',
     postalCode: '',
     addressDetails: '',
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-expect-error
     address: {
       id: '',
       cityId: '',
       cityName: '',
       provinceId: '',
       provinceName: '',
-      details: '',
       postalCode: '',
-      certificateNumber: '',
       workPlacePhoneNumber: '',
+      merchantAddress: '',
     },
+    merchantAddress: '',
     medicalSystemNumber: '',
     educationLevel: '',
     contractType: '',
@@ -82,7 +83,7 @@ const Profile = () => {
 
   return (
     <>
-      {isEditing && (
+      {isEditing ? (
         <ProfileForm
           name='userAccount'
           handleBack={handleBack}
@@ -90,6 +91,15 @@ const Profile = () => {
           setIsEditing={setIsEditing}
           userData={user}
         />
+      ) : (
+        <>
+          <ShowUserData user={user} />
+          <div className='flex justify-end my-2'>
+            <Button onClick={() => setIsEditing(true)}>
+              {t('dental-society:edit')}
+            </Button>
+          </div>
+        </>
       )}
     </>
   );

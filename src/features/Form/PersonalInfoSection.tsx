@@ -32,7 +32,6 @@ export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
     { id: 0, name: 'پست دکترا' },
     { id: 1, name: 'دکترا' },
     { id: 2, name: 'استاد' },
-    { id: 3, name: 'استاد' },
   ];
 
   const contractItems = [

@@ -39,5 +39,6 @@
   "bank_information": "Bank information",
   "only_numbers_allowed": "only number allowed",
   "mobile_must_be_11_digits": "mobile must be 11 digits",
-  "national_code_invalid": "national code invalid"
+  "national_code_invalid": "national code invalid",
+  "edit": "Edit Data"
 }

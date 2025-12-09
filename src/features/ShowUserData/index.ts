@@ -1,0 +1,1 @@
+export { ShowUserData } from './ShowUserData';
