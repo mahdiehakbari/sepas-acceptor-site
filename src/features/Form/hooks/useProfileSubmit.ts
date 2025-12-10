@@ -6,7 +6,7 @@ import axios, { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
 import { formatBirthDate } from '../utils/formatBirthDate';
 import { API_AUTHENTICATE_ME } from '@/config/api_address.config';
-import { IProfileFormValues } from '../types';
+import { IProfileFormValues, IUpdateProfileValues } from '../types';
 import { ProfileSubmitProps } from './types';
 import { updateProfile } from '../api/profile.api';
 import { useProfileStore } from '@/store/Profile/useProfileStore';
@@ -30,10 +30,10 @@ export const useProfileSubmit = ({
 
     setIsLoading(true);
 
-    const formattedData: Partial<IProfileFormValues> = {
+    const formattedData: Partial<IUpdateProfileValues> = {
       email: data.email,
       iban: data.iban,
-      merchantAddress: data.merchantAddress || '',
+      address: data.addressDetails || '',
       workPlacePhoneNumber: data.workPlacePhoneNumber,
       cityId: data.cityId,
       postalCode: data.postalCode,
