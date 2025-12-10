@@ -42,6 +42,15 @@ export interface IProfileFormValues {
   merchantAddress: string;
 }
 
+export interface IUpdateProfileValues {
+  email?: string;
+  iban?: string;
+  address: string;
+  workPlacePhoneNumber: string;
+  cityId: string;
+  postalCode: string;
+}
+
 export interface IProfileFormProps {
   userData?: IProfileFormValues | null;
   setUser?: (value: IProfileFormValues) => void;

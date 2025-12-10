@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 import { API_UPDATE_PROFILE } from '@/config/api_address.config';
-import { IProfileFormValues } from '../types';
+import { IUpdateProfileValues } from '../types';
 
 export const updateProfile = async (
   token: string,
-  data: Partial<IProfileFormValues>,
+  data: Partial<IUpdateProfileValues>,
 ) => {
   return axios.put(API_UPDATE_PROFILE, data, {
     headers: {
