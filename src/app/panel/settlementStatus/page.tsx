@@ -104,7 +104,7 @@ const SettlementStatus = () => {
       loading={pageLoading}
       loadingText={t('panel:page_loading')}
     >
-      <div className='max-w-6xl mx-auto mt-6'>
+      <div className='md:max-w-6xl mx-auto mt-6'>
         <PageHeader
           titleKey='settlement_status:settlement_list'
           onFilterClick={handleOpenModal}

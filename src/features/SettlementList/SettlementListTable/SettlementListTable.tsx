@@ -41,6 +41,14 @@ export const SettlementListTable = ({
                       {index + 1 + (currentPage - 1) * pageSize}
                     </div>
                     <div className='w-[20%] text-center'>
+                      {settlement.purchaseRequest.customer.fullName}
+                    </div>
+                    <div className='w-[20%] text-center'>
+                      {toPersianNumber(
+                        String(settlement.purchaseRequest.referenceNumber),
+                      )}
+                    </div>
+                    <div className='w-[20%] text-center'>
                       {settlement.create_date
                         ? toPersianNumber(
                             `${dayjs(settlement.create_date).format(
@@ -72,7 +80,7 @@ export const SettlementListTable = ({
                         }`}
                       >
                         {settlement.status === null
-                          ? 'اقدام نشده'
+                          ? 'تسویه نشده'
                           : settlement.status == 12
                           ? 'تسویه شده'
                           : 'لغو شده '}

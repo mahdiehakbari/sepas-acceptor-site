@@ -12,6 +12,12 @@ export interface ISettlementItem {
   payment_date?: string;
   iban?: string;
   person_address?: number;
+  purchaseRequest: {
+    referenceNumber: number;
+    customer: {
+      fullName: string;
+    };
+  };
 }
 
 export interface ISettlementListTableProps {

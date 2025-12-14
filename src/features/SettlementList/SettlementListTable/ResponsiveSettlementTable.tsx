@@ -13,7 +13,7 @@ export const ResponsiveSettlementTable = ({
   const { t } = useTranslation();
 
   return (
-    <div className='max-w-md mx-auto mt-10'>
+    <div className='mx-auto mt-10'>
       {requests.map((settlement, index) => {
         return (
           <div key={index}>
@@ -32,6 +32,24 @@ export const ResponsiveSettlementTable = ({
                   <p className='font-medium text-black text-[14px]'>
                     {settlement.payment_date &&
                       toPersianNumber(settlement.payment_date)}
+                  </p>
+                </div>
+                <div className='flex justify-between gap-2 items-center mb-4 '>
+                  <h2 className='font-medium text-(--text-gray) text-[14px]'>
+                    {t('transaction:customer_name')}
+                  </h2>
+                  <p className='font-medium text-black text-[14px]'>
+                    {settlement.purchaseRequest.customer.fullName}
+                  </p>
+                </div>
+                <div className='flex justify-between gap-2 items-center mb-4 '>
+                  <h2 className='font-medium text-(--text-gray) text-[14px]'>
+                    {t('panel:tracking_number')}
+                  </h2>
+                  <p className='font-medium text-black text-[14px]'>
+                    {toPersianNumber(
+                      String(settlement.purchaseRequest.referenceNumber),
+                    )}
                   </p>
                 </div>
 
