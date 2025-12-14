@@ -61,11 +61,18 @@ export const useProfileSubmit = ({
 
       setShowProfileModal?.(false);
       setShowCreditNoteModal?.(true);
-    } catch (error) {
-      const axiosError = error as AxiosError<{ message?: string }>;
-      toast.error(
-        axiosError.response?.data?.message || t('profile:update_error'),
-      );
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.data?.errors?.Iban) {
+          toast.error('شماره شبا باید با IR شروع شود و 24 کاراکتر باشد');
+        } else {
+          toast.error(
+            error.response?.data?.message || t('profile:update_error'),
+          );
+        }
+      } else {
+        toast.error(t('profile:update_error'));
+      }
     } finally {
       setIsLoading(false);
     }
