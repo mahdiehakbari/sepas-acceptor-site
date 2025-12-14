@@ -40,6 +40,7 @@ export interface IProfileFormValues {
   certificateNumber: string;
   workPlacePhoneNumber: string;
   merchantAddress: string;
+  professionalTitle: string;
 }
 
 export interface IUpdateProfileValues {

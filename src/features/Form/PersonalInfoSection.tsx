@@ -158,22 +158,14 @@ export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
           disabled={!!userData?.certificateNumber}
         />
 
-        <SelectInput
-          label={t('dental-society:educational')}
-          name='educationLevel'
+        <Input
+          label={t('dental-society:doctor_title')}
+          name='professionalTitle'
           register={register}
-          options={educationalItems.map((c) => ({
-            value: c.id.toString(),
-            label: c.name,
-          }))}
           errors={errors}
-          rules={{ required: t('dental-society:field_required') }}
-          defaultValue={
-            userData?.educationLevel !== undefined
-              ? String(userData.educationLevel)
-              : ''
-          }
-          disabled={!userData?.educationLevel ? true : false}
+          textError={t('dental-society:field_required')}
+          defaultValue={userData?.professionalTitle ?? ''}
+          disabled={!!userData?.professionalTitle}
         />
 
         <SelectInput

@@ -44,6 +44,7 @@ const Profile = () => {
     contractType: '',
     certificateNumber: '',
     workPlacePhoneNumber: '',
+    professionalTitle: '',
   });
 
   useEffect(() => {
