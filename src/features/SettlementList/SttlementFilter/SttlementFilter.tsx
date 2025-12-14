@@ -19,7 +19,8 @@ export const SettlementFilter = ({
   handleRemoveFilter,
 }: IFilteredProps) => {
   const { t } = useTranslation();
-
+  const today = new Date();
+  today.setHours(23, 59, 59, 999);
   const renderDatePicker = (
     value: DateObject | null,
     onChange: (date: DateObject | null) => void,
@@ -30,7 +31,7 @@ export const SettlementFilter = ({
       onChange={onChange}
       calendar={persian}
       locale={persian_fa}
-      maxDate={new Date()}
+      maxDate={today}
       portal
       className='w-full'
       containerClassName='w-full'

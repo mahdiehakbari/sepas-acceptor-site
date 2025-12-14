@@ -39,6 +39,9 @@ export const ReceiptsFilter = ({
     return str.replace(/[0-9]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
   };
 
+  const today = new Date();
+  today.setHours(23, 59, 59, 999);
+
   return (
     <div className='p-6 md:w-[465px]'>
       <div className='w-full mb-5'>
@@ -91,7 +94,7 @@ export const ReceiptsFilter = ({
           onChange={setFromDate}
           calendar={persian}
           locale={persian_fa}
-          maxDate={new Date()}
+          maxDate={today}
           portal
           className='w-full'
           containerClassName='w-full'
@@ -121,7 +124,7 @@ export const ReceiptsFilter = ({
           onChange={setToDate}
           calendar={persian}
           locale={persian_fa}
-          maxDate={new Date()}
+          maxDate={today}
           portal
           className='w-full'
           containerClassName='w-full'

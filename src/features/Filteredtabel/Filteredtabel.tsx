@@ -27,6 +27,8 @@ export const Filteredtabel = ({
   isFilterButtonDisabled,
   placeholderText,
 }: IFilteredProps) => {
+  const today = new Date();
+  today.setHours(23, 59, 59, 999);
   return (
     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4'>
       <div className='w-full'>
@@ -45,7 +47,7 @@ export const Filteredtabel = ({
           onChange={setFromDate}
           calendar={persian}
           locale={persian_fa}
-          maxDate={new Date()}
+          maxDate={today}
           inputClass='border border-gray-300 rounded-md w-full px-3 py-2 focus:outline-none focus:ring focus:border-blue-400'
           placeholder='انتخاب تاریخ'
         />
@@ -57,7 +59,7 @@ export const Filteredtabel = ({
           onChange={setToDate}
           calendar={persian}
           locale={persian_fa}
-          maxDate={new Date()}
+          maxDate={today}
           inputClass='border border-gray-300 rounded-md w-full px-3 py-2 focus:outline-none focus:ring focus:border-blue-400'
           placeholder='انتخاب تاریخ'
         />
