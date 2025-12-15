@@ -96,7 +96,7 @@ const PerformanceReport = () => {
           <h3 className='font-normal text-(--text-gray) text-[16px]'>
             {t('performance-report:contract_status')}
           </h3>
-          <h3 className='font-medium text-black text-[16px]'>فعال</h3>
+          <h3 className='font-medium text-[#237D24] text-[16px] '>فعال</h3>
         </div>
       </div>
 
