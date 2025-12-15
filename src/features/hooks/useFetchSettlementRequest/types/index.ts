@@ -7,4 +7,5 @@ export interface IFilterParams {
   toPaymentDate?: string;
   customerIds?: string[];
   merchantIds?: string[];
+  referenceNumber?: number | null;
 }

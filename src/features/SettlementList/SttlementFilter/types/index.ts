@@ -32,4 +32,9 @@ export interface IFilteredProps {
   handleFilter: () => void;
   placeholderText: string;
   handleRemoveFilter: () => void;
+  setReferenceNumber: (value: string | null) => void;
+  referenceNumber: string | null;
+  acceptorName: ISelectOption[];
+  setAcceptorName: (value: ISelectOption[]) => void;
+  acceptorData: IAcceptorData[];
 }

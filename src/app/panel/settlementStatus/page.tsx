@@ -14,6 +14,11 @@ import { DateObject } from 'react-multi-date-picker';
 import { SettlementFilter } from '@/features/SettlementList/SttlementFilter/SttlementFilter';
 import { useFilter } from '@/features/hooks/useFetchSettlementRequest/useFetchFilter';
 import { PageHeader } from '@/features/PageHeader';
+import {
+  IAcceptorData,
+  ISelectOption,
+} from '@/features/NewReceipt/ReceiptsFilter/types';
+import { useFetchAcceptor } from '@/features/hooks';
 
 const SettlementStatus = () => {
   const { t } = useTranslation();
@@ -30,27 +35,36 @@ const SettlementStatus = () => {
   const [fromDate, setFromDate] = useState<DateObject | null>(null);
   const [toDate, setToDate] = useState<DateObject | null>(null);
   const [remove, setRemove] = useState(false);
+  const [referenceNumber, setReferenceNumber] = useState<string | null>(null);
+  const [acceptorName, setAcceptorName] = useState<ISelectOption[]>([]);
+  const [acceptorData, setAcceptorData] = useState<IAcceptorData[]>([]);
   const PAGE_SIZE = 10;
   const token = Cookies.get('token');
 
   const { filterData } = useFilter<ISettlementsData>(token, setRequestData);
-
+  useFetchAcceptor(setAcceptorData);
   const fetchData = async (
     pageNumber = 1,
     filterFromPaymentDate = fromPaymentDate,
     filterToPaymentDate = toPaymentDate,
     filterFromDate = fromDate,
     filterToDate = toDate,
+    filterAcceptorName: ISelectOption[] = acceptorName,
+    filterReferenceNumber: string | null = referenceNumber,
   ) => {
     setPageLoading(true);
-
+    const customerIds = (filterAcceptorName ?? []).map(
+      (c: ISelectOption) => c.value,
+    );
     await filterData(
       filterFromPaymentDate,
       filterToPaymentDate,
       filterFromDate,
       filterToDate,
+      customerIds,
       pageNumber,
       PAGE_SIZE,
+      filterReferenceNumber ? Number(filterReferenceNumber) : undefined,
     );
 
     setPageLoading(false);
@@ -74,6 +88,8 @@ const SettlementStatus = () => {
     setToDate(null);
     setFromPaymentDate(null);
     setToPaymentDate(null);
+    setReferenceNumber(null);
+    setAcceptorName([]);
   };
 
   const handleRemoveFilter = () => {
@@ -83,6 +99,8 @@ const SettlementStatus = () => {
     setToDate(null);
     setFromPaymentDate(null);
     setToPaymentDate(null);
+    setReferenceNumber(null);
+    setAcceptorName([]);
   };
 
   const handleOpenModal = () => {
@@ -94,10 +112,19 @@ const SettlementStatus = () => {
       toDate !== null ||
       fromPaymentDate !== null ||
       toPaymentDate !== null;
-
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    acceptorName.length > 0 ||
+      (referenceNumber && referenceNumber.trim() !== '');
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setRemove(hasFilter);
-  }, [fromDate, toDate, fromPaymentDate, toPaymentDate]);
+  }, [
+    fromDate,
+    toDate,
+    fromPaymentDate,
+    toPaymentDate,
+    acceptorName.length,
+    referenceNumber,
+  ]);
 
   return (
     <ContentStateWrapper
@@ -160,6 +187,9 @@ const SettlementStatus = () => {
             handleFilter={handleFilter}
             placeholderText={t('panel:search_customer')}
             handleRemoveFilter={handleRemoveFilter}
+            setAcceptorName={setAcceptorName}
+            referenceNumber={referenceNumber}
+            acceptorData={acceptorData || []}
           />
         </ResponsiveModal>
       </div>

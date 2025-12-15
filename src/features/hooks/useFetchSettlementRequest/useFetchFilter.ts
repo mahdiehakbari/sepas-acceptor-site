@@ -17,6 +17,8 @@ export function useFilter<T>(
     toDate: DateObject | null,
     pageNo: number = 1,
     count: number = 10,
+    customerIds: string[] = [],
+    referenceNumber?: number | null,
   ) => {
     const formatShamsiDate = (date: DateObject | null) => {
       if (!date) return undefined;
@@ -30,6 +32,8 @@ export function useFilter<T>(
     const params: IFilterParams = {
       pageNo,
       count,
+      customerIds,
+      referenceNumber,
       fromPaymentDate: fromPaymentDate
         ? formatShamsiDate(fromPaymentDate)
         : undefined,
