@@ -23,7 +23,7 @@ export const SettlementListTable = ({
               <div className='flex bg-(--block-color) border border-(--block-color) rounded-lg px-3 py-3 font-semibold text-gray-700 text-sm'>
                 {getThItems().map((item) => (
                   <div key={item.id} className='w-1/1 text-right'>
-                    {item.label} {item.id == 4 && '(ریال)'}
+                    {item.label} {item.id == 6 && '(ریال)'}
                   </div>
                 ))}
               </div>

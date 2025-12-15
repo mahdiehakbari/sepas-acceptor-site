@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/fa';
 import { toPersianNumber } from './utils/toPersianNumber';
 
-export const ResponsiveSettlementTable = ({
+export const  ResponsiveSettlementTable = ({
   requests,
   currentPage,
   pageSize,
@@ -76,7 +76,7 @@ export const ResponsiveSettlementTable = ({
                   </h2>
 
                   <span className='font-medium text-black text-[14px]'>
-                    {settlement.amount.toLocaleString('fa-IR')} تومان
+                    {settlement.amount.toLocaleString('fa-IR')}ریال
                   </span>
                 </div>
                 <div className='flex justify-between gap-2 items-center mb-4 '>

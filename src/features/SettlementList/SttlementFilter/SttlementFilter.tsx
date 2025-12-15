@@ -48,12 +48,14 @@ export const SettlementFilter = ({
     value: DateObject | null,
     onChange: (date: DateObject | null) => void,
     placeholder: string,
+    maxDate?: Date
   ) => (
     <DatePicker
       value={value}
       onChange={onChange}
       calendar={persian}
       locale={persian_fa}
+       maxDate={maxDate}
       portal
       className='w-full'
       containerClassName='w-full'
@@ -131,9 +133,19 @@ export const SettlementFilter = ({
       {renderDatePicker(toPaymentDate, setToPaymentDate, 'تا تاریخ تسویه')}
 
       <div className='mb-4'>
-        {renderDatePicker(fromDate, setFromDate, 'از تاریخ تراکنش')}
+        {renderDatePicker(
+          fromDate,
+          setFromDate,
+          'از تاریخ تراکنش',
+          today
+        )}
       </div>
-      {renderDatePicker(toDate, setToDate, 'تا تاریخ تراکنش')}
+      {renderDatePicker(
+        toDate,
+        setToDate,
+        'تا تاریخ تراکنش',
+        today
+      )}
 
       <div className='flex justify-between gap-4 mt-4'>
         <Button
