@@ -54,7 +54,6 @@ export const SettlementFilter = ({
       onChange={onChange}
       calendar={persian}
       locale={persian_fa}
-      maxDate={today}
       portal
       className='w-full'
       containerClassName='w-full'

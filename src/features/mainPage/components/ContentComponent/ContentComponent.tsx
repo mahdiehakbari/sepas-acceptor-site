@@ -12,7 +12,7 @@ export const ContentComponent = () => {
         {t('home:register_patient_payments')}
       </p>
       <p className='text-black font-medium text-[16px] mb-5'>
-        {t('home:support_contact')}
+        شماره تماس پشتیبانی: ۷۹۵۷۲۰۰۰-۰۲۱
       </p>
     </div>
   );
