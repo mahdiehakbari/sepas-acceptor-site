@@ -56,14 +56,15 @@ const SettlementStatus = () => {
     const customerIds = (filterAcceptorName ?? []).map(
       (c: ISelectOption) => c.value,
     );
+
     await filterData(
       filterFromPaymentDate,
       filterToPaymentDate,
       filterFromDate,
       filterToDate,
-      customerIds,
       pageNumber,
       PAGE_SIZE,
+      customerIds,
       filterReferenceNumber ? Number(filterReferenceNumber) : undefined,
     );
 
@@ -189,7 +190,9 @@ const SettlementStatus = () => {
             handleRemoveFilter={handleRemoveFilter}
             setAcceptorName={setAcceptorName}
             referenceNumber={referenceNumber}
-            acceptorData={acceptorData || []}
+            acceptorData={acceptorData}
+            acceptorName={acceptorName}
+            setReferenceNumber={setReferenceNumber}
           />
         </ResponsiveModal>
       </div>

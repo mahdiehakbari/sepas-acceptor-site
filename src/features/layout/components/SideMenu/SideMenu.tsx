@@ -230,7 +230,10 @@ export const SideMenu = () => {
             : t('panel:contact_support')
         }
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => {
+          setIsModalOpen(false);
+          setSupportModal(false);
+        }}
       >
         {supportModal == false ? (
           <div className='md:w-[600px]'>
