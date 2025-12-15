@@ -29,6 +29,7 @@ export const SideMenu = () => {
   const [userData, setUserData] = useState<IUser | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [supportModal, setSupportModal] = useState(false);
 
   useEffect(() => {
     const userInfo = localStorage.getItem('userProfile');
@@ -51,6 +52,7 @@ export const SideMenu = () => {
     const blobUrl = URL.createObjectURL(file);
     setPreviewImage(blobUrl);
     setIsModalOpen(true);
+    setSupportModal(false);
     e.target.value = '';
   };
 
@@ -144,7 +146,10 @@ export const SideMenu = () => {
     };
   }, []);
   const isActive = (path: string) => pathname === path;
-
+  const handleSupport = () => {
+    setIsModalOpen(true);
+    setSupportModal(true);
+  };
   return (
     <>
       <aside className='w-64 bg-[#F8F9FA] shadow-md p-6'>
@@ -187,7 +192,10 @@ export const SideMenu = () => {
           </ul>
 
           <div className='px-6'>
-            <div className='flex items-center gap-2 pb-4 cursor-pointer'>
+            <div
+              className='flex items-center gap-2 pb-4 cursor-pointer'
+              onClick={handleSupport}
+            >
               <Image
                 src='/assets/icons/headphone.svg'
                 alt=''
@@ -216,24 +224,37 @@ export const SideMenu = () => {
       </aside>
 
       <ResponsiveModal
-        title={t('panel:select_image')}
+        title={
+          supportModal == false
+            ? t('panel:select_image')
+            : t('panel:contact_support')
+        }
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       >
-        <div className='md:w-[600px]'>
-          <img
-            src={previewImage!}
-            alt='preview'
-            className='w-40 h-40 object-cover rounded-full mx-auto my-6'
-          />
+        {supportModal == false ? (
+          <div className='md:w-[600px]'>
+            <img
+              src={previewImage!}
+              alt='preview'
+              className='w-40 h-40 object-cover rounded-full mx-auto my-6'
+            />
 
-          <div className='flex justify-between p-4 border-t border-border-color '>
-            <Button variant='outline' onClick={handleCancelImage}>
-              {t('panel:cancel')}
-            </Button>
-            <Button onClick={handleConfirmImage}>{t('panel:confirm')}</Button>
+            <div className='flex justify-between p-4 border-t border-border-color '>
+              <Button variant='outline' onClick={handleCancelImage}>
+                {t('panel:cancel')}
+              </Button>
+              <Button onClick={handleConfirmImage}>{t('panel:confirm')}</Button>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className='md:w-[500px] py-8 px-6'>
+            <div className='flex items-center gap-2'>
+              <p>شماره تماس پشتیبانی:</p>
+              <p>۷۹۵۷۲۰۰۰-۰۲۱</p>
+            </div>
+          </div>
+        )}
       </ResponsiveModal>
     </>
   );

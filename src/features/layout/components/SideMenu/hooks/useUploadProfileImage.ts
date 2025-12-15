@@ -23,7 +23,7 @@ export const useUploadProfileImage = () => {
         base64Image,
         description: description || 'User profile picture',
       });
-      toast.success(t('dental-society:success_toast'));
+      toast.success('عکس پروفایل شما با موفقیت ثبت شد.');
       return true;
     } catch (error) {
       const axiosError = error as AxiosError<{ message?: string }>;
