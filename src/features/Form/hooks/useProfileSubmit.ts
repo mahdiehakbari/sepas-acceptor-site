@@ -37,6 +37,7 @@ export const useProfileSubmit = ({
       workPlacePhoneNumber: data.workPlacePhoneNumber,
       cityId: data.cityId,
       postalCode: data.postalCode,
+      bio: data.bio,
     };
 
     try {

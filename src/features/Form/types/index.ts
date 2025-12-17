@@ -41,6 +41,7 @@ export interface IProfileFormValues {
   workPlacePhoneNumber: string;
   merchantAddress: string;
   professionalTitle: string;
+  bio: string;
 }
 
 export interface IUpdateProfileValues {
@@ -50,6 +51,7 @@ export interface IUpdateProfileValues {
   workPlacePhoneNumber: string;
   cityId: string;
   postalCode: string;
+  bio: string;
 }
 
 export interface IProfileFormProps {

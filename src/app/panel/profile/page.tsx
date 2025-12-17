@@ -45,6 +45,7 @@ const Profile = () => {
     certificateNumber: '',
     workPlacePhoneNumber: '',
     professionalTitle: '',
+    bio: '',
   });
 
   useEffect(() => {

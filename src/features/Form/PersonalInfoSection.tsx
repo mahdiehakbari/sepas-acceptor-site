@@ -191,6 +191,21 @@ export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
           rules={{ required: false }}
           defaultValue={userData?.email ?? ''}
         />
+
+        <textarea
+          className='w-full rounded-md border bg-white border-gray-300 p-3 text-sm
+             focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
+          rows={4}
+          placeholder='درباره‌ی من'
+          {...register('bio', {
+            required: false,
+            maxLength: {
+              value: 500,
+              message: t('dental-society:max_500_chars'),
+            },
+          })}
+          defaultValue={userData?.bio ?? ''}
+        />
       </div>
     </section>
   );

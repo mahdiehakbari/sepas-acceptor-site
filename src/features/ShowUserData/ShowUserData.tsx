@@ -39,7 +39,6 @@ export const ShowUserData = ({ user }: IShowUserDataProps) => {
               {user.fullName}
             </p>
           </div>
-
           <div className='flex justify-between items-center  pl-6 mb-6'>
             <p className='text-[#3B3B3B] text-[14px] font-medium'>
               {t('dental-society:phone_number')}:
@@ -48,7 +47,6 @@ export const ShowUserData = ({ user }: IShowUserDataProps) => {
               {user.phoneNumber}
             </p>
           </div>
-
           <div className='flex justify-between items-center md:border-l-2 border-[#C2C2C2] pl-6  mb-6'>
             <p className='text-[#3B3B3B] text-[14px] font-medium'>
               {t('dental-society:national_id')}:
@@ -57,7 +55,6 @@ export const ShowUserData = ({ user }: IShowUserDataProps) => {
               {user.nationalId}
             </p>
           </div>
-
           {/* <div className='flex justify-between items-center pl-6 mb-6'>
             <p className='text-[#3B3B3B] text-[14px] font-medium'>
               {t('dental-society:birth_date')}:
@@ -66,7 +63,6 @@ export const ShowUserData = ({ user }: IShowUserDataProps) => {
               <BirthDate birthDate={user.birthDate} />
             </p>
           </div> */}
-
           <div className='flex justify-between items-center pl-6  mb-6'>
             <p className='text-[#3B3B3B] text-[14px] font-medium'>
               {t('dental-society:gender')}:
@@ -75,7 +71,6 @@ export const ShowUserData = ({ user }: IShowUserDataProps) => {
               {user.gender == 'Female' ? 'زن' : 'مرد'}
             </p>
           </div>
-
           <div className='flex justify-between items-center  pl-6  mb-6  md:border-l-2 md:border-[#C2C2C2]'>
             <p className='text-[#3B3B3B] text-[14px] font-medium'>
               {t('dental-society:educational')}:
@@ -88,7 +83,6 @@ export const ShowUserData = ({ user }: IShowUserDataProps) => {
                 : 'استاد'}
             </p>
           </div>
-
           <div className='flex justify-between items-center pl-6  mb-6'>
             <p className='text-[#3B3B3B] text-[14px] font-medium'>
               {t('dental-society:medical_system_number')}:
@@ -97,7 +91,6 @@ export const ShowUserData = ({ user }: IShowUserDataProps) => {
               {user.certificateNumber}
             </p>
           </div>
-
           <div className='flex justify-between items-center pl-6  mb-6 md:border-l-2 md:border-[#C2C2C2]'>
             <p className='text-[#3B3B3B] text-[14px] font-medium'>
               {t('dental-society:contract_type')}:
@@ -112,7 +105,6 @@ export const ShowUserData = ({ user }: IShowUserDataProps) => {
                 : t('dental-society:six_monthly')}
             </p>
           </div>
-
           <div className='flex justify-between items-center pl-6 mb-6'>
             <p className='text-[#3B3B3B] text-[14px] font-medium'>
               {t('dental-society:email')}:
@@ -120,6 +112,12 @@ export const ShowUserData = ({ user }: IShowUserDataProps) => {
             <p className='text-[#3B3B3B] text-[14px] font-medium'>
               {user.email || '-'}
             </p>
+          </div>
+          <div className='flex justify-between items-center pl-6 mb-6'>
+            <p className='text-[#3B3B3B] text-[14px] font-medium'>
+              درباره‌ی من:
+            </p>
+            <p className='text-[#3B3B3B] text-[14px] font-medium'>{user.bio}</p>
           </div>
         </div>
 
