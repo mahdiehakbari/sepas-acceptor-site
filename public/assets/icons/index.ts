@@ -37,6 +37,7 @@ export interface IProfileFormValues {
   merchantAddress: string;
   certificateNumber: string;
   professionalTitle: string;
+  bio: string;
 }
 
 export interface InputProps {
