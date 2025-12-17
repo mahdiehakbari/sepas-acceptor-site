@@ -118,7 +118,7 @@ export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
           defaultValue={userData?.nationalId ?? ''}
           disabled={!!userData?.nationalId}
         />
-
+        {/* 
         <DateInput
           control={control}
           name='birthDate'
@@ -131,7 +131,7 @@ export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
               : undefined
           }
           disabled={!!userData?.birthDate}
-        />
+        /> */}
         <SelectInput
           label={t('dental-society:gender')}
           name='gender'
@@ -165,7 +165,7 @@ export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
           errors={errors}
           textError={t('dental-society:field_required')}
           defaultValue={userData?.professionalTitle ?? ''}
-          disabled={!!userData?.professionalTitle}
+          // disabled={!!userData?.professionalTitle}
         />
 
         <SelectInput

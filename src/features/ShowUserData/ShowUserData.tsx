@@ -58,16 +58,16 @@ export const ShowUserData = ({ user }: IShowUserDataProps) => {
             </p>
           </div>
 
-          <div className='flex justify-between items-center pl-6 mb-6'>
+          {/* <div className='flex justify-between items-center pl-6 mb-6'>
             <p className='text-[#3B3B3B] text-[14px] font-medium'>
               {t('dental-society:birth_date')}:
             </p>
             <p className='text-[#3B3B3B] text-[14px] font-medium'>
               <BirthDate birthDate={user.birthDate} />
             </p>
-          </div>
+          </div> */}
 
-          <div className='flex justify-between items-center md:border-l-2 md:border-[#C2C2C2] pl-6  mb-6'>
+          <div className='flex justify-between items-center pl-6  mb-6'>
             <p className='text-[#3B3B3B] text-[14px] font-medium'>
               {t('dental-society:gender')}:
             </p>
@@ -76,7 +76,7 @@ export const ShowUserData = ({ user }: IShowUserDataProps) => {
             </p>
           </div>
 
-          <div className='flex justify-between items-center  pl-6  mb-6'>
+          <div className='flex justify-between items-center  pl-6  mb-6  md:border-l-2 md:border-[#C2C2C2]'>
             <p className='text-[#3B3B3B] text-[14px] font-medium'>
               {t('dental-society:educational')}:
             </p>
@@ -89,7 +89,7 @@ export const ShowUserData = ({ user }: IShowUserDataProps) => {
             </p>
           </div>
 
-          <div className='flex justify-between items-center md:border-l-2 md:border-[#C2C2C2] pl-6  mb-6'>
+          <div className='flex justify-between items-center pl-6  mb-6'>
             <p className='text-[#3B3B3B] text-[14px] font-medium'>
               {t('dental-society:medical_system_number')}:
             </p>
@@ -98,7 +98,7 @@ export const ShowUserData = ({ user }: IShowUserDataProps) => {
             </p>
           </div>
 
-          <div className='flex justify-between items-center pl-6  mb-6'>
+          <div className='flex justify-between items-center pl-6  mb-6 md:border-l-2 md:border-[#C2C2C2]'>
             <p className='text-[#3B3B3B] text-[14px] font-medium'>
               {t('dental-society:contract_type')}:
             </p>
@@ -148,15 +148,15 @@ export const ShowUserData = ({ user }: IShowUserDataProps) => {
               {user.address?.cityName}
             </p>
           </div>
-          <div className='flex justify-between items-center md:border-l-2 border-[#C2C2C2] pl-6  mb-6'>
+          {/* <div className='flex justify-between items-center md:border-l-2 border-[#C2C2C2] pl-6  mb-6'>
             <p className='text-[#3B3B3B] text-[14px] font-medium'>
               {t('dental-society:zip_code')}:
             </p>
             <p className='text-[#3B3B3B] text-[14px] font-medium'>
               {user.address?.postalCode}
             </p>
-          </div>
-          <div className='flex justify-between items-center  mb-6'>
+          </div> */}
+          <div className='flex justify-between items-center  mb-6 pl-6 md:border-l-2 md:border-[#C2C2C2]'>
             <p className='text-[#3B3B3B] text-[14px] font-medium'>
               {t('dental-society:office_number')}:
             </p>
@@ -164,7 +164,7 @@ export const ShowUserData = ({ user }: IShowUserDataProps) => {
               {user?.workPlacePhoneNumber}
             </p>
           </div>
-          <div className='flex justify-between items-center md:border-l-2 border-[#C2C2C2] pl-6  mb-6'>
+          <div className='flex justify-between items-center  pl-6  mb-6'>
             <p className='text-[#3B3B3B] text-[14px] font-medium'>
               {t('dental-society:address')}:
             </p>
