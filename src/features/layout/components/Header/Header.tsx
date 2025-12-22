@@ -16,6 +16,8 @@ import { PhoneNumberModal } from '../Auth/PhoneNumber/PhoneNumberModal';
 import { OtpModal } from '../Auth/OTPComponent/OtpModal';
 import { DropdownMenu } from '../DropdownMenu/DropdownMenu';
 import { IUser } from './types';
+import axios from 'axios';
+import { API_AUTHENTICATE_ME } from '@/config/api_address.config';
 
 export const Header = () => {
   const { t } = useTranslation();
@@ -29,8 +31,12 @@ export const Header = () => {
   const [profileImage, setProfileImage] = useState<string>('');
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const token = Cookies.get('token');
   const { logout } = useAuthStore();
   const [user, setUser] = useState<IUser | null>(null);
+
+  const PROFILE_IMAGE_BASE_URL =
+    'https://dentalitfiles.sepasholding.com/images/profileimages/';
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -97,27 +103,35 @@ export const Header = () => {
     }
   }, [userData]);
 
-  // Listen for profile image changes
   useEffect(() => {
-    const handleStorageChange = (e: CustomEvent) => {
+    if (!isLoggedIn) return;
+
+    axios
+      .get(API_AUTHENTICATE_ME, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        setProfileImage(PROFILE_IMAGE_BASE_URL + res.data.imageFilePath);
+        localStorage.setItem('profileImage', res.data.imageFilePath);
+      })
+      .catch((err) => console.error(err));
+
+    const handleProfileImageUpdated = () => {
       const savedProfileImage = localStorage.getItem('profileImage');
       if (savedProfileImage) {
-        setProfileImage(savedProfileImage);
+        setProfileImage(PROFILE_IMAGE_BASE_URL + savedProfileImage);
       }
     };
 
-    window.addEventListener(
-      'profileImageUpdated',
-      handleStorageChange as EventListener,
-    );
+    window.addEventListener('profileImageUpdated', handleProfileImageUpdated);
 
     return () => {
       window.removeEventListener(
         'profileImageUpdated',
-        handleStorageChange as EventListener,
+        handleProfileImageUpdated,
       );
     };
-  }, []);
+  }, [isLoggedIn, token]);
 
   return (
     <header className='w-full sticky top-0 z-50 shadow-[0px_-3px_10px_-4px_#32323214,0px_4px_6px_-2px_#32323208] bg-white mb-14'>
@@ -153,11 +167,13 @@ export const Header = () => {
             <div className='relative' ref={menuRef}>
               <div onClick={handleClick} className='cursor-pointer'>
                 <div className='w-14 h-14 rounded-full overflow-hidden relative'>
-                  <Image
+                  <img
                     src={profileImage || '/assets/icons/guest.jpg'}
-                    alt='user'
-                    fill
-                    className='object-cover'
+                    alt='user-profile-icon'
+                    className='w-14 h-14 rounded-full object-cover'
+                    onError={(e) => {
+                      e.currentTarget.src = '/assets/icons/guest.jpg';
+                    }}
                   />
                 </div>
               </div>

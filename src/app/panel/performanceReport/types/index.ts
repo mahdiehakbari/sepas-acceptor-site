@@ -18,4 +18,6 @@ export interface IMerchantOverallData {
   totalAmountOfPaidOutPurchaseRequests: number;
   totalAmountOfUnpaidPurchaseRequests: number;
   lastContractType: ILastContractType;
+  sumOfMerchantCredit: number;
+  sumOfFee: number;
 }

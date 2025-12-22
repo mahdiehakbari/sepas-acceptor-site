@@ -40,11 +40,18 @@ const CustomTooltip = ({
 
 export const BarExample = ({ data }: { data: ChartItem[] }) => {
   return (
-    <div className='w-full h-72 bg-white rounded-xl pr-6'>
+    <div className='w-full h-72 bg-white rounded-xl px-6'>
       <ResponsiveContainer width='100%' height='100%'>
-        <BarChart data={data}>
-          <XAxis dataKey='day' tick={{ fontSize: 12 }} />
-          <YAxis tick={{ fontSize: 12 }} />
+        <BarChart data={data} margin={{ left: 40, right: 20 }}>
+          <XAxis
+            dataKey='day'
+            tick={{ fontSize: 12 }}
+            tickFormatter={(value) => Number(value).toLocaleString('fa-IR')}
+          />
+          <YAxis
+            tick={{ fontSize: 12, dx: -50 }}
+            tickFormatter={(value) => Number(value).toLocaleString('fa-IR')}
+          />
           <Tooltip content={<CustomTooltip />} />
           <Bar
             dataKey='value'

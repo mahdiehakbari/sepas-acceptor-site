@@ -2,11 +2,14 @@
   "performance_report": "تعداد کل بیماران:",
   "credit_amount": "مبلغ کل اعتبار تاکنون",
   "credit_settled": "مجموع اعتبار تسویه شده",
-  "credit_balance": "مجموع اعتبار مانده",
+  "credit_balance": "مجموع اعتبار تسویه نشده",
   "contract_status": "وضعیت قرارداد:",
   "transaction_status": "وضعیت تراکنش ها در ماه",
   "transaction_amount": "میزان تراکنش",
   "month": "ماه",
   "year": "سال",
-  "recorded_month": "تراکنشی در این ماه ثبت نشده است."
+  "recorded_month": "تراکنشی در این ماه ثبت نشده است.",
+  "Total_clients":"تعداد کل مراجعات",
+  "Total_transactions":"جمع کل تراکنش های موفق",
+  "Total_wages":"مجموع کارمزده های محاسبه شده"
 }

@@ -12,6 +12,7 @@ import { Button } from '@/sharedComponent/ui/Button/Button';
 import { IUser } from '../Header/types';
 import Cookies from 'js-cookie';
 import { useUploadProfileImage } from './hooks/useUploadProfileImage';
+import { toast } from 'react-toastify';
 
 export const SideMenu = () => {
   const { t } = useTranslation();
@@ -37,17 +38,24 @@ export const SideMenu = () => {
       Promise.resolve().then(() => setUserProfile(JSON.parse(userInfo)));
     }
 
-    // Load saved profile image from localStorage
     const savedProfileImage = localStorage.getItem('profileImage');
     if (savedProfileImage) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setProfileImage(savedProfileImage);
+      setPreviewImage(profileImage);
     }
   }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    const maxSizeInBytes = 256 * 1024;
+    if (file.size > maxSizeInBytes) {
+      toast.error('حجم عکس نمی‌تواند بیشتر از 256 کیلوبایت باشد.');
+      e.target.value = '';
+      return;
+    }
 
     const blobUrl = URL.createObjectURL(file);
     setPreviewImage(blobUrl);
@@ -60,6 +68,7 @@ export const SideMenu = () => {
     if (!previewImage) return;
 
     try {
+      // Convert blob URL to base64
       const response = await fetch(previewImage);
       const blob = await response.blob();
 
@@ -68,10 +77,10 @@ export const SideMenu = () => {
         const base64String = reader.result as string;
         const base64Image = base64String.split(',')[1];
         const success = await uploadImage(base64Image);
-
         if (success) {
-          localStorage.setItem('profileImage', base64String);
-          setProfileImage(base64String);
+          const fullUrl = `https://dentalitfiles.sepasholding.com/images/profileimages/${success}`;
+          localStorage.setItem('profileImage', success);
+          setProfileImage(fullUrl);
           window.dispatchEvent(new CustomEvent('profileImageUpdated'));
         }
 
@@ -112,7 +121,9 @@ export const SideMenu = () => {
     const savedProfileImage = localStorage.getItem('profileImage');
     if (savedProfileImage) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setProfileImage(savedProfileImage);
+      setProfileImage(
+        `https://dentalitfiles.sepasholding.com/images/profileimages/${savedProfileImage}`,
+      );
     } else {
       switch (userData?.gender) {
         case 'Male':
@@ -128,12 +139,13 @@ export const SideMenu = () => {
     }
   }, [userData]);
 
-  // Listen for profile image updates
   useEffect(() => {
     const handleProfileImageUpdate = () => {
       const savedProfileImage = localStorage.getItem('profileImage');
       if (savedProfileImage) {
-        setProfileImage(savedProfileImage);
+        setProfileImage(
+          `https://dentalitfiles.sepasholding.com/images/profileimages/${savedProfileImage}`,
+        );
       }
     };
 

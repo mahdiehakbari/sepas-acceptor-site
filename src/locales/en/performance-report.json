@@ -8,5 +8,8 @@
   "transaction_amount": "Transaction amount",
   "month": "month",
   "year": "year",
-  "recorded_month": "No transactions recorded this month."
+  "recorded_month": "No transactions recorded this month.", 
+  "Total_clients":"Total number of clients",
+  "Total_transactions":"Total number of successful transactions",
+  "Total_wages":"Total calculated wages"
 }

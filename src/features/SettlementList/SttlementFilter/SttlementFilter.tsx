@@ -44,29 +44,44 @@ export const SettlementFilter = ({
 
   const today = new Date();
   today.setHours(23, 59, 59, 999);
-  const renderDatePicker = (
-    value: DateObject | null,
-    onChange: (date: DateObject | null) => void,
-    placeholder: string,
-    maxDate?: Date
-  ) => (
-    <DatePicker
-      value={value}
-      onChange={onChange}
-      calendar={persian}
-      locale={persian_fa}
-       maxDate={maxDate}
-      portal
-      className='w-full'
-      containerClassName='w-full'
-      inputClass='border border-gray-300 rounded-md w-full px-3 py-2 focus:outline-none focus:ring focus:border-blue-400'
-      placeholder={placeholder}
-      render={(val, openCalendar) => (
-        <div
-          className='border border-gray-300 rounded-md w-full px-3 py-2 flex items-center justify-between cursor-pointer'
-          onClick={openCalendar}
-        >
-          <span>{val || placeholder}</span>
+const renderDatePicker = (
+  value: DateObject | null,
+  onChange: (date: DateObject | null) => void,
+  placeholder: string,
+  maxDate?: Date,
+) => (
+  <DatePicker
+    value={value}
+    onChange={(date) => onChange(date ?? null)}
+    calendar={persian}
+    locale={persian_fa}
+    maxDate={maxDate}
+    portal
+    className='w-full'
+    containerClassName='w-full'
+    placeholder={placeholder}
+    onOpenPickNewDate={false}
+    render={(val, openCalendar) => (
+      <div
+        className='border border-gray-300 rounded-md w-full px-3 py-2 flex items-center justify-between cursor-pointer'
+        onClick={openCalendar}
+      >
+        <span className='truncate'>{val || placeholder}</span>
+
+        <div className='flex items-center gap-2'>
+          {val && (
+            <button
+              type='button'
+              onClick={(e) => {
+                e.stopPropagation(); // جلوگیری از باز شدن تقویم
+                onChange(null);
+              }}
+              className='text-gray-400 hover:text-red-500 text-lg leading-none'
+            >
+              ×
+            </button>
+          )}
+
           <Image
             src='/assets/icons/calendar.svg'
             alt='calendar'
@@ -74,9 +89,11 @@ export const SettlementFilter = ({
             height={20}
           />
         </div>
-      )}
-    />
-  );
+      </div>
+    )}
+  />
+);
+
 
   return (
     <div className='p-6 md:w-[465px] space-y-5'>

@@ -52,20 +52,39 @@ export const DateInput = <T extends FieldValues>({
             }}
             calendar={persian}
             locale={persian_fa}
-            inputClass={`w-full bg-white border rounded-lg px-3 py-2 text-right placeholder-gray-400 
-        focus:outline-none focus:ring-2
-         ${
-           disabled
-             ? 'bg-gray-100 cursor-default opacity-70 text-[#9b9b9b]'
-             : ''
-         } 
-        ${
-          hasError
-            ? 'border-red-500 focus:ring-red-400'
-            : 'border-gray-300 focus:ring-blue-500'
-        }`}
-            placeholder={`${label} *`}
+            onOpenPickNewDate={false}
             calendarPosition='bottom-right'
+            render={(value, openCalendar) => (
+              <div
+                className={`w-full bg-white border rounded-lg px-3 py-2 flex items-center justify-between cursor-pointer
+        focus:outline-none
+        ${
+          disabled ? 'bg-gray-100 cursor-default opacity-70 text-[#9b9b9b]' : ''
+        }
+        ${hasError ? 'border-red-500' : 'border-gray-300'}`}
+                onClick={!disabled ? openCalendar : undefined}
+              >
+                <span className='truncate text-right'>
+                  {value || `${label} *`}
+                </span>
+
+                <div className='flex items-center gap-2'>
+                  {value && !disabled && (
+                    <button
+                      type='button'
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setPickerValue(undefined);
+                        field.onChange(undefined);
+                      }}
+                      className='text-gray-400 hover:text-red-500 text-lg leading-none'
+                    >
+                      ×
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
           />
         )}
       />

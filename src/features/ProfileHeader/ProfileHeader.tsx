@@ -15,11 +15,13 @@ export const ProfileHeader = ({
     >
       <div className='relative'>
         <div className='w-14 h-14 rounded-full overflow-hidden relative'>
-          <Image
+          <img
             src={profileImage || '/assets/icons/guest.jpg'}
             alt='user'
-            fill
-            className='object-cover'
+            className='object-cover h-full'
+            onError={(e) => {
+              e.currentTarget.src = '/assets/icons/guest.jpg';
+            }}
           />
         </div>
         <Image

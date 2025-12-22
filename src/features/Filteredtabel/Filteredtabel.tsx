@@ -44,24 +44,68 @@ export const Filteredtabel = ({
       <div className='w-full'>
         <DatePicker
           value={fromDate}
-          onChange={setFromDate}
+          onChange={(date) => setFromDate(date ?? null)}
           calendar={persian}
           locale={persian_fa}
           maxDate={today}
-          inputClass='border border-gray-300 rounded-md w-full px-3 py-2 focus:outline-none focus:ring focus:border-blue-400'
-          placeholder='انتخاب تاریخ'
+          onOpenPickNewDate={false}
+          render={(value, openCalendar) => (
+            <div
+              className='border border-gray-300 rounded-md w-full px-3 py-2 flex items-center justify-between cursor-pointer'
+              onClick={openCalendar}
+            >
+              <span className='truncate'>{value || 'انتخاب تاریخ'}</span>
+
+              <div className='flex items-center gap-2'>
+                {value && (
+                  <button
+                    type='button'
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setFromDate(null);
+                    }}
+                    className='text-gray-400 hover:text-red-500 text-lg leading-none'
+                  >
+                    ×
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
         />
       </div>
 
       <div className='w-full'>
         <DatePicker
           value={toDate}
-          onChange={setToDate}
+          onChange={(date) => setToDate(date ?? null)}
           calendar={persian}
           locale={persian_fa}
           maxDate={today}
-          inputClass='border border-gray-300 rounded-md w-full px-3 py-2 focus:outline-none focus:ring focus:border-blue-400'
-          placeholder='انتخاب تاریخ'
+          onOpenPickNewDate={false}
+          render={(value, openCalendar) => (
+            <div
+              className='border border-gray-300 rounded-md w-full px-3 py-2 flex items-center justify-between cursor-pointer'
+              onClick={openCalendar}
+            >
+              <span className='truncate'>{value || 'انتخاب تاریخ'}</span>
+
+              <div className='flex items-center gap-2'>
+                {value && (
+                  <button
+                    type='button'
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setToDate(null);
+                    }}
+                    className='text-gray-400 hover:text-red-500 text-lg leading-none'
+                  >
+                    ×
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
         />
       </div>
 

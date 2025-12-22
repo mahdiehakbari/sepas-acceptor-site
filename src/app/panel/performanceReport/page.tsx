@@ -28,8 +28,7 @@ const PerformanceReport = () => {
   const [overAllData, setOverAllData] = useState<IMerchantOverallData | null>(
     null,
   );
-  const number = 200;
-  const number1 = 40000000;
+
   const token = localStorage.getItem('token');
   useEffect(() => {
     if (!selectedYear || !selectedMonth) return;
@@ -94,20 +93,36 @@ const PerformanceReport = () => {
 
         <div className='flex justify-between md:justify-start items-center gap-1'>
           <h3 className='font-normal text-(--text-gray) text-[16px]'>
+            {t('performance-report:Total_clients')}
+          </h3>
+          <h3 className='font-medium text-[#237D24] text-[16px] '>
+            {overAllData?.totalNumberOfCompletedPurchaseRequests.toLocaleString(
+              'fa-IR',
+            )}
+          </h3>
+        </div>
+        <div className='flex justify-between md:justify-start items-center gap-1'>
+          <h3 className='font-normal text-(--text-gray) text-[16px]'>
             {t('performance-report:contract_status')}
           </h3>
-          <h3 className='font-medium text-[#237D24] text-[16px] '>فعال</h3>
+          <h3 className='font-medium text-[#237D24] text-[16px] '>
+            {overAllData?.lastContractType.payoutType == 'TwoMonths'
+              ? 'دوماه'
+              : overAllData?.lastContractType.payoutType == 'SixMonths'
+              ? 'شش ماه'
+              : overAllData?.lastContractType.payoutType == 'FourMonths'
+              ? 'چهارماه'
+              : 'نقدی'}
+          </h3>
         </div>
       </div>
 
-      <div className='bg-white rounded-2xl md:py-6 md:flex items-center mb-8'>
+      <div className='bg-white rounded-2xl md:py-6 md:flex items-center mb-2'>
         <PerformanceReportAmount
           image={'/assets/icons/icon-wallet.svg'}
           title={t('performance-report:credit_amount')}
           amount={
-            overAllData?.totalAmountOfCompletedPurchaseRequests.toLocaleString(
-              'fa-IR',
-            ) || '0'
+            overAllData?.sumOfMerchantCredit.toLocaleString('fa-IR') || '0'
           }
         />
 
@@ -130,6 +145,23 @@ const PerformanceReport = () => {
             ) || '0'
           }
           isLast
+        />
+      </div>
+      <div className='bg-white rounded-2xl md:py-6 md:flex items-center mb-8'>
+        <PerformanceReportAmount
+          image={'/assets/icons/icon-wallet.svg'}
+          title={t('performance-report:Total_transactions')}
+          amount={
+            overAllData?.totalAmountOfCompletedPurchaseRequests.toLocaleString(
+              'fa-IR',
+            ) || '0'
+          }
+        />
+
+        <PerformanceReportAmount
+          image={'/assets/icons/icon-credit.svg'}
+          title={t('performance-report:Total_wages')}
+          amount={overAllData?.sumOfFee.toLocaleString('fa-IR') || '0'}
         />
       </div>
 
