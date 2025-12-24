@@ -17,11 +17,12 @@ export const useOtp = (onClose: () => void) => {
   useEffect(() => {
     const token = Cookies.get('token');
     const userData = localStorage.getItem('user');
+    const expiresAt = Cookies.get('expiresAt');
 
-    if (token && userData) {
+    if (token && userData && expiresAt) {
       try {
         const parsedUser = JSON.parse(userData);
-        setAuth(token, parsedUser);
+        setAuth(token, parsedUser, expiresAt);
       } catch (err) {
         console.error('Failed to parse user from localStorage', err);
       }
@@ -38,9 +39,9 @@ export const useOtp = (onClose: () => void) => {
         otp,
       });
 
-      const { token, user } = response.data;
+      const { token, user, expiresAt } = response.data;
 
-      setAuth(token, user);
+      setAuth(token, user, expiresAt);
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
 
@@ -49,7 +50,10 @@ export const useOtp = (onClose: () => void) => {
         const profileImageData = await getProfileImage(token);
         if (profileImageData && profileImageData.base64Image) {
           // Store the base64 image in localStorage
-          localStorage.setItem('profileImage', `data:image/jpeg;base64,${profileImageData.base64Image}`);
+          localStorage.setItem(
+            'profileImage',
+            `data:image/jpeg;base64,${profileImageData.base64Image}`,
+          );
         } else {
           // Remove any existing profile image if none exists
           localStorage.removeItem('profileImage');
