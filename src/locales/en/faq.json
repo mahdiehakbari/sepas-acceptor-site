@@ -1,0 +1,48 @@
+{
+  "doctor_faq_title": "Doctors Frequently Asked Questions",
+
+  "doctor_registration_question": "How can I register as a doctor on the Dentalit platform?",
+  "doctor_registration_answer": "By visiting the doctors' registration page, you should enter your identity information, medical council number, clinic phone number, and required details. Your account will be activated after review and approval.",
+
+  "required_documents_question": "What information and documents are required for doctors to join?",
+  "required_documents_answer": [
+    "Identity information",
+    "Medical council registration number",
+    "Clinic license",
+    "Bank IBAN number",
+    "Contact details and address"
+  ],
+
+  "account_activation_time_question": "How long does account activation take?",
+  "account_activation_time_answer": "Usually between 2 to 3 business days, provided that the information is complete and the acceptance contract is signed by the doctor.",
+
+  "patient_referral_question": "How are patients referred to me?",
+  "patient_referral_answer": "Patients visit the Dentalit website, view the list of doctors and centers in the Dentalit acceptance network, select their desired doctor or center, and مراجعه for treatment.",
+
+  "treatment_cost_registration_question": "How do I register the treatment cost in the system?",
+  "treatment_cost_registration_answer": "After the patient’s visit, you register the treatment cost form using the patient’s national ID number. After patient confirmation and submission of the verification code by the patient, the amount is deducted from the patient’s wallet and added to the doctor’s balance.",
+
+  "edit_treatment_cost_question": "Can I change the treatment cost later?",
+  "edit_treatment_cost_answer": "Yes, editing is possible before finalization. After the patient confirmation code is registered, changes are not allowed. If additional payment is required, a new treatment cost form must be registered for the patient.",
+
+  "receive_payment_question": "How do I receive my treatment payment?",
+  "receive_payment_answer": "Based on the selected settlement method (instant settlement or deferred settlement), you will receive your payment accordingly.",
+
+  "payment_transfer_time_question": "When will the amount be deposited into my account?",
+  "payment_transfer_time_answer": "This depends on the settlement method you have selected.",
+
+  "change_settlement_method_question": "Can I change my settlement method later?",
+  "change_settlement_method_answer": "Yes. Please note that after changing the settlement method, it will only apply to new cases. Previous cases will be settled using the previous method.",
+
+  "platform_commission_question": "What are the platform commission fees?",
+  "platform_commission_answer": "The commission varies depending on the settlement method and is displayed to you when selecting the settlement type.",
+
+  "installment_responsibility_question": "Is the doctor responsible for the patient’s installment repayments?",
+  "installment_responsibility_answer": "No. Installment repayment is entirely the patient’s responsibility, and the doctor has no obligation.",
+
+  "installment_default_question": "What happens if the patient does not pay their installments?",
+  "installment_default_answer": "It has no impact on the doctor’s settlement. The responsibility lies solely with the patient.",
+
+  "support_question": "What should I do if I face an issue with treatment registration or receiving payment?",
+  "support_answer": "Please contact the Dentalit support team through the “Support” section."
+}

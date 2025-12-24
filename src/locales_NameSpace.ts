@@ -8,6 +8,7 @@ export const localesNS = [
   'contract',
   'performance-report',
   'dental-society',
+  'faq',
 ] as const;
 export type LocaleNS = (typeof localesNS)[number];
 
