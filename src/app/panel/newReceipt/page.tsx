@@ -33,6 +33,7 @@ const NewReceipt = () => {
     resetFormRef.current?.();
   };
 
+  console.log(showModalResult, 'setErrorResult');
   return (
     <div className="h-[-webkit-fill-available] bg-[url('/assets/icons/bg-image.svg')] bg-cover bg-center flex items-center justify-center">
       <div className='bg-(--second-light-primary) p-6 rounded-2xl md:w-[438px]'>
@@ -44,6 +45,8 @@ const NewReceipt = () => {
           setPhoneNumber={setPhoneNumber}
           setAmountNumber={setAmountNumber}
           registerReset={(resetFn) => (resetFormRef.current = resetFn)}
+          setShowModalResult={setShowModalResult}
+          setErrorResult={setErrorResult}
         />
 
         <ResponsiveModal

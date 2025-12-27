@@ -8,4 +8,6 @@ export interface INewReceiptProps {
   setPhoneNumber: (value: string) => void;
   setAmountNumber: (value: number) => void;
   registerReset?: (resetFn: () => void) => void;
+  setShowModalResult: (value: boolean) => void;
+  setErrorResult: (value: string) => void;
 }

@@ -58,14 +58,13 @@ export const NewReceiptOtp: React.FC<INewReceiptOtpProps> = ({
     try {
       const resp = await verifyOtpAPI(purchaseRequestId, otp, token);
       setResultData(resp.data);
-      setShowModalResult(true);
       setErrorResult('');
+       setShowModalResult(true);
     } catch (err) {
       const axiosErr = err as AxiosError<{ message?: string }>;
       const msg = axiosErr.response?.data?.message ?? 'خطایی رخ داده است.';
       setError(msg);
       setErrorResult(msg);
-      setShowModalResult(true);
     }
 
     setButtonLoading(false);

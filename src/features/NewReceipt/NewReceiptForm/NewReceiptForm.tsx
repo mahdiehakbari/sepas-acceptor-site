@@ -8,7 +8,6 @@ import Cookies from 'js-cookie';
 import { API_PURCHASE_REQUESTS_COMMAND } from '@/config/api_address.config';
 import { useEffect, useState } from 'react';
 import { SpinnerDiv } from '@/sharedComponent/ui/SpinnerDiv/SpinnerDiv';
-import { toast } from 'react-toastify';
 import { numberToPersianWords } from '@/features/utils/numberToPersianWords';
 
 export const NewReceiptForm = ({
@@ -16,6 +15,8 @@ export const NewReceiptForm = ({
   setPhoneNumber,
   setAmountNumber,
   registerReset,
+  setShowModalResult,
+  setErrorResult,
 }: INewReceiptProps) => {
   const { t } = useTranslation();
   const token = Cookies.get('token');
@@ -65,8 +66,10 @@ export const NewReceiptForm = ({
         setAmountNumber(data.amount);
       })
       .catch((err) => {
+        setErrorResult(err.response.data.message);
+        setShowModalResult(true);
+        setShowOtpModal(true);
         setButtonLoading(false);
-        toast.error(err?.response?.data?.message);
       });
   };
 
