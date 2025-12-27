@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { RegisterOptions } from 'react-hook-form';
+import { Controller, RegisterOptions } from 'react-hook-form';
 import { IProfileFormValues } from '@/sharedComponent/ui/Input/types';
 import { validationRules } from './utils/validationRules';
 import { IPersonalInfoSectionProps } from './types';
@@ -9,8 +9,10 @@ import Cookies from 'js-cookie';
 import {
   API_CONTRACT_GET,
   API_CONTRACT_POST,
+  API_SKILLS,
 } from '@/config/api_address.config';
 import { DateInput, FormTitle, Input, SelectInput } from '@/sharedComponent/ui';
+import Select, { components, MultiValue, OptionProps } from 'react-select';
 
 export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
   t,
@@ -24,14 +26,28 @@ export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
   const rules = validationRules(t);
   const token = Cookies.get('token');
   const [contract, setContract] = useState('');
+
+  interface ISkill {
+    id: string;
+    description: string;
+  }
+
+  const [skills, setSkills] = useState<ISkill[]>([]);
+
+  interface ISkillOption {
+    label: string;
+    value: string;
+  }
+
+  const CheckboxOption = (props: OptionProps<ISkillOption, true>) => (
+    <components.Option {...props}>
+      <input type='checkbox' checked={props.isSelected} readOnly />{' '}
+      {props.label}
+    </components.Option>
+  );
   const genderItems = [
     { id: 'Male', name: t('dental-society:man') },
     { id: 'Female', name: t('dental-society:woman') },
-  ];
-  const educationalItems = [
-    { id: 0, name: 'پست دکترا' },
-    { id: 1, name: 'دکترا' },
-    { id: 2, name: 'استاد' },
   ];
 
   const contractItems = [
@@ -67,9 +83,22 @@ export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
           .catch();
       })
       .catch();
+
+    axios
+      .get(API_SKILLS, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((resp) => {
+        setSkills(resp.data);
+      })
+      .catch();
   }, []);
 
-  console.log(contract, 'userData');
+  const skillOptions: ISkillOption[] = skills.map((c) => ({
+    value: String(c.id),
+    label: c.description,
+  }));
+
   return (
     <section>
       <FormTitle title={t('dental-society:personal_info')} />
@@ -191,6 +220,55 @@ export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
           rules={{ required: false }}
           defaultValue={userData?.email ?? ''}
         />
+
+        <div className='flex flex-col'>
+          <Controller
+            control={control}
+            name='skills'
+            rules={{ required: t('dental-society:field_required') as string }}
+            render={({ field }) => {
+              const selectedValues = Array.isArray(field.value)
+                ? field.value
+                : [];
+              const selectedOptions = skillOptions.filter((opt) =>
+                selectedValues.includes(opt.value),
+              );
+
+              return (
+                <Select
+                  options={skillOptions}
+                  isMulti
+                  closeMenuOnSelect={false}
+                  hideSelectedOptions={false}
+                  components={{ Option: CheckboxOption }}
+                  onChange={(
+                    val: MultiValue<{ label: string; value: string }>,
+                  ) => field.onChange(val.map((v) => v.value))}
+                  value={selectedOptions}
+                  placeholder={t('dental-society:skills')}
+                  styles={{
+                    valueContainer: (base) => ({
+                      ...base,
+                      display: 'flex',
+                      flexWrap: 'nowrap',
+                      overflowX: 'auto',
+                      maxHeight: '38px',
+                    }),
+                    multiValue: (base) => ({
+                      ...base,
+                      whiteSpace: 'nowrap',
+                    }),
+                  }}
+                />
+              );
+            }}
+          />
+          {errors.skills?.message && (
+            <span className='text-red-500 text-sm mt-1'>
+              {errors.skills.message.toString()}
+            </span>
+          )}
+        </div>
 
         <textarea
           className='w-full rounded-md border bg-white border-gray-300 p-3 text-sm

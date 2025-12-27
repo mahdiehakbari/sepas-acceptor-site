@@ -22,3 +22,4 @@ export const API_CONTRACT_POST = '/api/MerchantContractsCommand/me';
 export const API_UPDATE_PROFILE = ' /api/MerchantsCommand/profile';
 export const API_MERCHANT_MONTH = '/api/MerchantFinancialQuery/Monthly';
 export const API_MERCHANT_OVERALL = '/api/MerchantFinancialQuery/Overall';
+export const API_SKILLS = '/api/SkillsQuery';

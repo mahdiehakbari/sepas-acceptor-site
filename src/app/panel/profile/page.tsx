@@ -46,6 +46,8 @@ const Profile = () => {
     workPlacePhoneNumber: '',
     professionalTitle: '',
     bio: '',
+    merchantBio: '',
+    skills: [],
   });
 
   useEffect(() => {

@@ -46,5 +46,6 @@
   "mobile_must_be_11_digits": "شماره وارد شده باید 11 رقم باشد ",
   "national_code_invalid": "شماره ملی اشتباه است ",
   "edit": "ویرایش اطلاعات",
-  "doctor_title": "عنوان پزشک"
+  "doctor_title": "عنوان پزشک",
+  "skills": "تخصص‌ها"
 }

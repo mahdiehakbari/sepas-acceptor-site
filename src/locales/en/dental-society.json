@@ -41,5 +41,6 @@
   "mobile_must_be_11_digits": "mobile must be 11 digits",
   "national_code_invalid": "national code invalid",
   "edit": "Edit Data",
-  "doctor_title": "Doctor Title"
+  "doctor_title": "Doctor Title",
+  "skills": "Skills"
 }

@@ -4,45 +4,10 @@ import {
   UseFormRegister,
   UseFormSetValue,
 } from 'react-hook-form';
+import { Dispatch, SetStateAction } from 'react';
+import { IProfileFormValues } from '@/sharedComponent/ui/Input/types';
 
-interface IAddress {
-  id: string;
-  cityId: string;
-  cityName: string;
-  provinceId: string;
-  provinceName: string;
-  // details: string;
-  postalCode: string;
-
-  workPlacePhoneNumber: string;
-  merchantAddress: string;
-}
-
-export interface IProfileFormValues {
-  phoneNumber?: string;
-  firstName: string;
-  lastName: string;
-  mobile: string;
-  nationalId: string;
-  birthDate: string;
-  gender: number | string;
-  email?: string;
-  iban?: string;
-  province: string;
-  cityId: string;
-  postalCode: string;
-  addressDetails: string;
-  FullName?: string;
-  address?: IAddress;
-  medicalSystemNumber: string;
-  educationLevel: string | number;
-  contractType: string | number;
-  certificateNumber: string;
-  workPlacePhoneNumber: string;
-  merchantAddress: string;
-  professionalTitle: string;
-  bio: string;
-}
+export type { IProfileFormValues };
 
 export interface IUpdateProfileValues {
   email?: string;
@@ -52,11 +17,12 @@ export interface IUpdateProfileValues {
   cityId: string;
   postalCode: string;
   bio: string;
+  skills?: string[];
 }
 
 export interface IProfileFormProps {
   userData?: IProfileFormValues | null;
-  setUser?: (value: IProfileFormValues) => void;
+  setUser?: Dispatch<SetStateAction<IProfileFormValues>>;
   name: string;
   handleBack: () => void;
   onSuccess?: (updatedUser: IProfileFormValues) => void;

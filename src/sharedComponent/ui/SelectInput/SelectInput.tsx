@@ -11,6 +11,7 @@ export const SelectInput = <T extends FieldValues>({
   rules,
   defaultValue,
   disabled,
+  isMulti,
 }: ISelectInputProps<T>) => {
   const registerField = register(name, rules);
 
@@ -18,10 +19,19 @@ export const SelectInput = <T extends FieldValues>({
     <div className='flex flex-col'>
       <select
         {...registerField}
+        multiple={isMulti}
         disabled={disabled}
         onChange={(e) => {
-          registerField.onChange(e);
-          onChange?.(e.target.value);
+          if (isMulti) {
+            const values = Array.from(e.target.selectedOptions).map(
+              (opt) => opt.value,
+            );
+            registerField.onChange({ target: { value: values } });
+            onChange?.(values);
+          } else {
+            registerField.onChange(e);
+            onChange?.(e.target.value);
+          }
         }}
         defaultValue={defaultValue}
         className={`bg-white border rounded-lg px-3 py-2 text-right placeholder-gray-400 
@@ -37,7 +47,7 @@ export const SelectInput = <T extends FieldValues>({
               : 'border-gray-300 focus:ring-blue-500'
           }`}
       >
-        <option value=''>{label}</option>
+        {!isMulti && <option value=''>{label}</option>}
         {options.map((opt: { value: string; label: string }) => (
           <option key={opt.value} value={opt.value}>
             {opt.label}

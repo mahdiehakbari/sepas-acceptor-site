@@ -38,6 +38,7 @@ export const useProfileSubmit = ({
       cityId: data.cityId,
       postalCode: data.postalCode,
       bio: data.bio,
+      skills: data.skills ?? [],
     };
 
     try {

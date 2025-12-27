@@ -117,7 +117,9 @@ export const ShowUserData = ({ user }: IShowUserDataProps) => {
             <p className='text-[#3B3B3B] text-[14px] font-medium'>
               درباره‌ی من:
             </p>
-            <p className='text-[#3B3B3B] text-[14px] font-medium'>{user.bio}</p>
+            <p className='text-[#3B3B3B] text-[14px] font-medium'>
+              {user.merchantBio}
+            </p>
           </div>
         </div>
 
