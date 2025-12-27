@@ -47,6 +47,7 @@ const Profile = () => {
     professionalTitle: '',
     bio: '',
     merchantBio: '',
+    skillIds: [],
     skills: [],
   });
 

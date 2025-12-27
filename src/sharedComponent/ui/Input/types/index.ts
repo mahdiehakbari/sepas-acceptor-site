@@ -12,6 +12,11 @@ interface IAddress {
   merchantAddress: string;
 }
 
+export interface ISkill {
+  id: string;
+  description: string;
+}
+
 export interface IProfileFormValues {
   phoneNumber?: string;
   fullName?: string;
@@ -38,19 +43,21 @@ export interface IProfileFormValues {
   professionalTitle: string;
   bio: string;
   merchantBio: string;
-  skills: string[];
+  skillIds: string[];
+  skills: ISkill[];
 }
 
-export interface InputProps {
+export interface InputProps<TFieldName extends keyof IProfileFormValues> {
   defaultValue: string;
   label: string;
-  name: keyof IProfileFormValues;
+  name: TFieldName;
   register: UseFormRegister<IProfileFormValues>;
   required?: boolean;
   type?: string;
   full?: boolean;
   errors: FieldErrors<IProfileFormValues>;
   textError: string;
-  rules?: RegisterOptions<IProfileFormValues, keyof IProfileFormValues>;
+  rules?: RegisterOptions<IProfileFormValues, TFieldName>;
   disabled?: boolean;
 }
+

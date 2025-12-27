@@ -17,7 +17,7 @@ export interface IUpdateProfileValues {
   cityId: string;
   postalCode: string;
   bio: string;
-  skills?: string[];
+  skillIds?: string[];
 }
 
 export interface IProfileFormProps {

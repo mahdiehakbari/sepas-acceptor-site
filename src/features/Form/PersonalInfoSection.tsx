@@ -92,7 +92,7 @@ export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
         setSkills(resp.data);
       })
       .catch();
-  }, []);
+  }, [token]);
 
   const skillOptions: ISkillOption[] = skills.map((c) => ({
     value: String(c.id),
@@ -224,8 +224,8 @@ export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
         <div className='flex flex-col'>
           <Controller
             control={control}
-            name='skills'
-            rules={{ required: t('dental-society:field_required') as string }}
+            name='skillIds'
+            rules={{}}
             render={({ field }) => {
               const selectedValues = Array.isArray(field.value)
                 ? field.value
@@ -263,9 +263,9 @@ export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
               );
             }}
           />
-          {errors.skills?.message && (
+          {errors.skillIds?.message && (
             <span className='text-red-500 text-sm mt-1'>
-              {errors.skills.message.toString()}
+              {errors.skillIds.message.toString()}
             </span>
           )}
         </div>

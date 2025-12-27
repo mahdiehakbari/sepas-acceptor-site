@@ -113,6 +113,21 @@ export const ShowUserData = ({ user }: IShowUserDataProps) => {
               {user.email || '-'}
             </p>
           </div>
+          <div className='flex gap-1.5 flex-wrap items-center pl-6  mb-6 md:border-l-2 md:border-[#C2C2C2]'>
+            <p className='text-[#3B3B3B] text-[14px] font-medium'>
+              {t('dental-society:skills')}:
+            </p>
+            {user.skills && user.skills.length > 0
+              ? user.skills.map((skill, index) => (
+                  <p
+                    key={skill.id ?? index}
+                    className='text-[#3B3B3B] text-[14px] font-medium'
+                  >
+                    {skill.description}
+                  </p>
+                ))
+              : null}
+          </div>
           <div className='flex justify-between items-center pl-6 mb-6'>
             <p className='text-[#3B3B3B] text-[14px] font-medium'>
               درباره‌ی من:
