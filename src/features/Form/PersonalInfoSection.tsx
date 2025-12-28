@@ -8,7 +8,6 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import {
   API_CONTRACT_GET,
-  API_CONTRACT_POST,
   API_SKILLS,
 } from '@/config/api_address.config';
 import { DateInput, FormTitle, Input, SelectInput } from '@/sharedComponent/ui';
@@ -72,22 +71,6 @@ export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
           const skillIds = userData.skills.map((skill: any) => skill.skillId);
           setValue('skillIds', skillIds);
         }
-
-        axios
-          .post(
-            API_CONTRACT_POST,
-            {
-              merchantId: resp.data.merchantId,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json',
-              },
-            },
-          )
-          .then((resp) => {})
-          .catch();
       })
       .catch();
 

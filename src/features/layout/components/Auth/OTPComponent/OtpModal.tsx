@@ -163,7 +163,7 @@ export const OtpModal: React.FC<IOtpProps> = ({
         </span>
       </div>
 
-      <div className='text-center text-xs text-gray-600 mt-4 leading-relaxed'>
+      {/* <div className='text-center text-xs text-gray-600 mt-4 leading-relaxed'>
         <Trans
           i18nKey='login:accept_terms_message'
           components={[
@@ -176,7 +176,7 @@ export const OtpModal: React.FC<IOtpProps> = ({
             />,
           ]}
         />
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -18,7 +18,6 @@ export const BankInfoSection: React.FC<IBankInfoSectionProps> = ({
         errors={errors}
         textError={t('dental-society:field_required')}
         defaultValue={userData?.iban ?? ''}
-        disabled={!!userData?.iban}
       />
     </div>
   </section>
