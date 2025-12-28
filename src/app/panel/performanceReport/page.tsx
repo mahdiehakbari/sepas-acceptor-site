@@ -106,13 +106,17 @@ const PerformanceReport = () => {
             {t('performance-report:contract_status')}
           </h3>
           <h3 className='font-medium text-[#237D24] text-[16px] '>
+            فعال (
             {overAllData?.lastContractType.payoutType == 'TwoMonths'
-              ? 'دوماه'
+              ? 'تسویه دو ماهه'
               : overAllData?.lastContractType.payoutType == 'SixMonths'
-              ? 'شش ماه'
+              ? 'تسویه شش ماهه'
               : overAllData?.lastContractType.payoutType == 'FourMonths'
-              ? 'چهارماه'
-              : 'نقدی'}
+              ? 'تسویه چهار ماهه'
+              : overAllData?.lastContractType.payoutType == 'Instant'
+              ? 'تسویه نقدی'
+              : ''}
+              )
           </h3>
         </div>
       </div>
