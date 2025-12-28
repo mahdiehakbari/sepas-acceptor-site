@@ -282,7 +282,7 @@ export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
               message: t('dental-society:max_500_chars'),
             },
           })}
-          defaultValue={userData?.bio ?? ''}
+          defaultValue={userData?.merchantBio ?? ''}
         />
       </div>
     </section>

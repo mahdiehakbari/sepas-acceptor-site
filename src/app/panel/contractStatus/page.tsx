@@ -21,6 +21,7 @@ const ContractStatus = () => {
   const [isEmpty, setIsEmpty] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [buttonLoading, setButtonLoading] = useState(false);
+  const [isTermsAccepted, setIsTermsAccepted] = useState(false);
 
   const token = Cookies.get('token');
 
@@ -77,8 +78,8 @@ const ContractStatus = () => {
       loading={pageLoading}
       loadingText={t('panel:page_loading')}
     >
-      <div className='flex flex-col items-center justify-center mt-6'>
-        <h1 className='text-black font-normal text-[14px] mb-4 text-right md:w-[400px] w-[300px]'>
+      <div className='flex flex-col items-center justify-center mt-6 px-4'>
+        <h1 className='text-black font-normal text-[14px] mb-4 text-right w-full max-w-5xl'>
           {t('contract:settlement_status')}
         </h1>
 
@@ -87,62 +88,199 @@ const ContractStatus = () => {
             {t('panel:empty')}
           </div>
         ) : (
-          <div className='md:w-[400px] w-[300px] mb-6  relative'>
-            <button
-              type='button'
-              onClick={() => setDropdownOpen((prev) => !prev)}
-              className='cursor-pointer w-full bg-white border border-gray-300 rounded-lg px-4 py-2 text-right flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-blue-500'
-            >
-              <span>
-                {selectedContract !== null && selectedContract !== undefined
-                  ? contractOptions.find(
-                      (opt) => opt.value === selectedContract,
-                    )?.label
-                  : t('contract:settlement_type')}
-              </span>
+          <div className='w-full max-w-5xl mb-6'>
+            {/* جدول تسویه */}
+            <div className='mb-6 bg-white rounded-lg shadow-md p-4'>
+              <table className='w-full border-collapse text-sm table-fixed'>
+                <colgroup>
+                  <col className='w-[12%]' />
+                  <col className='w-[11%]' />
+                  <col className='w-[13%]' />
+                  <col className='w-[13%]' />
+                  <col className='w-[13%]' />
+                  <col className='w-[13%]' />
+                  <col className='w-[13%]' />
+                  <col className='w-[12%]' />
+                </colgroup>
+                <thead>
+                  <tr className='bg-gray-100'>
+                    <th className='border border-gray-300 px-3 py-2 text-right font-semibold text-xs'>
+                      روش تسویه
+                    </th>
+                    <th className='border border-gray-300 px-3 py-2 text-center font-semibold text-xs'>
+                      کارمزد
+                    </th>
+                    <th className='border border-gray-300 px-3 py-2 text-center font-semibold text-xs'>
+                      20 روز بعد از خرید
+                    </th>
+                    <th className='border border-gray-300 px-3 py-2 text-center font-semibold text-xs'>
+                      60 روز بعد از خرید
+                    </th>
+                    <th className='border border-gray-300 px-3 py-2 text-center font-semibold text-xs'>
+                      90 روز بعد از خرید
+                    </th>
+                    <th className='border border-gray-300 px-3 py-2 text-center font-semibold text-xs'>
+                      یک ماه بعد از قسط قبلی
+                    </th>
+                    <th className='border border-gray-300 px-3 py-2 text-center font-semibold text-xs'>
+                      یک ماه بعد از قسط قبلی
+                    </th>
+                    <th className='border border-gray-300 px-3 py-2 text-center font-semibold text-xs'>
+                      یک ماه بعد از قسط قبلی
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className='hover:bg-gray-50'>
+                    <td className='border border-gray-300 px-3 py-2 text-right font-medium text-xs'>
+                      تسویه نقدی
+                    </td>
+                    <td className='border border-gray-300 px-3 py-2 text-center text-xs'>
+                      10% مبلغ تراکنش
+                    </td>
+                    <td className='border border-gray-300 px-3 py-2 text-center text-xs'>
+                      100% مبلغ بعد از کسر کارمزد
+                    </td>
+                    <td className='border border-gray-300 px-3 py-2 text-center bg-gray-50'></td>
+                    <td className='border border-gray-300 px-3 py-2 text-center bg-gray-50'></td>
+                    <td className='border border-gray-300 px-3 py-2 text-center bg-gray-50'></td>
+                    <td className='border border-gray-300 px-3 py-2 text-center bg-gray-50'></td>
+                    <td className='border border-gray-300 px-3 py-2 text-center bg-gray-50'></td>
+                  </tr>
+                  <tr className='hover:bg-gray-50'>
+                    <td className='border border-gray-300 px-3 py-2 text-right font-medium text-xs'>
+                      تسویه 2 ماهه
+                    </td>
+                    <td className='border border-gray-300 px-3 py-2 text-center text-xs'>
+                      7% مبلغ تراکنش
+                    </td>
+                    <td className='border border-gray-300 px-3 py-2 text-center bg-gray-50'></td>
+                    <td className='border border-gray-300 px-3 py-2 text-center text-xs'>
+                      100% مبلغ بعد از کسر کارمزد
+                    </td>
+                    <td className='border border-gray-300 px-3 py-2 text-center bg-gray-50'></td>
+                    <td className='border border-gray-300 px-3 py-2 text-center bg-gray-50'></td>
+                    <td className='border border-gray-300 px-3 py-2 text-center bg-gray-50'></td>
+                    <td className='border border-gray-300 px-3 py-2 text-center bg-gray-50'></td>
+                  </tr>
+                  <tr className='hover:bg-gray-50'>
+                    <td className='border border-gray-300 px-3 py-2 text-right font-medium text-xs'>
+                      تسویه 4 ماهه
+                    </td>
+                    <td className='border border-gray-300 px-3 py-2 text-center text-xs'>
+                      4% مبلغ تراکنش
+                    </td>
+                    <td className='border border-gray-300 px-3 py-2 text-center bg-gray-50'></td>
+                    <td className='border border-gray-300 px-3 py-2 text-center bg-gray-50'></td>
+                    <td className='border border-gray-300 px-3 py-2 text-center text-xs'>
+                      50% مبلغ بعد از کسر کارمزد
+                    </td>
+                    <td className='border border-gray-300 px-3 py-2 text-center text-xs'>
+                      50% مبلغ بعد از کسر کارمزد
+                    </td>
+                    <td className='border border-gray-300 px-3 py-2 text-center bg-gray-50'></td>
+                    <td className='border border-gray-300 px-3 py-2 text-center bg-gray-50'></td>
+                  </tr>
+                  <tr className='hover:bg-gray-50'>
+                    <td className='border border-gray-300 px-3 py-2 text-right font-medium text-xs'>
+                      تسویه 6 ماهه
+                    </td>
+                    <td className='border border-gray-300 px-3 py-2 text-center text-xs'>0%</td>
+                    <td className='border border-gray-300 px-3 py-2 text-center bg-gray-50'></td>
+                    <td className='border border-gray-300 px-3 py-2 text-center bg-gray-50'></td>
+                    <td className='border border-gray-300 px-3 py-2 text-center text-xs'>
+                      25% مبلغ بعد از کسر کارمزد
+                    </td>
+                    <td className='border border-gray-300 px-3 py-2 text-center text-xs'>
+                      25% مبلغ بعد از کسر کارمزد
+                    </td>
+                    <td className='border border-gray-300 px-3 py-2 text-center text-xs'>
+                      25% مبلغ بعد از کسر کارمزد
+                    </td>
+                    <td className='border border-gray-300 px-3 py-2 text-center text-xs'>
+                      25% مبلغ بعد از کسر کارمزد
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-              <Image
-                src='/assets/icons/arrow-down.svg'
-                alt='close-button'
-                width={18}
-                height={18}
-                className={`transition-transform duration-300 ${
-                  dropdownOpen ? 'rotate-180' : 'rotate-0'
-                }`}
-              />
-            </button>
+            <div className='md:w-[500px] w-[300px] mx-auto relative'>
+              <button
+                type='button'
+                onClick={() => setDropdownOpen((prev) => !prev)}
+                className='cursor-pointer w-full bg-white border border-gray-300 rounded-lg px-4 py-2 text-right flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-blue-500'
+              >
+                <span>
+                  {selectedContract !== null && selectedContract !== undefined
+                    ? contractOptions.find(
+                        (opt) => opt.value === selectedContract,
+                      )?.label
+                    : t('contract:settlement_type')}
+                </span>
 
-            {dropdownOpen && (
-              <div className='absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-10'>
-                {contractOptions.map((opt) => (
-                  <label
-                    key={opt.value}
-                    className='flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100'
-                  >
-                    <input
-                      type='radio'
-                      name='contract-type'
-                      value={opt.value}
-                      checked={selectedContract === opt.value}
-                      onChange={() => {
-                        setSelectedContract(opt.value);
-                        setDropdownOpen(false);
-                      }}
-                      className='mr-2 accent-blue-500'
-                    />
-                    <span className='pr-2'>{opt.label}</span>
-                  </label>
-                ))}
+                <Image
+                  src='/assets/icons/arrow-down.svg'
+                  alt='close-button'
+                  width={18}
+                  height={18}
+                  className={`transition-transform duration-300 ${
+                    dropdownOpen ? 'rotate-180' : 'rotate-0'
+                  }`}
+                />
+              </button>
+
+              {dropdownOpen && (
+                <div className='absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-10'>
+                  {contractOptions.map((opt) => (
+                    <label
+                      key={opt.value}
+                      className='flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100'
+                    >
+                      <input
+                        type='radio'
+                        name='contract-type'
+                        value={opt.value}
+                        checked={selectedContract === opt.value}
+                        onChange={() => {
+                          setSelectedContract(opt.value);
+                          setDropdownOpen(false);
+                        }}
+                        className='mr-2 accent-blue-500'
+                      />
+                      <span className='pr-2'>{opt.label}</span>
+                    </label>
+                  ))}
+                </div>
+              )}
+
+              {/* چک‌باکس تایید */}
+              <div className='mt-6 mb-4'>
+                <label className='flex items-start cursor-pointer'>
+                  <input
+                    type='checkbox'
+                    checked={isTermsAccepted}
+                    onChange={(e) => setIsTermsAccepted(e.target.checked)}
+                    className='mt-1 ml-2 accent-blue-500 w-4 h-4'
+                  />
+                  <span className='text-gray-700 text-sm'>
+                    مفاد جدول فوق را مطالعه کردم و مورد تایید می‌باشد.
+                  </span>
+                </label>
               </div>
-            )}
-            <div className='flex justify-end mt-14'>
-              <Button disabled={buttonLoading} onClick={handleRegister}>
-                {buttonLoading == true ? (
-                  <SpinnerDiv />
-                ) : (
-                  t('contract:register')
-                )}
-              </Button>
+
+              <div className='flex justify-end mt-6'>
+                <Button 
+                  disabled={buttonLoading || !isTermsAccepted || selectedContract === null} 
+                  onClick={handleRegister}
+                >
+                  {buttonLoading == true ? (
+                    <SpinnerDiv />
+                  ) : (
+                    t('contract:register')
+                  )}
+                </Button>
+              </div>
             </div>
           </div>
         )}

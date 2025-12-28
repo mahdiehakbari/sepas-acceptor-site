@@ -10,6 +10,7 @@ import { IProfileFormValues } from '@/sharedComponent/ui/Input/types';
 export type { IProfileFormValues };
 
 export interface IUpdateProfileValues {
+  professionalTitle?: string;
   email?: string;
   iban?: string;
   address: string;

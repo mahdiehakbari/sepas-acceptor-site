@@ -31,6 +31,7 @@ export const useProfileSubmit = ({
     setIsLoading(true);
 
     const formattedData: Partial<IUpdateProfileValues> = {
+      professionalTitle: data.professionalTitle,
       email: data.email,
       iban: data.iban,
       address: data.addressDetails || '',
