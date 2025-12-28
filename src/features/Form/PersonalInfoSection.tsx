@@ -137,7 +137,7 @@ export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
           register={register}
           errors={errors}
           textError={t('dental-society:field_required')}
-          rules={rules.mobile as unknown as RegisterOptions<IProfileFormValues>}
+          rules={rules.mobile as any}
           defaultValue={userData?.phoneNumber ?? phoneNumber}
           disabled={!!userData?.phoneNumber || !!phoneNumber}
         />
@@ -148,9 +148,7 @@ export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
           register={register}
           errors={errors}
           textError={t('dental-society:field_required')}
-          rules={
-            rules.nationalId as unknown as RegisterOptions<IProfileFormValues>
-          }
+          rules={rules.nationalId as any}
           defaultValue={userData?.nationalId ?? ''}
           disabled={!!userData?.nationalId}
         />

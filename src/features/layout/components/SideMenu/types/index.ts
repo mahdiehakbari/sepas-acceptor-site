@@ -1,6 +1,8 @@
 import { FieldErrors, RegisterOptions, UseFormRegister } from 'react-hook-form';
 import { IProfileFormValues } from '@/sharedComponent/ui/Input/types';
 
+export type { IProfileFormValues };
+
 export interface InputProps {
   label: string;
   name: keyof IProfileFormValues;
