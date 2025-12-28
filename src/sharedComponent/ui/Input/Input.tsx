@@ -1,7 +1,7 @@
 import React from 'react';
-import { InputProps } from './types';
+import { InputProps, IProfileFormValues } from './types';
 
-export const Input: React.FC<InputProps> = ({
+export const Input: React.FC<InputProps<keyof IProfileFormValues>> = ({
   label,
   name,
   register,

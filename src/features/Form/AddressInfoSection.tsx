@@ -28,7 +28,10 @@ export const AddressInfoSection: React.FC<IAddressInfoSectionProps> = ({
             name='province'
             register={register}
             options={provinces.map((p) => ({ value: p.id, label: p.name }))}
-            onChange={handleProvinceChange}
+            onChange={(value: string | string[]) => {
+              const provinceId = Array.isArray(value) ? value[0] : value;
+              handleProvinceChange(provinceId);
+            }}
             errors={errors}
             rules={{ required: t('dental-society:field_required') }}
             defaultValue={userData?.address?.provinceId ?? ''}
@@ -41,7 +44,6 @@ export const AddressInfoSection: React.FC<IAddressInfoSectionProps> = ({
             name='cityId'
             register={register}
             options={cities.map((c) => ({ value: c.id, label: c.name }))}
-            onChange={handleProvinceChange}
             errors={errors}
             rules={{ required: t('dental-society:field_required') }}
             defaultValue={userData?.address?.cityId ?? ''}
