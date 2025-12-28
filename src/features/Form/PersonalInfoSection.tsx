@@ -66,6 +66,13 @@ export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
         const payout = resp.data.payoutTypeDesc?.trim();
         setContract(payout);
         setValue('contractType', payout);
+
+        // Set user skills from userData
+        if (userData?.skills && Array.isArray(userData.skills)) {
+          const skillIds = userData.skills.map((skill: any) => skill.skillId);
+          setValue('skillIds', skillIds);
+        }
+
         axios
           .post(
             API_CONTRACT_POST,
@@ -92,7 +99,7 @@ export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
         setSkills(resp.data);
       })
       .catch();
-  }, [token]);
+  }, [token, userData, setValue]);
 
   const skillOptions: ISkillOption[] = skills.map((c) => ({
     value: String(c.id),
