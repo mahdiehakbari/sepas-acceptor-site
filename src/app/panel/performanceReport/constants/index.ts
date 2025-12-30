@@ -18,3 +18,10 @@ export const months = [
   { value: '11', label: 'بهمن' },
   { value: '12', label: 'اسفند' },
 ];
+
+export const payoutTypeMap: Record<string, string> = {
+  TwoMonths: 'تسویه دو ماهه',
+  FourMonths: 'تسویه چهار ماهه',
+  SixMonths: 'تسویه شش ماهه',
+  Instant: 'تسویه نقدی',
+};

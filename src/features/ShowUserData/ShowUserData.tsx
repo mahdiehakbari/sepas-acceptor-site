@@ -73,14 +73,10 @@ export const ShowUserData = ({ user }: IShowUserDataProps) => {
           </div>
           <div className='flex justify-between items-center  pl-6  mb-6  md:border-l-2 md:border-[#C2C2C2]'>
             <p className='text-[#3B3B3B] text-[14px] font-medium'>
-              {t('dental-society:educational')}:
+              عنوان تخصص:
             </p>
             <p className='text-[#3B3B3B] text-[14px] font-medium'>
-              {user.educationLevel == 0
-                ? 'پست دکترا'
-                : user.educationLevel == 1
-                ? 'دکترا'
-                : 'استاد'}
+              {user.professionalTitle}
             </p>
           </div>
           <div className='flex justify-between items-center pl-6  mb-6'>
