@@ -11,6 +11,7 @@ import { useCountdown } from './hooks/useCountdown';
 import { resendOtpAPI, verifyOtpAPI } from './api/resendOtpAPI';
 import { AxiosError } from 'axios';
 import { OtpField } from './OtpField/OtpField';
+import { toast } from 'react-toastify';
 
 export const NewReceiptOtp: React.FC<INewReceiptOtpProps> = ({
   phoneNumber,
@@ -36,6 +37,7 @@ export const NewReceiptOtp: React.FC<INewReceiptOtpProps> = ({
   const { timeLeft, reset } = useCountdown(120, handleExpire);
 
   const handleResend = async (): Promise<void> => {
+    toast.success(t('home:resend_otp'));
     if (!canResend) return;
 
     try {
@@ -59,7 +61,7 @@ export const NewReceiptOtp: React.FC<INewReceiptOtpProps> = ({
       const resp = await verifyOtpAPI(purchaseRequestId, otp, token);
       setResultData(resp.data);
       setErrorResult('');
-       setShowModalResult(true);
+      setShowModalResult(true);
     } catch (err) {
       const axiosErr = err as AxiosError<{ message?: string }>;
       const msg = axiosErr.response?.data?.message ?? 'خطایی رخ داده است.';

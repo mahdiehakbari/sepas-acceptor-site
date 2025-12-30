@@ -83,14 +83,14 @@ export const useUploadProfileImage = () => {
         toast.success('عکس پروفایل با موفقیت بروزرسانی شد.');
         return response.data.imageFilePath;
       } else {
-        toast.error(response.data?.message || 'dental-society:update_error');
+        toast.error(response.data?.message || 'خطا در بروز رسانی اطلاعات');
         return null;
       }
     } catch (error) {
       const axiosError = error as AxiosError<UploadProfileImageResponse>;
 
       toast.error(
-        axiosError.response?.data?.message || 'dental-society:update_error',
+        axiosError.response?.data?.message || 'خطا در بروز رسانی اطلاعات',
       );
 
       return null;

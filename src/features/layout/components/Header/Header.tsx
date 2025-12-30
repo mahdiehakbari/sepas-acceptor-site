@@ -138,7 +138,7 @@ export const Header = () => {
       <div className='mx-auto max-w-7xl px-4 py-2.5 flex items-center justify-between'>
         <div className='flex items-center gap-[50px]'>
           <Image
-            src='/assets/icons/sepas.png'
+            src='/assets/icons/logo.png'
             alt='logo'
             width={78}
             height={42}
@@ -233,7 +233,7 @@ export const Header = () => {
             <Image
               src={
                 currentLanguage === 'fa'
-                  ? '/assets/icons/ir-logo.svg'
+                  ? '/assets/icons/ir-logo.png'
                   : '/assets/icons/us-logo.png'
               }
               alt={currentLanguage === 'fa' ? 'Iran flag' : 'US flag'}

@@ -70,11 +70,11 @@ export const useProfileSubmit = ({
           toast.error('شماره شبا باید با IR شروع شود و 24 کاراکتر باشد');
         } else {
           toast.error(
-            error.response?.data?.message || t('profile:update_error'),
+            error.response?.data?.message || 'خطا در بروز رسانی اطلاعات',
           );
         }
       } else {
-        toast.error(t('profile:update_error'));
+        toast.error('خطا در بروز رسانی اطلاعات');
       }
     } finally {
       setIsLoading(false);

@@ -10,6 +10,7 @@ import axios from 'axios';
 import { Button } from '@/sharedComponent/ui/Button/Button';
 import { SpinnerDiv } from '@/sharedComponent/ui/SpinnerDiv/SpinnerDiv';
 import { formatTime } from '@/sharedComponent/lib/formatTime';
+import { toast } from 'react-toastify';
 
 export const OtpModal: React.FC<IOtpProps> = ({
   setIsOpenOtpModal,
@@ -43,11 +44,22 @@ export const OtpModal: React.FC<IOtpProps> = ({
   useEffect(() => {
     if (timeLeft <= 0) return;
 
-    const timer = setInterval(() => setTimeLeft((t) => t - 1), 1000);
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => prev - 1);
+    }, 2000);
+
     return () => clearInterval(timer);
   }, [timeLeft]);
 
+  useEffect(() => {
+    if (timeLeft <= 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setCanResend(true);
+    }
+  }, [timeLeft]);
+
   const handleResend = async () => {
+    toast.success(t('home:resend_otp'));
     setOtp('');
     setTimeLeft(120);
     setCanResend(false);
@@ -150,10 +162,10 @@ export const OtpModal: React.FC<IOtpProps> = ({
         <button
           onClick={handleResend}
           disabled={!canResend}
-          className={`cursor-pointer font-semibold ${
+          className={` font-semibold ${
             canResend
-              ? 'text-primary hover:underline'
-              : 'text-gray-400 cursor-not-allowed'
+              ? 'text-primary hover:underline cursor-pointer'
+              : 'text-gray-400 '
           }`}
         >
           {t('login:resend_code')}
